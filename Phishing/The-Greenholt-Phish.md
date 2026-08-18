@@ -99,19 +99,33 @@ Remember that email headers can be complex, so it may take some time to understa
 **Phishing Resources:**
 
 https://hybrid-analysis.com/
+
 https://mxtoolbox.com/
+
 https://phishtank.com/
+
 https://any.run/
+
 https://urlscan.io/
+
 https://checkphish.ai/
+
 https://www.urlvoid.com/
+
 https://www.ipvoid.com/
+
 https://www.abuseipdb.com/
+
 https://exchange.xforce.ibmcloud.com/
+
 https://mailheader.org/
+
 https://malshare.com/
+
 https://www.shodan.io/
+
 https://www.thunderbird.net/en-GB/
+
 
 **Q1 What is the Transfer Reference Number listed in the email's Subject?**
 
