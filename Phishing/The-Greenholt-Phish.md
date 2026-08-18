@@ -1,10 +1,10 @@
-Phishing is a social engineering attack. It is a campaign done by attackers to lure the victim to click a malicious URL or have them download/execute a malicious file.
+**Phishing** is a social engineering attack. It is a campaign done by attackers to lure the victim to click a malicious URL or have them download/execute a malicious file.
 
-What is the weakest link in the cyber world?
+**What is the weakest link in the cyber world?**
 human!
 Because people sometimes act emotionally, they can be easily hacked with a simple trick.
 
-What is the purpose of Attacker?
+**What is the purpose of Attacker?**
 
 The purpose of the attacker in a phishing attack is typically to gain unauthorized access to sensitive information, such as login credentials, financial details, or personal information, for malicious purposes.
 
@@ -12,13 +12,13 @@ A Sales Executive at Greenholt PLC received an email that he didn't expect to re
 
 Investigate(Static / Dynamic) the email sample to determine if it is legitimate.
 
-Tip: Open the EML file with Thunderbird. To do so, right-click on the challenge.eml file and select Open With Other Application. From there, scroll down to select Thunderbird Mail and click Open. It may take a few moments to open the application. You will then see the email and its contents appear in the app.
+**Tip:** Open the EML file with Thunderbird. To do so, right-click on the challenge.eml file and select Open With Other Application. From there, scroll down to select Thunderbird Mail and click Open. It may take a few moments to open the application. You will then see the email and its contents appear in the app.
 
-How do you work on a Phishing email?
-What is static analysis? and What is dynamic analysis?
+**How do you work on a Phishing email?**
+_**What is static analysis? and What is dynamic analysis?**_
 If we do not use tools, it will be static analysis. If we use the tool, it will be dynamic analysis.
 
-Static analysis:
+**Static analysis:**
 
 Is the mail from public domain (like Gmail, yahoo, etc.)
 
@@ -28,7 +28,7 @@ Is the email poorly written (grammar mistakes, incorrect use of words etc.)? Att
 
 Does the email create a sense of urgency?
 
-Dynamic analysis:
+**Dynamic analysis:**
 Submit the URL to www.urlvoid.com and check the reputation.
 
 Check the domain in WHOIS lookup to identify the IP address of the domain.
@@ -46,11 +46,11 @@ SPF (Sender Policy Framework), DKIM (DomainKeys Identified Mail), and DMARC (Dom
 
 To investigate an email header using MXToolbox, you typically follow these steps:
 
-Access MXToolbox:
+**Access MXToolbox:**
 
 Go to the MXToolbox website (https://mxtoolbox.com/).
 
-Access the Email Header Analyzer:
+**Access the Email Header Analyzer:**
 
 MXToolbox provides various tools for analyzing email-related information. Look for the "Email Header Analyzer" tool. You may find it in the "Email Tools" section or by searching for it in the search bar.
 
@@ -96,7 +96,7 @@ Use external tools if needed: If eM Client's built-in tools don't provide enough
 
 Remember that email headers can be complex, so it may take some time to understand all the information they contain. If you're investigating a suspicious email, be cautious and consider seeking advice from IT professionals or security experts.
 
-Phishing Resources:
+**Phishing Resources:**
 
 https://hybrid-analysis.com/
 https://mxtoolbox.com/
@@ -114,6 +114,7 @@ https://www.shodan.io/
 https://www.thunderbird.net/en-GB/
 
 **Q1 What is the Transfer Reference Number listed in the email's Subject?**
+
 <img width="1224" height="398" alt="image" src="https://github.com/user-attachments/assets/ce82db55-9f37-4aac-b672-bec617ce859f" />
 
 
@@ -136,6 +137,7 @@ info@mutawamarine.com
 info.mutawamarine@mail.com
 
 **Q5 What is the Originating IP?**
+
 Identify the First "Received" Header: Email headers usually contain multiple "Received" lines, which track the servers that handled the email as it was transmitted.The first "Received" line typically indicates the originating server.
 
 Locate the IP Address: In the first "Received" line, look for the IP address following the from keyword. This is the IP address from which the email was originally sent.
@@ -157,6 +159,7 @@ ESMTP, Extended Simple Mail Transfer Protocol
 <img width="1337" height="925" alt="image" src="https://github.com/user-attachments/assets/1b2e358f-2ee3-4d97-b6b5-67d7a87fc54e" />
 
 **Q6 Who is the owner of the Originating IP? (Do not include the "." in your answer.)**
+
 <img width="1903" height="1023" alt="image" src="https://github.com/user-attachments/assets/1ccc539f-950b-416e-bf3b-843ef9763658" />
 
 
@@ -173,18 +176,21 @@ domain name= mutawamarine.com
 <img width="1529" height="665" alt="image" src="https://github.com/user-attachments/assets/a7d4a3b5-8e95-4f40-89ed-5c415ecf1d73" />
 
 **Q8 What is the DMARC record for the Return-Path domain?**
+
 <img width="706" height="388" alt="image" src="https://github.com/user-attachments/assets/ceddab9d-9164-4910-a8aa-4daeb24f233d" />
 
 
 v=DMARC1; p=quarantine; fo=1
 
 **Q9 What is the name of the attachment?**
+
 <img width="857" height="755" alt="image" src="https://github.com/user-attachments/assets/333bf035-2e73-42bd-a77c-390f7c43942c" />
 
 
 SWT_#09674321____PDF__.CAB
 
 **Q10 What is the SHA256 hash of the file attachment?**
+
 <img width="739" height="244" alt="image" src="https://github.com/user-attachments/assets/ba9f5025-c42d-454d-a995-c21cd9e6ba6a" />
 
 
@@ -194,7 +200,7 @@ ubuntu@ip-10-10-171-105:/Desktop$ sha256sum SWT_#09674321____PDF__.CAB
 2e91c533615a9bb8929ac4bb76707b2444597ce063d84a4b33525e25074fff3f SWT_#09674321____PDF__.CAB
 ubuntu@ip-10-10-171-105:~/Desktop$
 
-For PowerShell:
+**For PowerShell:**
 
 The command get-filehash will generate a SHA256 hash. If we want to obtain MD5 or SHA1 values, we need to add the '-algorithm' flag to specify which hashes we desire. Using:
 
@@ -203,7 +209,7 @@ get-filehash -algorithm SHA1
 
 we can obtain the MD5 hash value, and the same method can be applied for SHA1.
 
-For Linux:
+**For Linux:**
 
 SHA256, MD5, and SHA1 hashes respectively:
 
@@ -212,6 +218,7 @@ md5sum
 sha1sum
 
 **Q11 What is the attachments file size? (Don't forget to add "KB" to your answer, NUM KB)**
+
 <img width="1657" height="866" alt="image" src="https://github.com/user-attachments/assets/8cef1579-1285-40ff-ae10-17d5e798b7b3" />
 
 
@@ -219,6 +226,7 @@ sha1sum
 2e91c533615a9bb8929ac4bb76707b2444597ce063d84a4b33525e25074fff3f
 
 **Q12 What is the actual file extension of the attachment?**
+
 <img width="1706" height="413" alt="image" src="https://github.com/user-attachments/assets/c2a09c56-8eaa-4faa-aef4-9e5290c97719" />
 
 
