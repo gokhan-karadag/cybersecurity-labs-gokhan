@@ -31,11 +31,11 @@ Please, load the pcap file in your Analysis folder on the Desktop into Wireshark
 <img width="1910" height="651" alt="image" src="https://github.com/user-attachments/assets/04606224-5c8b-4d04-b45d-7f36b9215192" />
 <img width="1912" height="693" alt="image" src="https://github.com/user-attachments/assets/4586f155-f539-44b4-a8e7-0f11d08b2d40" />
 
-2021-09-24 16:44:38
+_2021-09-24 16:44:38_
 
 **Q2 What is the name of the zip file that was downloaded?**
 
-documents.zip
+_documents.zip_
 
 <img width="1919" height="479" alt="image" src="https://github.com/user-attachments/assets/ca2e0b53-a5ab-4552-9000-9292cee19277" />
 
@@ -48,20 +48,20 @@ attirenepal.com
 
 **Q4 Without downloading the file, what is the name of the file in the zip file?**
 
-chart-1530076591.xls
+_chart-1530076591.xls_
 
 <img width="1914" height="906" alt="image" src="https://github.com/user-attachments/assets/27cf76f9-24fd-443a-9a57-d773bde1bf46" />
 
 
 **Q5 What is the name of the webserver of the malicious IP from which the zip file was downloaded?**
 
-LiteSpeed
+_LiteSpeed_
 
 <img width="649" height="595" alt="image" src="https://github.com/user-attachments/assets/94043269-a95b-46bf-bb0e-b12950f48ed1" />
 
 **Q6 What is the version of the webserver from the previous question?**
 
-PHP/7.2.34
+_PHP/7.2.34_
 
 <img width="653" height="459" alt="image" src="https://github.com/user-attachments/assets/066dfe97-1fe6-47e5-8cea-7766f17cac09" />
 
@@ -87,7 +87,7 @@ finejewels.com.au. thietbiagt.com new.americold.com
 
 **Q8 Which certificate authority issued the SSL certificate to the first domain from the previous question?**
 
-goDaddy
+_goDaddy_
 
 <img width="1918" height="675" alt="image" src="https://github.com/user-attachments/assets/a0ba05d6-4afa-4cc9-a96a-c5ae56124680" />
 
@@ -99,11 +99,11 @@ IP address 1- 185.106.96.158 at port 80
 
 <img width="1892" height="923" alt="image" src="https://github.com/user-attachments/assets/1046a9a9-2c9e-46d3-aeb6-827bb1bebe9a" />
 
-185.106.96.158, 185.125.204.174
+_185.106.96.158, 185.125.204.174_
 
 **Q10 What is the Host header for the first Cobalt Strike IP address from the previous question?**
 
-ocsp.verisign.com
+_ocsp.verisign.com_
 <img width="1920" height="562" alt="image" src="https://github.com/user-attachments/assets/730f7b12-567f-41da-9bc9-c40dcfba4661" />
 
 **Q11 What is the domain name for the first IP address of the Cobalt Strike server? You may use VirusTotal to confirm if it's the Cobalt Strike server (check the Community tab).**
@@ -114,13 +114,13 @@ using ip.addr == 185.106.96.158 find the domain name, also enable network IP add
 
 Do same as mentioned in point 11
 
-survmeter.live
+_survmeter.live_
 
 <img width="952" height="153" alt="image" src="https://github.com/user-attachments/assets/e752c04b-2ab2-4b3d-9bdf-72de27f60ea1" />
 
 **Q12 What is the domain name of the second Cobalt Strike server IP?  You may use VirusTotal to confirm if it's the Cobalt Strike server (check the Community tab).**
 
-securitybusinpuff.com
+_securitybusinpuff.com_
 
 13366 2021-09-24 16:57:37.126301 securitybusinpuff.com DESKTOP-IOJC6RB.goingfortune.com TCP 54
 
@@ -130,11 +130,11 @@ securitybusinpuff.com
 
 http.request.method == POST
 
-maldivehost.net
+_maldivehost.net_
 
 **Q14 What are the first eleven characters that the victim host sends out to the malicious domain involved in the post-infection traffic?** 
 
-zLIisQRWZI9
+_zLIisQRWZI9_
 
 <img width="886" height="229" alt="image" src="https://github.com/user-attachments/assets/228a4ede-212b-4eef-9eb9-f733cbeb39b1" />
 
@@ -142,28 +142,31 @@ zLIisQRWZI9
 
 <img width="1573" height="240" alt="image" src="https://github.com/user-attachments/assets/039392b0-7fcc-4e26-9e11-c709946f12fb" />
 
-281
+_281_
 
 **Q16 What was the Server header for the malicious domain from the previous question?**
-Apache/2.4.49 (cPanel) OpenSSL/1.1.1l mod_bwlimited/1.4
+_Apache/2.4.49 (cPanel) OpenSSL/1.1.1l mod_bwlimited/1.4_
 
 <img width="1723" height="473" alt="image" src="https://github.com/user-attachments/assets/de0b7a59-d03e-4490-acb6-7a18a12c33a0" />
 
 **Q17 The malware used an API to check for the IP address of the victim’s machine. What was the date and time when the DNS query for the IP check domain occurred? (answer format: yyyy-mm-dd hh:mm:ss UTC)**
 
-2021-09-24 17:00:04
+_2021-09-24 17:00:04_
 
 <img width="957" height="583" alt="image" src="https://github.com/user-attachments/assets/cade6f5d-5172-427f-ab77-e5267478f3fc" />
 
 **Q18 What was the domain in the DNS query from the previous question?**
-api.ipify.org
+_api.ipify.org_
 
 **Q19 Looks like there was some malicious spam (malspam) activity going on. What was the first MAIL FROM address observed in the traffic?**
 Apply smtp filter or we can also use frame contains “MAIL FROM”
-farshin@mailfa.com
+_farshin@mailfa.com_
 
 <img width="959" height="664" alt="image" src="https://github.com/user-attachments/assets/4b84dfe9-ed55-4286-b59a-d213bdfb6b81" />
 
 **Q20 How many packets were observed for the SMTP traffic?**
-1439
+_1439_
+
 <img width="1803" height="503" alt="image" src="https://github.com/user-attachments/assets/d5bb7b8d-e293-4cb7-8c87-afede3e9940d" />
+
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/d1feed66-251e-4d4e-ad48-8184a6cd83cc" />
