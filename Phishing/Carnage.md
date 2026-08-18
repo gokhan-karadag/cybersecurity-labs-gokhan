@@ -166,9 +166,9 @@ _farshin@mailfa.com_
 
 **Q20 How many packets were observed for the SMTP traffic?**
 
-_1439_
-
 <img width="1803" height="503" alt="image" src="https://github.com/user-attachments/assets/d5bb7b8d-e293-4cb7-8c87-afede3e9940d" />
+
+_1439_
 
  
 <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/d1feed66-251e-4d4e-ad48-8184a6cd83cc" />
