@@ -125,11 +125,16 @@ hashcat -m 3200 -a 0 bcrypt.txt rockyou.txt
 * bcrypt significantly increases the computational cost of password guessing.
 * Password length, uniqueness, and MFA reduce credential-based risk.
 
-**Crack the hash**
-Cracking hashes challenges
+# 🔐 Crack the Hash
 
+Hands-on hash identification and password auditing challenge.
+
+**TryHackMe Lab:**
 https://tryhackme.com/room/crackthehash
-<img width="1510" height="292" alt="image" src="https://github.com/user-attachments/assets/8ebfdec4-d74c-4986-9db1-ef4b40aa3503" />
+
+<img width="1510" height="292" alt="Crack the Hash challenge" src="https://github.com/user-attachments/assets/8ebfdec4-d74c-4986-9db1-ef4b40aa3503" />
+
+---
 
 ## Task 1 — Level 1
 
@@ -179,9 +184,9 @@ Complete the Level 1 challenges by identifying and cracking the provided passwor
 
 <img width="1912" height="925" alt="bcrypt hash analysis" src="https://github.com/user-attachments/assets/edd9d039-1fe7-4286-b877-d068a4a3a90d" />
 
-The hash could not be recovered using CrackStation, so additional password-auditing methods were tested.
+The hash could not be recovered using CrackStation, so Hashcat was used for additional password auditing.
 
-For bcrypt, Hashcat mode `3200` can be used:
+**Hashcat mode:** `3200` — bcrypt
 
 ```bash
 hashcat -m 3200 hash.txt rockyou.txt
@@ -210,7 +215,6 @@ https://hashes.com/en/decrypt/hash
 
 <img width="1920" height="656" alt="Password recovery result - Q5" src="https://github.com/user-attachments/assets/45934143-a498-4758-8953-9e074f2892b0" />
 
----
 
 # Task 2 — Level 2
 
