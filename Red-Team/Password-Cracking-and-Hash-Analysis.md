@@ -52,6 +52,7 @@ https://crackstation.net/
 
 ### Hashes.com
 
+
 Known-hash lookup.
 
 https://hashes.com/en/decrypt/hash
@@ -63,6 +64,9 @@ Identify possible hash algorithms.
 https://www.tunnelsup.com/hash-analyzer/
 
 ## Wordlists
+<img width="845" height="646" alt="image" src="https://github.com/user-attachments/assets/6af2a8b1-a10f-4de0-8715-fe1a0180ad7b" />
+
+<img width="837" height="646" alt="image" src="https://github.com/user-attachments/assets/05843c20-8aa2-4c36-bbf9-1fe670efdda6" />
 
 Kali Linux wordlists:
 
