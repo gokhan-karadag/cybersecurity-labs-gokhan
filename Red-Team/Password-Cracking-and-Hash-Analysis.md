@@ -91,7 +91,7 @@ nano custom-wordlist.txt
 sort -u custom-wordlist.txt > unique-wordlist.txt
 ```
 
-## 🔄 Rule-Based Attack
+## Rule-Based Attack
 
 Hashcat rules can generate password variations from an existing wordlist.
 
