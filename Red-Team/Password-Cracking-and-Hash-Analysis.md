@@ -119,7 +119,7 @@ hashcat -m 3200 -a 0 bcrypt.txt rockyou.txt
 
 ```
 
-## 🔎 Analyst Takeaways
+##  Analyst Takeaways
 
 - Hash identification determines the appropriate analysis method.
 - Weak passwords remain vulnerable to dictionary and rule-based attacks.
@@ -129,7 +129,7 @@ hashcat -m 3200 -a 0 bcrypt.txt rockyou.txt
 
 ---
 
-# 🔐 Crack the Hash
+#  Crack the Hash
 
 Hands-on hash identification and password auditing challenge.
 
