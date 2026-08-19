@@ -137,8 +137,7 @@ Can you complete the level 1 tasks by cracking the hashes?
 
 Answer the questions below
 _**48bb6e862e54f2a795ffc4e541caed4d**_
-
-<img width="1919" height="763" alt="image" src="https://github.com/user-attachments/assets/1ebf224d-603a-4394-a9dc-20bbde216210" />
+<img width="1359" height="551" alt="image" src="https://github.com/user-attachments/assets/80a4a8de-1f9c-4fa0-b6f7-cf774dfc786c" />
 
 **easy**
 
