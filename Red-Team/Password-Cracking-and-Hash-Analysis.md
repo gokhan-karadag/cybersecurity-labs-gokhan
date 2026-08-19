@@ -117,22 +117,26 @@ Instead of decrypting bcrypt, candidate passwords are hashed and compared agains
 hashcat -m 3200 -a 0 bcrypt.txt rockyou.txt
 ```
 
-## Analyst Takeaways
+```
 
-* Hash identification determines the appropriate analysis method.
-* Weak passwords remain vulnerable to dictionary and rule-based attacks.
-* Custom wordlists can improve password-auditing efficiency.
-* bcrypt significantly increases the computational cost of password guessing.
-* Password length, uniqueness, and MFA reduce credential-based risk.
+## 🔎 Analyst Takeaways
+
+- Hash identification determines the appropriate analysis method.
+- Weak passwords remain vulnerable to dictionary and rule-based attacks.
+- Custom wordlists can improve password-auditing efficiency.
+- bcrypt significantly increases the computational cost of password guessing.
+- Password length, uniqueness, and MFA reduce credential-based risk.
+
+---
 
 # 🔐 Crack the Hash
 
 Hands-on hash identification and password auditing challenge.
 
-**TryHackMe Lab:**
+**TryHackMe Lab:**  
 https://tryhackme.com/room/crackthehash
 
-<img width="1510" height="292" alt="Crack the Hash challenge" src="https://github.com/user-attachments/assets/8ebfdec4-d74c-4986-9db1-ef4b40aa3503" />
+<img width="1510" height="292" alt="Crack the Hash Challenge" src="https://github.com/user-attachments/assets/8ebfdec4-d74c-4986-9db1-ef4b40aa3503" />
 
 ---
 
@@ -146,7 +150,7 @@ Complete the Level 1 challenges by identifying and cracking the provided passwor
 
 `48bb6e862e54f2a795ffc4e541caed4d`
 
-<img width="1359" height="551" alt="Hash analysis - Q1" src="https://github.com/user-attachments/assets/80a4a8de-1f9c-4fa0-b6f7-cf774dfc786c" />
+<img width="1359" height="551" alt="Hash Analysis Q1" src="https://github.com/user-attachments/assets/80a4a8de-1f9c-4fa0-b6f7-cf774dfc786c" />
 
 **Recovered Password:** `easy`
 
@@ -158,7 +162,7 @@ Complete the Level 1 challenges by identifying and cracking the provided passwor
 
 `CBFDAC6008F9CAB4083784CBD1874F76618D2A97`
 
-<img width="1918" height="819" alt="Hash analysis - Q2" src="https://github.com/user-attachments/assets/f8aec15c-4d0e-4db0-abdc-9a1cd3dcac6c" />
+<img width="1918" height="819" alt="Hash Analysis Q2" src="https://github.com/user-attachments/assets/f8aec15c-4d0e-4db0-abdc-9a1cd3dcac6c" />
 
 **Recovered Password:** `password123`
 
@@ -170,7 +174,7 @@ Complete the Level 1 challenges by identifying and cracking the provided passwor
 
 `1C8BFE8F801D79745C4631D09FFF36C82AA37FC4CCE4FC946683D7B336B63032`
 
-<img width="1919" height="813" alt="Hash analysis - Q3" src="https://github.com/user-attachments/assets/97a873be-da85-434d-8ee8-2fcc4988e34b" />
+<img width="1919" height="813" alt="Hash Analysis Q3" src="https://github.com/user-attachments/assets/97a873be-da85-434d-8ee8-2fcc4988e34b" />
 
 **Recovered Password:** `letmein`
 
@@ -182,22 +186,22 @@ Complete the Level 1 challenges by identifying and cracking the provided passwor
 
 `$2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom`
 
-<img width="1912" height="925" alt="bcrypt hash analysis" src="https://github.com/user-attachments/assets/edd9d039-1fe7-4286-b877-d068a4a3a90d" />
+<img width="1912" height="925" alt="bcrypt Hash Analysis" src="https://github.com/user-attachments/assets/edd9d039-1fe7-4286-b877-d068a4a3a90d" />
 
 The hash could not be recovered using CrackStation, so Hashcat was used for additional password auditing.
 
-**Hashcat mode:** `3200` — bcrypt
+**Hashcat Mode:** `3200` — bcrypt
 
 ```bash
 hashcat -m 3200 hash.txt rockyou.txt
 ```
 
-<img width="1911" height="1042" alt="Hashcat bcrypt analysis" src="https://github.com/user-attachments/assets/3c28d720-46ad-47db-a6ce-b6d07aee7f59" />
+<img width="1911" height="1042" alt="Hashcat bcrypt Analysis" src="https://github.com/user-attachments/assets/3c28d720-46ad-47db-a6ce-b6d07aee7f59" />
 
-**Additional Resource:**
+**Additional Resource:**  
 https://hashes.com/en/decrypt/hash
 
-<img width="1913" height="985" alt="bcrypt recovery result" src="https://github.com/user-attachments/assets/ce1c8888-63af-47c7-8f7c-620e176fe5ae" />
+<img width="1913" height="985" alt="bcrypt Recovery Result" src="https://github.com/user-attachments/assets/ce1c8888-63af-47c7-8f7c-620e176fe5ae" />
 
 **Recovered Password:** `bleh`
 
@@ -209,13 +213,13 @@ https://hashes.com/en/decrypt/hash
 
 `279412f945939ba78ce0758d3fd83daa`
 
-<img width="1920" height="852" alt="Hash analysis - Q5" src="https://github.com/user-attachments/assets/26149ce8-47c7-47f1-ab01-91c8cbb2969d" />
+<img width="1920" height="852" alt="Hash Analysis Q5" src="https://github.com/user-attachments/assets/26149ce8-47c7-47f1-ab01-91c8cbb2969d" />
 
 **Recovered Password:** `Eternity22`
 
-<img width="1920" height="656" alt="Password recovery result - Q5" src="https://github.com/user-attachments/assets/45934143-a498-4758-8953-9e074f2892b0" />
+<img width="1920" height="656" alt="Password Recovery Result Q5" src="https://github.com/user-attachments/assets/45934143-a498-4758-8953-9e074f2892b0" />
 
-
+---
 # Task 2 — Level 2
 
 Level 2 increases the difficulty and requires additional password-auditing techniques. The challenge indicates that the passwords can be found in the `rockyou.txt` wordlist.
