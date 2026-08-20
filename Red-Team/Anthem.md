@@ -540,8 +540,6 @@ THM{Y0U_4R3_1337}
 
 ## Task 1 – Website Enumeration
 
-<img width="1000" alt="Task 1 Q&A" src="YOUR_GITHUB_IMAGE_URL">
-
 | Question | Answer |
 |---|---|
 | What port is for the web server? | `80` |
