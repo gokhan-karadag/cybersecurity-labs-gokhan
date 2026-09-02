@@ -151,7 +151,7 @@ john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
 Display recovered credentials:
 
 ```bash
-john --show hash.txt
+john --show hash.txt ```
 
 From the backup file, we identified the following credentials:
 
@@ -225,7 +225,6 @@ we created the shell as a successfully
 <img width="1920" height="931" alt="image" src="https://github.com/user-attachments/assets/d16146dd-745a-4728-8934-5fa0ecdc4dbd" />
 
 
-```markdown
 ### Initial Shell Access
 
 Start a Netcat listener:
