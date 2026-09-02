@@ -48,7 +48,7 @@ ssh username@IP
 
 
 **STEP 2:WEBB PAGE SEARCH**  
-STEP3: dirb http://10.10.230.160 or you can use gobuster .I started the dirb scan because it takes a lot of time.
+STEP3: dirb http://10.10.230.160, or you can use gobuster.I started the dirb scan because it takes a lot of time.
 
 ### What are we looking for?
 
@@ -95,6 +95,7 @@ Discovered Directories
 /content/js/
 
 Directory enumeration reveals the SweetRice CMS structure and several paths worth further investigation.
+
 ---
 
 ## 4. VISETED CONTENT
@@ -103,7 +104,7 @@ Directory enumeration reveals the SweetRice CMS structure and several paths wort
 
 <img width="1402" height="1122" alt="image" src="https://github.com/user-attachments/assets/2fb305fe-0f1e-41f9-9c97-15af6d8c58df" />
 
-This message says:Website Under Construction: The website is still in the development phase.  
+This message says: Website Under Construction: The website is still in the development phase.  
 So the guy is working slowly, LAZYADMIN!!
 
 Unlike the other directories, we can see /inc and /as directories. Let's proceed with our operations by examining these 2 directories.
@@ -225,9 +226,9 @@ nc -lvnp 9001
 ```
 <img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/fce3d625-67e5-4fb9-bb64-ac3a4e97dd37" />
 
-listening is starting and go to content/inc/ads click **file name**reverse-shell
+Listening is starting, and go to content/inc/ads, click **file name**reverse-shell
 
-we created the shell as a successfully
+We created the shell successfully
 
 <img width="1920" height="931" alt="image" src="https://github.com/user-attachments/assets/d16146dd-745a-4728-8934-5fa0ecdc4dbd" />
 
