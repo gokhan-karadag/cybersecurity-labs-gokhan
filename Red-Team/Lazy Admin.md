@@ -217,13 +217,6 @@ http://10.10.180.128/content/inc/ads/
 
 <img width="957" height="377" alt="image" src="https://github.com/user-attachments/assets/089fb684-99fa-4407-bd2e-f5d59edbeafc" />
 
-## Create the Reverse Shell File
-
-Create a file for the reverse shell payload:
-
-```bash
-nano reverse-shell.php
-```
 
 Next, start a Netcat listener on the Kali machine to wait for the incoming connection:
 
