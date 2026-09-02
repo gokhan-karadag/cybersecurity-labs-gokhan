@@ -127,7 +127,7 @@ Let's try to find the username and password in this database.
 
 <img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/165e6021-0d58-4342-9019-282a8b38fd5e" />
 
-click it
+Click it!
 
 <img width="1920" height="931" alt="image" src="https://github.com/user-attachments/assets/0bd54fc2-607a-4f3c-95a2-897217860e8b" />
 
