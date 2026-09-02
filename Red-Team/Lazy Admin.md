@@ -131,7 +131,7 @@ Click it!
 
 <img width="1920" height="931" alt="image" src="https://github.com/user-attachments/assets/0bd54fc2-607a-4f3c-95a2-897217860e8b" />
 
-**Credential Discovery / Hash Cracking**
+## 5 **Credential Discovery / Hash Cracking**
 
 If the password is stored as a hash, first identify the hash type and then attempt to recover the plaintext password using an authorized password-recovery tool.
 
@@ -189,7 +189,7 @@ We changed the website status to `Running`.
 
 <img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/c65dfe47-89a4-4dad-bd3c-fb03321f32ad" />
 
-## Reverse Shell
+## 6- Reverse Shell
 
 After successfully logging in, we start poking around the panel. :) Let's try to get a reverse shell and use a PHP reverse shell code from GitHub.
 
@@ -262,7 +262,7 @@ cat user.txt
 **THM{63e5bce9271952aad1113b6f1ac28a07}**
 
 
-## Privilege Escalation##
+## 7- Privilege Escalation##
 
 Now, let's check if we can escalate our privileges:
 
