@@ -267,23 +267,7 @@ cat user.txt
 
 # THM{63e5bce9271952aad1113b6f1ac28a07}
 ```
-
-**Result:** We successfully gained a shell as `www-data`, enumerated the `itguy` home directory, and obtained the `user.txt` flag.
-
-
 ---
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## 13. Privilege Escalation Enumeration
 
