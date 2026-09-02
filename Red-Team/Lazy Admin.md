@@ -142,6 +142,8 @@ Useful tools include:
 
 ### John the Ripper
 
+## Hash Cracking
+
 Example:
 
 ```bash
@@ -151,12 +153,15 @@ john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
 Display recovered credentials:
 
 ```bash
-john --show hash.txt ```
+john --show hash.txt
+```
 
 From the backup file, we identified the following credentials:
 
+```text
 Username: manager
 Password Hash: 42f749ade7f9e195bf475f37a44cafcb
+```
 
 The password is stored as a hash, so our next step is to identify and attempt to crack it using CrackStation.
 
@@ -164,44 +169,61 @@ After successfully recovering the password, we can use the discovered credential
 
 <img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/6f0fea7d-2eed-430d-ab84-29a20f08f6ae" />
 
-username: manager
+```text
+Username: manager
+Password: Password123
+```
 
-password:Password123
+Let's try to access the webpage:
 
-lets try enter the webbpage: http://10.10.180.128/content/as/
+```text
+http://10.10.180.128/content/as/
+```
 
 <img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/e3472e92-1d46-4291-a16e-5d5d903d8ef8" />
 
 <img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/f5a9c228-e1bb-442c-bf38-29662a1575be" />
 
-we changed webbsite status 'running'
+We changed the website status to `Running`.
 
 <img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/c65dfe47-89a4-4dad-bd3c-fb03321f32ad" />
 
+## Reverse Shell
 
-After successfully logging in, we start poking around the panel :) Let's try to get a reverse shell and get a PHP shell code from Github to add it here.
+After successfully logging in, we start poking around the panel. :) Let's try to get a reverse shell and use a PHP reverse shell code from GitHub.
 
+```text
 https://github.com/pentestmonkey/php-reverse-shell/blob/master/php-reverse-shell.php
+```
 
 To access MySQL databases, we need valid credentials and a connection to the MySQL server. However, if we want to execute commands on the server, we can use a reverse shell.
 
-In the reverse shell, we need to change the **'CHANGE THIS'** sections.
+In the reverse shell, we need to change the **`CHANGE THIS`** sections.
 
 - **LHOST (Local Host):** This is the attacker's machine IP address. It's where the exploit sends information or establishes a connection after successfully compromising a target.
-    
 - **RHOST (Remote Host):** This is the target's machine IP address. It's the system being attacked by the exploit.
 
 <img width="1920" height="932" alt="image" src="https://github.com/user-attachments/assets/200f2464-25f2-4bcf-96d4-4386e3c2e2b9" />
 
-Let's copy the code here and modify the necessary parts (IP and port). we use local ip and i use port 9001
+Let's copy the code here and modify the necessary parts (IP and port). We use our local IP address and port `9001`.
 
 <img width="1918" height="802" alt="image" src="https://github.com/user-attachments/assets/0b6cf3fc-05dd-4aac-a12c-c1ce49496daf" />
 
-I will check with content/inc/ads directory
+I will check the `content/inc/ads/` directory:
+
+```text
 http://10.10.180.128/content/inc/ads/
+```
 
 <img width="957" height="377" alt="image" src="https://github.com/user-attachments/assets/089fb684-99fa-4407-bd2e-f5d59edbeafc" />
 
+## Create the Reverse Shell File
+
+Create a file for the reverse shell payload:
+
+```bash
+nano reverse-shell.php
+```
 
 Next, start a Netcat listener on the Kali machine to wait for the incoming connection:
 
