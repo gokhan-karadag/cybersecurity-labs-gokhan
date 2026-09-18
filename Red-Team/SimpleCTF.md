@@ -233,6 +233,11 @@ gobuster dir -u http://10.145.135.187 -w /usr/share/wordlists/dirb/common.txt
 
 <img width="932" height="543" alt="DIRB or Gobuster directory enumeration" src="https://github.com/user-attachments/assets/7116c320-6ef1-4da9-b080-456467a373f8" />
 
+From the gobuster result we were able to find a webpage ‘simple’. Let’s browse simple through the browser.
+<img width="1917" height="870" alt="image" src="https://github.com/user-attachments/assets/4f5b1147-b2ae-417d-a9bc-01465dff54d8" />
+
+The website is running CMS Made Simple 2.2.8. Let's check Exploit-DB for known exploits.
+
 The directory enumeration reveals additional web content that can be investigated further.
 
 Browsing the discovered CMS application reveals the following information:
@@ -274,14 +279,6 @@ The corresponding Exploit-DB entry is:
 Exploit-DB: 46635
 CVE: CVE-2019-9053
 ```
-
-Since the target is running **CMS Made Simple 2.2.8**, it falls within the affected version range.
-
-<img width="922" height="150" alt="CVE-2019-9053 identification" src="https://github.com/user-attachments/assets/f291b3c1-3190-4705-8bd5-f43937078bd5" />
-
-**Answer:** `CVE-2019-9053`
-
-<img width="1884" height="730" alt="CVE-2019-9053 evidence" src="https://github.com/user-attachments/assets/9a311d99-3bab-4d36-af72-bb00a35752c5" />
 
 ### 4. To what kind of vulnerability is the application vulnerable?
 
