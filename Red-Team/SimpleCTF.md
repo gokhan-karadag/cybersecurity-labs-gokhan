@@ -37,6 +37,17 @@ Alternative web directory scanner useful for recursive URL brute-forcing.
 ```bash
 dirb http://<MACHINE_IP>
 
+- **Identified directories:**
+
+```text
+/simple/
+/simple/admin/
+/simple/assets/
+/simple/doc/
+/simple/lib/
+/simple/modules/
+/simple/tmp/
+/simple/uploads/
 ```
 
 #### 4. Netdiscover — Network Host Discovery
