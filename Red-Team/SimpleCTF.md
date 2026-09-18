@@ -10,7 +10,7 @@ By completing this walkthrough and analyzing the target environment, you will ac
 * <img src="https://img.shields.io/badge/-Credential%20Attacks-yellow?style=flat-square" /> **Credential Cracking & Brute-Forcing:** Conduct hash cracking and perform targeted SSH authentication brute-forcing using `Hydra` and `Hashcat`.
 * <img src="https://img.shields.io/badge/-PrivSec-purple?style=flat-square" /> **Linux Privilege Escalation:** Evaluate local `sudo` permissions (`sudo -l`) and apply **GTFOBins** techniques to exploit `NOPASSWD` misconfigurations (`vim`) for root shell access.
 
-###  Golden Recon Commands
+###  Golden Recon Commands 
 
 #### 1. Nmap — Full TCP Port & Service Enumeration
 
@@ -464,6 +464,9 @@ First, search for a known exploit:
 ```bash
 searchsploit "CMS Made Simple"
 ```
+<img width="1907" height="495" alt="image" src="https://github.com/user-attachments/assets/24d21642-0a10-4535-b6d8-8a7abd8b991a" />
+<img width="1756" height="1015" alt="image" src="https://github.com/user-attachments/assets/c4b1f8dd-1cf5-445f-9c93-787fc8b20e90" />
+
 
 If an exploit is available on Exploit-DB, copy the Python exploit code to the AttackBox/Kali machine and save it as a `.py` file:
 
@@ -486,6 +489,27 @@ python3 exploit.py -u http://MACHINE_IP/simple/
 ```
 
 > **Note:** Some older Exploit-DB scripts were written for Python 2 and may produce errors when run with Python 3. They may require minor syntax updates or the appropriate Python version.
+**Note:** Some older Exploit-DB scripts were written for Python 2 and may not work with Python 3.
+
+**Quick solution:**
+
+1. Try running the script with Python 2:
+
+```bash
+python2 exploit.py
+```
+
+2. If Python 2 is unavailable, update the script for Python 3 compatibility. Common changes include:
+
+```python
+# Python 2
+print "Hello"
+
+# Python 3
+print("Hello")
+```
+
+You may also need to update older libraries, `raw_input()`, `urllib`, or string/byte handling.
 
 The exploit may reveal information such as:
 
