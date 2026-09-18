@@ -815,6 +815,7 @@ The user `mitch` can execute `/usr/bin/vim` as `root` without providing a passwo
 ---
 
 ### 3. Root Exploitation (GTFOBins - Vim Escaping)
+<img width="940" height="235" alt="image" src="https://github.com/user-attachments/assets/84ab650a-d472-407c-b9e6-e8a6e450a3f3" />
 
 Exploit the binary execution vector using Vim's shell escape feature:
 
