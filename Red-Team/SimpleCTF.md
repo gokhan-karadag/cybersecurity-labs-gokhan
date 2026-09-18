@@ -183,7 +183,8 @@ Nmap done: 1 IP address (1 host up) scanned in 141.21 seconds
 
 ## Enumeration
 
-### 1. How many services are running on ports below 1000?
+### **1- How many services are running under port 1000?**
+
 
 From the Nmap scan:
 
@@ -218,7 +219,9 @@ The higher port, **2222/tcp**, is running an **SSH service**.
 
 ## Exploitation
 
-### 3. What CVE can be used to exploit the web application?
+### 3. What's the CVE you're using against the application?
+
+
 
 Now that we have identified an HTTP service on port `80`, let's enumerate the web server for hidden directories and application content using **DIRB or Gobuster**.
 
@@ -282,6 +285,7 @@ Since the target is running **CMS Made Simple 2.2.8**, it falls within the affec
 
 ### 4. To what kind of vulnerability is the application vulnerable?
 
+
 Based on our vulnerability research, **CMS Made Simple 2.2.8** is affected by **CVE-2019-9053**.
 
 The SearchSploit results identify the vulnerability as:
@@ -305,11 +309,13 @@ https://tryhackme.com/r/room/sqlinjectionlm
 **Answer:** `SQL Injection (SQLi)`
 
 
-### 5. What password did you obtain during exploitation?
+### 5. What's the password?
 
 
 
-### 6. Where can you log in using the credentials you discovered?
+### 6. Where can you login with the details obtained?
+
+
 
 
 
@@ -317,11 +323,14 @@ https://tryhackme.com/r/room/sqlinjectionlm
 
 ## User Access
 
-### 7. What is the user flag?
+### 7. What's the user flag?
 
 
 
-### 8. Is there another user account in the `/home` directory? If so, what is the username?
+
+### 8. Is there any other user in the home directory? What's its name?
+
+
 
 
 
@@ -333,7 +342,12 @@ https://tryhackme.com/r/room/sqlinjectionlm
 
 
 
-### 10. What is the root flag?
+
+
+
+### 10. What's the root flag?
+
+
 
 
 
