@@ -1,8 +1,13 @@
+<img width="1380" height="752" alt="image" src="https://github.com/user-attachments/assets/3a80139d-aa5a-45a4-b10b-e0ec28913cee" />
+
+
 # Overview
 
 This lab introduces **pivoting**, a technique used in penetration testing to reach systems that are not directly accessible from the attack machine.
 
 You will first gain access to `demo1.ine.local`. Then you will use that foothold to investigate and access the secondary target, `demo2.ine.local`.
+
+**Lab link:** [INE Pivoting Lab](https://my.ine.com/CyberSecurity/courses/4350487c-0e3a-4849-9cb0-4ee3ad718c63/host-network-penetration-testing-post-exploitation/lab/6792b1f9-20f8-336c-a825-1dc9dc48b0ab)
 
 # Lab Environment
 
@@ -357,21 +362,30 @@ This lab successfully guides through fingerprinting and exploiting vulnerable ap
 [https://www.rapid7.com/db/modules/exploit/windows/http/badblue_passthru]
 [https://www.rapid7.com/db/modules/exploit/windows/http/rejetto_hfs_exec]
 
+## Additional Pivoting Resources
 
+I hope these resources on pivoting will be useful to you.
 
+### TryHackMe: Advent of Cyber 4
 
+- **Task 14 — [Day 9] Pivoting: Dock the Halls:** https://tryhackme.com/room/adventofcyber4
+- **Video:** https://www.youtube.com/watch?v=mZqNP2fOLlk
+- **Write-up:** https://medium.com/@NightFox007/pivoting-ebd7f5d9481d
 
+### TryHackMe: Wreath
 
+- **Task 7 — Pivoting: What Is Pivoting?:** https://tryhackme.com/room/wreath
+- **Videos:**
+  - https://www.youtube.com/watch?v=seYiYHHJOkc
+  - https://www.youtube.com/watch?v=xv9bCJLv-DU
 
+### TryHackMe: Threat Hunting Pivoting
 
+- **Room:** https://tryhackme.com/room/threathuntingpivoting
+- **Write-up:** https://medium.com/@josephalan17201972/threat-hunting-pivoting-tryhackme-write-up-ab451dcc7b13
+- **Video:** https://www.youtube.com/watch?v=FRgn9eiOYqc
 
+### INE Pivoting Lessons
 
-
-
-
-
-
-
-
-
-
+- **Lateral Movement & Pivoting:** https://my.ine.com/CyberSecurity/courses/6c896dc4/lateral-movement-pivoting
+- **Host & Network Penetration Testing: Post-Exploitation — Pivoting Lesson:** https://my.ine.com/CyberSecurity/courses/4350487c/host-network-penetration-testing-post-exploitation
