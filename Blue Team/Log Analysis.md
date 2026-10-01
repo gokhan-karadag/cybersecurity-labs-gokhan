@@ -218,24 +218,4 @@ Jul 07 09:30:25 endpoint-win10 sysmon[3]: Network Connection - powershell.exe ma
 <img width="1744" height="902" alt="image" src="https://github.com/user-attachments/assets/05cba7bc-9169-4979-8501-aefe3c6f36d2" />
 
 ​
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/58a39ef3-7bb5-4bf6-81f7-5f035287687b" />
