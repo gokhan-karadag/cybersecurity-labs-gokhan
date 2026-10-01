@@ -370,7 +370,7 @@ Read **Received** entries from bottom to top, starting with the earliest listed 
 
 **Expected answer:** No.
 
-## 14. Splunk — Raw Events and Extracted Fields
+## 14. Practice 2 Splunk — Raw Events and Extracted Fields
 
 ![Splunk Raw Events and Extracted Fields](https://github.com/user-attachments/assets/e32139cb-8348-41b9-abed-13adb825a0c4)
 
@@ -390,7 +390,7 @@ Extracted fields help analysts filter results and connect related activity. Thei
 
 Reference: [Splunk — Use the CIM to Normalize Data at Search Time](https://help.splunk.com/en/data-management/common-information-model/6.0/using-the-common-information-model/use-the-cim-to-normalize-data-at-search-time)
 
-## 15. Wireshark — Network Traffic Triage
+## 15. Practice 3 Wireshark — Network Traffic Triage
 
 ![Wireshark Network Traffic Triage](https://github.com/user-attachments/assets/190f864e-049e-4ab9-b156-a6537491dc82)
 
@@ -426,7 +426,7 @@ Review:
 
 Content visibility depends on encryption, capture position, and completeness.
 
-## 16. CyberChef — Data Transformation and Triage
+## 16. Practice 4 CyberChef — Data Transformation and Triage
 
 ![CyberChef Log Analysis](https://github.com/user-attachments/assets/8f85a312-2cd8-4796-a2eb-bb10dd7d22c7)
 
