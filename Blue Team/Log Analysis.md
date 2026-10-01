@@ -179,17 +179,45 @@ DEMO: Open https://mxtoolbox.com/EmailHeaders.aspx and paste a synthetic header.
 Sources:​
 https://mxtoolbox.com/EmailHeaders.aspx​
 
+​<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/e32139cb-8348-41b9-abed-13adb825a0c4" />
+
+Splunk helps search large volumes of events. We can still view the raw record and examine extracted fields. Data onboarding and field extraction settings determine which fields are available. Add-ons and Common Information Model mappings support normalization. Open the class Splunk lab and show the raw event, host, source, sourcetype, and extracted fields.​
+Sources:​
+https://help.splunk.com/en/data-management/common-information-model/6.0/using-the-common-information-model/use-the-cim-to-normalize-data-at-search-time​
+
+<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/190f864e-049e-4ab9-b156-a6537491dc82" />
+
+<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/420054e4-1305-4117-ba91-1b8d921e00c1" />
+
+Wireshark analyzes packet captures. A PCAP provides packet-level evidence that we can correlate with endpoint, firewall, and application logs.
+
+In the first slide, we use display filters to focus on a host, HTTP traffic, a TCP port, or a keyword in packet bytes. A filter match is an investigation clue, not a verdict.
+
+In the second slide, we review the TCP handshake, HTTP request and response, and the start of session closure. We examine the requested URI and response content, then compare the activity with expected behavior and related logs.
+
+For the demo, select a consistent time display under **View > Time Display Format**. Then open **Statistics > Conversations** to identify communications involving the case workstation.
+
+Content visibility depends on encryption, capture position, and capture completeness. Confirm the available evidence before classifying the activity.
+
+<img width="1812" height="868" alt="image" src="https://github.com/user-attachments/assets/8f85a312-2cd8-4796-a2eb-bb10dd7d22c7" />
+
+
+_Jul 07 09:30:15 mail-gateway postfix/smtpd[12345]: from=<payments@finance-invoice-2026.com>, to=<john.nash@cybertechllc.com>, message-id=<20260703093015.abc123@finance-invoice-2026.com>, status=sent, relay=10.10.15.23[10.10.15.23]:25, size=5832
+
+Jul 07 09:30:16 mail-gateway spamd[23412]: Email from payments@finance-invoice-2026.com scored 5.2 (Phishing heuristics + Suspicious link), severity=medium
+
+Jul 07 09:30:18 webproxy01 squid[41251]: CONNECT finance-invoice-2026.com:80 [185.72.94.11] user=john.nash@cybertechllc.com uri=/invoice-access
+
+Jul 07 09:30:19 webproxy01 squid[41251]: GET http://finance-invoice-2026.com/invoice-access attachment=invoice_98231.pdf status=200 size=87233 content-type=application/pdf
+
+Jul 07 09:30:21 endpoint-win10 sysmon[13]: Process Create - powershell.exe invoked with command to open invoice_98231.pdf
+
+Jul 07 09:30:25 endpoint-win10 sysmon[3]: Network Connection - powershell.exe made connection to 185.72.94.11:80 (finance-invoice-2026.com)_
+
+
+<img width="1744" height="902" alt="image" src="https://github.com/user-attachments/assets/05cba7bc-9169-4979-8501-aefe3c6f36d2" />
+
 ​
-
-
-
-
-
-
-
-
-
-
 
 
 
