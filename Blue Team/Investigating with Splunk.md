@@ -179,6 +179,10 @@ Examine:
 - **Hostname:** The system associated with the event.
 - **_time:** The event timestamp.
 <img width="847" height="470" alt="image" src="https://github.com/user-attachments/assets/09e0b02a-b9fe-48ff-9ba4-60540a388113" />
+- **`index=main EventID=4720`**: Finds new user account creation events.
+- **`| table _time Hostname SubjectUserName TargetUserName`**: Displays the time, host, initiating user and newly created account in a table.
+- **`| sort 0 _time`**: Sorts all results from oldest to newest.
+<img width="1910" height="352" alt="image" src="https://github.com/user-attachments/assets/f4a489c3-2b89-4e2e-8455-06d16ec9c047" />
 
 #### Answer
 
@@ -212,19 +216,37 @@ Find registry activity associated with the new account.
 index=main A1berto (EventID=12 OR EventID=13 OR EventID=14)
 | table _time Hostname EventID EventType Image TargetObject Details
 | sort 0 _time
+
+- **`index=main A1berto (EventID=12 OR EventID=13 OR EventID=14)`**: Finds registry creation, deletion, value modification or rename events containing `A1berto`.
+- **`| table _time Hostname EventID EventType Image TargetObject Details`**: Displays the time, host, event ID, event type, process executable, registry path and details.
+- **`| sort 0 _time`**: Sorts all results from oldest to newest.
 ```
+<img width="1901" height="412" alt="image" src="https://github.com/user-attachments/assets/ce62054f-c189-4dc1-a969-a2d6e4953f22" />
+
+HKLM\SAM\SAM\Domains\Account\Users\Names\A1berto
+<img width="1827" height="412" alt="image" src="https://github.com/user-attachments/assets/11559492-3dbc-46a6-aa84-f86556db5ee8" />
+
+ORRRRR :))
+
+Depending on the log source and field extraction settings, registry information may appear in **`TargetObject`** or **`registry_key_name`**. Compare their values:
+
+```spl
+index=main A1berto (EventID=12 OR EventID=13 OR EventID=14)
+| table _time EventID TargetObject registry_key_name
+```
+<img width="1910" height="379" alt="image" src="https://github.com/user-attachments/assets/99ec3fcb-b004-448f-a0db-359a8eb25675" />
 
 A narrower search:
 
 ```spl
 index=main A1berto EventID=13
 ```
+<img width="1906" height="588" alt="image" src="https://github.com/user-attachments/assets/e1375c9c-3b11-4a64-9c2b-c9088bbb19dd" />
 
 #### Evidence Review
 
-Inspect the **TargetObject** field.
-
-Compare the hostname and timestamp with the account creation event from Q2.
+Depending on the log source and field extraction settings, registry information may appear in TargetObject or registry_key_name. Inspect these fields and compare their values.
+Compare the hostname and timestamp with the account creation event from Q2 to confirm the registry activity occurred on the same host around the time the account was created.
 
 #### Answer
 
@@ -253,6 +275,7 @@ index=main
 | stats count BY User
 | sort - count
 ```
+<img width="1901" height="427" alt="image" src="https://github.com/user-attachments/assets/b385a1c0-86c6-4b92-a859-74d2fe865a38" />
 
 Alternatively, run:
 
@@ -261,6 +284,7 @@ index=main
 ```
 
 Then inspect the **User** field in the field panel.
+<img width="1899" height="628" alt="image" src="https://github.com/user-attachments/assets/8e6e4fd9-b546-4a4d-9023-9d97628edc6a" />
 
 #### Answer
 
@@ -292,6 +316,7 @@ index=main A1berto (EventID=1 OR EventID=4688)
 | table _time Hostname EventID User Image ParentImage CommandLine
 | sort 0 _time
 ```
+<img width="1895" height="646" alt="image" src="https://github.com/user-attachments/assets/4c0822fb-4ef6-44f0-8d85-23894be972af" />
 
 #### Evidence Review
 
@@ -338,14 +363,18 @@ Determine whether the new account appears in successful or failed logon events.
 index=main A1berto (EventID=4624 OR EventID=4625)
 | stats count AS observed_logon_events
 ```
+- **`index=main A1berto (EventID=4624 OR EventID=4625)`**: Finds successful (`4624`) and failed (`4625`) logon events containing `A1berto`.
+- **`| stats count AS observed_logon_events`**: Counts matching events and displays the total as `observed_logon_events`.
+  
+<img width="1909" height="288" alt="image" src="https://github.com/user-attachments/assets/332abf36-85bc-4a27-bc50-8bef52b27046" />
 
-If the target account is extracted into `TargetUserName`:
+Alternatively, run:
 
 ```spl
-index=main (EventID=4624 OR EventID=4625)
-TargetUserName="A1berto"
-| stats count AS observed_logon_events
+index=main User="A1berto"
 ```
+
+<img width="1898" height="234" alt="image" src="https://github.com/user-attachments/assets/ff72bac3-8e3b-4de3-9ddb-3b7697c6aae3" />
 
 #### Answer
 
@@ -376,6 +405,7 @@ index=main powershell
 | stats count BY Hostname
 | sort - count
 ```
+<img width="1910" height="330" alt="image" src="https://github.com/user-attachments/assets/8333bfed-97f7-4e0b-9380-c60e61d57172" />
 
 To focus on PowerShell logging events:
 
@@ -384,6 +414,7 @@ index=main (EventID=4103 OR EventID=4104)
 | stats count BY Hostname
 | sort - count
 ```
+<img width="1906" height="335" alt="image" src="https://github.com/user-attachments/assets/155ec60b-71a1-4741-8bdf-fdf28f27f12b" />
 
 #### Answer
 
@@ -403,30 +434,24 @@ PowerShell usage alone is not malicious. Evaluate the encoded command, script be
 
 ### Q8. PowerShell logging is enabled on this device. How many events were logged for the malicious PowerShell execution?
 
-#### Investigation Goal
+#### Compare PowerShell Logging Event Types
 
-Count the relevant PowerShell logging records on the identified host.
-
-#### SPL Query
+This query counts PowerShell module logging (`4103`) and script block logging (`4104`) events by hostname and event type.
 
 ```spl
-index=main Hostname="James.browne" EventID=4103
-| stats count AS powershell_events
+index=main (EventID=4103 OR EventID=4104)
+| stats count BY Hostname EventID
+| sort - count
 ```
-
-To compare logging event types:
-
-```spl
-index=main Hostname="James.browne"
-(EventID=4103 OR EventID=4104)
-| stats count BY EventID
-```
+<img width="1906" height="318" alt="PowerShell logging search results" src="https://github.com/user-attachments/assets/38722508-129a-44b5-87f7-8aaa2a54fd0e" />
 
 #### Answer
 
 ```text
 79
 ```
+
+The dataset contains **79 PowerShell logging events**. This count represents log records, not necessarily 79 separate PowerShell executions.
 
 #### SOC Analysis
 
@@ -449,35 +474,11 @@ Extract the encoded PowerShell command and identify its web request target.
 #### Step 1: Extract the Command
 
 ```spl
-index=main Hostname="James.browne"
-(EventID=4103 OR EventID=4104)
-| rex field=ContextInfo "Host Application = (?<Command>[^\r\n]+)"
-| where isnotnull(Command)
-| dedup Command
-| table Command
+index=main PowerShell
 ```
+<img width="1931" height="787" alt="image" src="https://github.com/user-attachments/assets/f60ca1bb-ed6c-407d-bcfb-a42c5176a12a" />
 
-| Query Component | Purpose |
-|---|---|
-| `rex` | Extracts content using a regular expression |
-| `field=ContextInfo` | Specifies the field to inspect |
-| `(?<Command>...)` | Stores extracted text in the `Command` field |
-| `[^\r\n]+` | Captures text until the end of the line |
-| `dedup Command` | Removes duplicate command values |
-
-If no result appears, inspect the raw event for the **Host Application** section.
-
-#### Step 2: Isolate the Base64 Value
-
-The command has this structure:
-
-```text
-powershell.exe -noP -sta -w 1 -enc <Base64>
-```
-
-Copy only the Base64 value after **`-enc`**.
-
-#### Step 3: Decode the First Layer
+#### Step 2: Decode the First Layer
 
 Open [CyberChef](https://gchq.github.io/CyberChef/) and apply:
 
@@ -488,6 +489,7 @@ Open [CyberChef](https://gchq.github.io/CyberChef/) and apply:
 PowerShell's `-EncodedCommand` parameter uses a Base64 representation of UTF-16LE text.
 
 > Base64 is encoding, not hashing or encryption. Review decoded content as text without executing it.
+<img width="1907" height="990" alt="image" src="https://github.com/user-attachments/assets/3d6dff4f-d350-4c84-b178-e11bf5000ae9" />
 
 #### Step 4: Locate the Inner Base64 Value
 
@@ -519,6 +521,7 @@ Output:
 ```text
 http://10.10.10.5
 ```
+<img width="1916" height="668" alt="image" src="https://github.com/user-attachments/assets/79cad2ed-a6a7-4996-bd66-32ac6fac47e8" />
 
 #### Step 5: Assemble the URL
 
@@ -527,6 +530,7 @@ The path is:
 ```powershell
 $t='/news.php'
 ```
+<img width="950" height="378" alt="image" src="https://github.com/user-attachments/assets/97f2984f-c7f6-463b-bb05-7d3b4a09078f" />
 
 The script uses:
 
@@ -549,6 +553,7 @@ Apply CyberChef's **Defang URL** operation.
 ```text
 hxxp[://]10[.]10[.]10[.]5/news[.]php
 ```
+<img width="1908" height="995" alt="image" src="https://github.com/user-attachments/assets/f34e3c9f-750a-4bcf-b530-dc7004a268ae" />
 
 #### SOC Analysis
 
@@ -564,83 +569,6 @@ Script content alone does not prove:
 Validate these conclusions using network and endpoint telemetry.
 
 `10.10.10.5` is a private IP address and should not be described as an external internet destination.
-
-## Timeline and Further Investigation
-
-### Build a Timeline
-
-```spl
-index=main
-(
-    A1berto
-    OR
-    (Hostname="James.browne" (EventID=4103 OR EventID=4104))
-)
-| table _time Hostname EventID User Image CommandLine TargetObject ContextInfo
-| sort 0 _time
-```
-
-For each relevant event, record:
-
-| Evidence | Purpose |
-|---|---|
-| Timestamp | Establish event order |
-| Source host | Identify where activity originated |
-| Target host | Identify the destination |
-| User | Determine the security context |
-| Process and command line | Understand the action |
-| Supporting event | Connect the conclusion to evidence |
-
-Build the actual chronology from your lab timestamps.
-
-### Investigate Network Connections
-
-```spl
-index=main EventID=3 DestinationIp="10.10.10.5"
-| table _time Hostname Image User DestinationIp DestinationPort ProcessGuid
-| sort 0 _time
-```
-
-An empty result does not prove that no connection occurred. Sysmon network logging may be disabled or outside the collected scope.
-
-### Investigate File Creation
-
-```spl
-index=main Hostname="James.browne" EventID=11
-| table _time Hostname Image TargetFilename ProcessGuid
-| sort 0 _time
-```
-
-Correlate results with the PowerShell timestamp and process identifiers.
-
-### Investigate the Process Chain
-
-```spl
-index=main Hostname="James.browne"
-(EventID=1 OR EventID=4688) powershell
-| table _time User ParentImage Image CommandLine ProcessGuid
-| sort 0 _time
-```
-
-The parent process helps explain how the PowerShell activity started.
-
-## SOC Incident Summary
-
-**Incident:** Suspicious account creation and encoded PowerShell activity.
-
-The dataset contains **12,256 events**. Windows Security logs identify creation of the account **`A1berto`**, whose name resembles the legitimate account **`Alberto`**.
-
-An associated SAM registry entry and a WMIC command targeting **`WORKSTATION6`** support the account creation finding. No successful or failed logon event for the new account was observed in the available data.
-
-The host **`James.browne`** contains **79 Event ID 4103 records** associated with the investigated PowerShell activity.
-
-Decoding the script reveals code intended to download data from:
-
-```text
-hxxp[://]10[.]10[.]10[.]5/news[.]php
-```
-
-The evidence supports suspicious account creation and PowerShell behavior. Successful network connection, download and payload execution require additional verification.
 
 ## References
 
