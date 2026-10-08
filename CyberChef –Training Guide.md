@@ -13,7 +13,7 @@ OPERATIONS (search) -> RECIPE (ordered steps) -> INPUT -> OUTPUT
 ```
 
 ## Your first ten minutes
-1. Open https://gchq.github.io/CyberChef/.
+1. Open https://cyberchef.io/.
 2. Enter `U09D` in Input.
 3. Search for `From Base64` and drag it into Recipe.
 4. Confirm the Output reads `SOC`.
