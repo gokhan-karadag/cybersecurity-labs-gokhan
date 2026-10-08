@@ -13,7 +13,7 @@ OPERATIONS (search) -> RECIPE (ordered steps) -> INPUT -> OUTPUT
 ```
 
 ## Your first ten minutes
-1. Open https://cyberchef.io/.
+1. Open https://gchq.github.io/CyberChef/.
 2. Enter `U09D` in Input.
 3. Search for `From Base64` and drag it into Recipe.
 4. Confirm the Output reads `SOC`.
@@ -40,12 +40,12 @@ OPERATIONS (search) -> RECIPE (ordered steps) -> INPUT -> OUTPUT
 
 **Sample input:**
 ```text
-Merhaba SOC
+Hello SOC
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-TWVyaGFiYSBTT0M=
+SGVsbG8gU09D
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -66,12 +66,12 @@ TWVyaGFiYSBTT0M=
 
 **Sample input:**
 ```text
-TWVyaGFiYSBTT0M=
+SGVsbG8gU09D
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Merhaba SOC
+Hello SOC
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -95,7 +95,7 @@ Merhaba SOC
 SOC
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 53 4f 43
 ```
@@ -121,7 +121,7 @@ SOC
 53 4f 43
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 SOC
 ```
@@ -147,7 +147,7 @@ SOC
 A
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 01000001
 ```
@@ -173,7 +173,7 @@ A
 01000001
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 A
 ```
@@ -199,7 +199,7 @@ A
 A
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 65
 ```
@@ -225,7 +225,7 @@ A
 83 79 67
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 SOC
 ```
@@ -251,7 +251,7 @@ SOC
 ABC
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 65 66 67
 ```
@@ -277,7 +277,7 @@ ABC
 72 105
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 Hi
 ```
@@ -303,7 +303,7 @@ Hi
 hello world
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 hello%20world
 ```
@@ -329,7 +329,7 @@ hello%20world
 hello%20world
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 hello world
 ```
@@ -355,7 +355,7 @@ hello world
 <tag>
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 &lt;tag&gt;
 ```
@@ -381,7 +381,7 @@ hello world
 &lt;tag&gt;
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 <tag>
 ```
@@ -407,7 +407,7 @@ hello world
 uryyb
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 hello
 ```
@@ -433,7 +433,7 @@ hello
 96==@
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 hello
 ```
@@ -459,7 +459,7 @@ hello
 SOC
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 COS
 ```
@@ -485,7 +485,7 @@ COS
 SOS
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 ... --- ...
 ```
@@ -511,7 +511,7 @@ SOS
 ... --- ...
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 SOS
 ```
@@ -537,7 +537,7 @@ SOS
 JBSWY3DP
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 Hello
 ```
@@ -563,7 +563,7 @@ Hello
 error ERROR error
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 warning WARNING warning
 ```
@@ -589,7 +589,7 @@ warning WARNING warning
 alice,bob,carol
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 alice | bob | carol
 ```
@@ -616,7 +616,7 @@ red
 blue
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 red,blue
 ```
@@ -642,7 +642,7 @@ red,blue
   SOC  
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 SOC
 ```
@@ -668,7 +668,7 @@ SOC
 ALERT
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 alert
 ```
@@ -694,7 +694,7 @@ alert
 soc
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 SOC
 ```
@@ -720,7 +720,7 @@ SOC
 a b c
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 abc
 ```
@@ -748,7 +748,7 @@ a
 m
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 a
 m
@@ -778,7 +778,7 @@ a
 b
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 a
 b
@@ -805,7 +805,7 @@ b
 error error ok
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 error: 2
 ```
@@ -831,7 +831,7 @@ error: 2
 User: alice; IP: 192.0.2.10
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 192.0.2.10
 ```
@@ -857,7 +857,7 @@ User: alice; IP: 192.0.2.10
 Visit https://example.org/a
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 https://example.org/a
 ```
@@ -883,7 +883,7 @@ https://example.org/a
 Source 192.0.2.10 contacted 198.51.100.8
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 192.0.2.10, 198.51.100.8
 ```
@@ -909,7 +909,7 @@ Source 192.0.2.10 contacted 198.51.100.8
 Contact analyst@example.org
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 analyst@example.org
 ```
@@ -935,9 +935,9 @@ analyst@example.org
 {"a":1,"b":2}
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Çok satırlı girintili JSON
+Multi-line, indented JSON object (the keys and values remain unchanged)
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -961,7 +961,7 @@ analyst@example.org
 { "a": 1 }
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 {"a":1}
 ```
@@ -988,7 +988,7 @@ name,score
 Ada,95
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 [{"name":"Ada","score":"95"}]
 ```
@@ -1014,9 +1014,9 @@ Ada,95
 <a><b>1</b></a>
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Girintili XML
+Indented XML with the same elements and values
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1040,7 +1040,7 @@ Girintili XML
 hello
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 5d41402abc4b2a76b9719d911017c592
 ```
@@ -1066,7 +1066,7 @@ hello
 hello
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
 ```
@@ -1092,7 +1092,7 @@ hello
 hello
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d
 ```
@@ -1103,7 +1103,7 @@ aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d
 
 ### Recipe 42 — HMAC
 
-**Purpose:** Calculate a keyed message authentication code.
+**Purpose:** Calculate a keyed message authentication code. Set the demonstration key to `demo` in the HMAC operation settings; do not append it to the input.
 
 **Step-by-step procedure:**
 1. Clear the existing Recipe to avoid accidental extra transformations.
@@ -1115,12 +1115,12 @@ aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d
 
 **Sample input:**
 ```text
-hello; key=demo
+hello
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Anahtara bağlı doğrulama etiketi
+A hexadecimal message authentication code determined by the selected hash algorithm and secret key
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1129,7 +1129,7 @@ Anahtara bağlı doğrulama etiketi
 
 ### Recipe 43 — XOR
 
-**Purpose:** Apply a bitwise XOR operation with a supplied key.
+**Purpose:** Apply a bitwise XOR operation with a supplied key. Set the key to `1` as a decimal byte in the XOR operation settings.
 
 **Step-by-step procedure:**
 1. Clear the existing Recipe to avoid accidental extra transformations.
@@ -1141,10 +1141,10 @@ Anahtara bağlı doğrulama etiketi
 
 **Sample input:**
 ```text
-ABC; key=1
+ABC
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 @CB
 ```
@@ -1167,12 +1167,12 @@ ABC; key=1
 
 **Sample input:**
 ```text
-XOR ile maskelenmiş örnek metin
+Sample text obfuscated using XOR
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Olası anahtar/çıktı adayları
+Candidate XOR keys and their corresponding decoded outputs
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1181,7 +1181,7 @@ Olası anahtar/çıktı adayları
 
 ### Recipe 45 — AES Encrypt
 
-**Purpose:** Encrypt bytes with AES using an explicit key, mode, and IV or nonce as required.
+**Purpose:** Encrypt bytes with AES using an explicit key, mode, and IV or nonce as required. Set a test key and mode in the operation settings; the key is not part of the plaintext input.
 
 **Step-by-step procedure:**
 1. Clear the existing Recipe to avoid accidental extra transformations.
@@ -1193,12 +1193,12 @@ Olası anahtar/çıktı adayları
 
 **Sample input:**
 ```text
-hello; known key and IV
+hello
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Şifreli bayt dizisi
+Encrypted ciphertext bytes (display as Hex or Base64 for readability)
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1222,9 +1222,9 @@ hello; known key and IV
 AES ciphertext + matching key
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-hello (doğru parametrelerle)
+hello (when the key, mode, IV/nonce, padding, and other required settings match)
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1245,12 +1245,12 @@ hello (doğru parametrelerle)
 
 **Sample input:**
 ```text
-16 byte isteği
+Request 16 bytes in the operation settings
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-16 rastgele bayt
+16 random bytes (the exact values differ on each run)
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1271,12 +1271,12 @@ hello (doğru parametrelerle)
 
 **Sample input:**
 ```text
-AAAAAA ve rastgele bayt
+Compare AAAAAA with a sample of random bytes
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Düşük ve yüksek entropi farkı
+Observe the difference between low-entropy and higher-entropy data
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1300,7 +1300,7 @@ Düşük ve yüksek entropi farkı
 ABC
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 00000000  41 42 43
 ```
@@ -1326,7 +1326,7 @@ ABC
 00000000  41 42 43
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 ABC
 ```
@@ -1352,9 +1352,9 @@ ABC
 hello hello hello
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Gzip ikili çıktı
+Gzip-compressed binary output (not necessarily readable as text)
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1375,12 +1375,12 @@ Gzip ikili çıktı
 
 **Sample input:**
 ```text
-Geçerli gzip verisi
+Valid gzip-compressed bytes (for example, the output of Recipe 51)
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Özgün metin
+Original uncompressed text
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1404,9 +1404,9 @@ Geçerli gzip verisi
 192.0.2.10
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Adres bilgisi ve gösterimi
+Parsed address information and representation
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1430,9 +1430,9 @@ Adres bilgisi ve gösterimi
 192.0.2.0/24
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-192.0.2.0–192.0.2.255
+192.0.2.0-192.0.2.255
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1456,7 +1456,7 @@ Adres bilgisi ve gösterimi
 https://example.org/a
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 hxxps://example[.]org/a
 ```
@@ -1482,7 +1482,7 @@ hxxps://example[.]org/a
 hxxps://example[.]org/a
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 https://example.org/a
 ```
@@ -1508,7 +1508,7 @@ https://example.org/a
 0
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 1970-01-01 00:00:00 UTC
 ```
@@ -1534,7 +1534,7 @@ https://example.org/a
 1970-01-01 00:00:00 UTC
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 0
 ```
@@ -1560,9 +1560,9 @@ https://example.org/a
 Mozilla/5.0 ...
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Tarayıcı/OS tahminleri
+Inferred browser and operating-system details
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1586,7 +1586,7 @@ Tarayıcı/OS tahminleri
 https://example.org:443/a?x=1
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 Scheme=https; host=example.org; path=/a; query=x=1
 ```
@@ -1612,9 +1612,9 @@ Scheme=https; host=example.org; path=/a; query=x=1
 eyJ...eyJ...signature
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Header ve payload alanları
+Decoded JWT header and payload fields; signature validity is not established
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1638,7 +1638,7 @@ Header ve payload alanları
 PEM sertifika metni
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 Subject, issuer, validity
 ```
@@ -1664,9 +1664,9 @@ Subject, issuer, validity
 TWVyaGFiYQ==
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Base64 olasılığı ve önerilen işlem
+Possible Base64 encoding and suggested decoding operations
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1691,7 +1691,7 @@ U09D
 VEVTVA==
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
 SOC
 TEST
@@ -1715,12 +1715,12 @@ TEST
 
 **Sample input:**
 ```text
-Fork sonrası parçalar
+Individual branches created by the preceding Fork operation
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Tek bir çıktı akışı
+A single combined output stream after the Merge operation
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1744,9 +1744,9 @@ Tek bir çıktı akışı
 ID=123; ID=456
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-123 ve 456 üzerinde işlem
+An operation applied only to the matched values 123 and 456
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1770,9 +1770,9 @@ ID=123; ID=456
 user=alice&token=demo
 ```
 
-**Expected output / observation:**
+**Expected output / observation (depending on operation settings):**
 ```text
-Yakalanan alanları sonraki adımda kullanma
+Captured values can be referenced by a subsequent operation
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -1825,4 +1825,4 @@ Yakalanan alanları sonraki adımda kullanma
 
 ## Reference
 Official CyberChef: https://gchq.github.io/CyberChef/
-Source material: translated and reorganized from the provided Turkish CyberChef training notes.
+Editorial note: All instructional prose, sample inputs, expected observations, exercises, and labs are written in English. Some outputs depend on operation settings and are described rather than presented as exact bytes.
