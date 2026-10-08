@@ -1,10 +1,9 @@
-# Investigating with Splunk — SOC Walkthrough
+# Investigating with Splunk
 
 A step-by-step investigation of suspicious Windows activity using Splunk.
 
 - **Platform:** TryHackMe
 - **Room:** [Investigating with Splunk](https://tryhackme.com/room/investigatingwithsplunk)
-- **Index:** `main`
 - **Data sources:** Windows Security, Sysmon and PowerShell logs
 
 > Findings are based on the provided training materials. Verify the results in your own lab environment.
@@ -34,21 +33,6 @@ Splunk is a data analytics platform used to collect, search, analyze and visuali
 | Alerting | Generates alerts when defined conditions are met. |
 | Visualization | Presents findings through dashboards, charts and reports. |
 
-### Email Monitoring Example
-
-In the pre-test exercise, a user received nine emails and only one was malicious.
-
-If email security logs are ingested into Splunk and an appropriate detection rule is configured, suspicious activity can generate an alert.
-
-```spl
-index=email_logs sourcetype=email
-recipient="user@example.com"
-(subject="*urgent*" OR subject="*invoice*")
-```
-
-This query narrows the search to candidate emails. Subject keywords alone do not establish maliciousness.
-
-Review the sender, URLs, attachments, authentication results and the email security tool's verdict. Field names depend on the data source.
 
 ## Notable Investigation
 
@@ -105,8 +89,10 @@ Our objectives are to:
 2. Access Splunk using the assigned IP address.
 3. Open **Search & Reporting**.
 4. Set the time range to **All time**.
+5. Set the search mode to **Verbose**.
 
-> This lab uses `EventID` and `Hostname`. Other environments may use fields such as `EventCode`, `Computer` or `ComputerName`. Check the raw event if a field is missing.
+> This lab uses fields such as `EventID` and `Hostname`. During your investigation, also review `Image`, `TargetFilename`, `Hashes`, `host`, `source`, `sourcetype`, `Description`, `UtcTime`, `Caller_User_Name`, `TargetUserName`, `TargetLogonId`, `LogonType` and `src_ip`, when available. These fields help identify processes, file paths, hash values, users, systems, log sources, timestamps and authentication activity. Field names and availability vary by data source and configuration. Other environments may use `EventCode`, `Computer` or `ComputerName`. If a field is missing, check the raw event for the relevant information.
+
 
 ## Questions and Investigation Steps
 
@@ -121,6 +107,7 @@ Establish the size and scope of the dataset.
 ```spl
 index=main
 ```
+<img width="1906" height="259" alt="image" src="https://github.com/user-attachments/assets/5624b1c5-3da6-491e-9e90-e09d4920c028" />
 
 To display the count:
 
@@ -128,6 +115,8 @@ To display the count:
 index=main
 | stats count AS total_events
 ```
+<img width="1890" height="283" alt="image" src="https://github.com/user-attachments/assets/0f7fdf07-ad17-49cc-8162-161bc751f37e" />
+
 
 #### Answer
 
@@ -179,6 +168,7 @@ If the fields are available:
 index=main EventID=4720
 | table _time Hostname SubjectUserName TargetUserName TargetSid
 ```
+<img width="1895" height="263" alt="image" src="https://github.com/user-attachments/assets/5940f185-6f21-4e4c-9eaf-3c2dccc5b329" />
 
 #### Evidence Review
 
@@ -188,6 +178,7 @@ Examine:
 - **Subject / SubjectUserName:** The initiating security context.
 - **Hostname:** The system associated with the event.
 - **_time:** The event timestamp.
+<img width="847" height="470" alt="image" src="https://github.com/user-attachments/assets/09e0b02a-b9fe-48ff-9ba4-60540a388113" />
 
 #### Answer
 
