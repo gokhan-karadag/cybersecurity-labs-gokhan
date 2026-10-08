@@ -1,5 +1,3 @@
-[SOC_Analyst_Professional_Study_Notes_GitHub.md](https://github.com/user-attachments/files/33217594/SOC_Analyst_Professional_Study_Notes_GitHub.md)
-
 # SOC Analyst — Professional Study Notes
 
 **60 Interview Questions and Study Answers**
@@ -1145,6 +1143,6 @@ On Windows, I check logs in Event Viewer, especially Security, System, and Appli
 
 A rainbow table attack compares stolen password hashes with a database of precomputed hashes to find the original password. Salting helps prevent this attack.
 
-## 60. Walk me through your day-to-day activities at your current job (CyberNow).
+## 60. Walk me through your day-to-day activities at your current job.
 
 “I start by checking my email and reviewing any open cases from the previous shift. During my shift, I monitor security alerts in QRadar and use Splunk to search logs and investigate suspicious activity. I also review reported phishing emails and help with vulnerability scans using Nessus. I document my findings in the ticketing system and escalate serious incidents to the appropriate team.
