@@ -2,6 +2,18 @@
 
 > Practical training handbook • From first steps to SOC and DFIR investigations • 67 guided recipes
 
+## Table of Contents
+
+- [How to use this book](#how-to-use-this-book)
+- [Interface map](#interface-map)
+- [Your first ten minutes](#your-first-ten-minutes)
+- [Core concepts](#core-concepts)
+- [Recipe catalog](#recipe-catalog)
+- [CyberChef Practice Labs](#cyberchef-practice-labs)
+- [Common Troubleshooting](#common-troubleshooting)
+- [Knowledge Check](#knowledge-check)
+- [Reference](#reference)
+
 ## How to use this book
 CyberChef is a browser-based data transformation workbench. **Input** is the data, **Operations** are tools, **Recipe** is the ordered sequence of transformations, and **Output** is the result. Think of a recipe as a cooking process: your data is the ingredient and each operation is a preparation step.
 
@@ -1779,49 +1791,219 @@ Captured values can be referenced by a subsequent operation
 
 **SOC application:** Use the transformation to investigate authorized logs, artifacts, network indicators, or suspicious text. Record the input type, selected options, and output in your case notes.
 
-## Multi-step SOC labs
+# CyberChef Practice Labs
 
-### Lab A — Decode a suspicious URL
-1. Paste a harmless percent-encoded URL into Input.
-2. Add **URL Decode**.
-3. Add **Parse URL** to inspect the host and path.
-4. If needed, use **Defang URL** before sharing the indicator in a report.
-5. Confirm the decoded destination without visiting it.
+## Lab 1 — Base64 Encoding
 
-### Lab B — Unwrap layered encoding
-1. Start with `VTJWR2RHVjRQVDA9` (a deliberately layered example).
-2. Apply **From Base64** and inspect the output.
-3. If the result is another Base64 string, apply **From Base64** again.
-4. Stop when you reach meaningful plaintext; never assume the number of layers.
+Use CyberChef to encode the text below with Base64.
 
-### Lab C — Investigate a possible encoded PowerShell fragment
-1. Copy only the authorized command-line text into Input.
-2. Identify the encoding first; PowerShell `-EncodedCommand` commonly uses UTF-16LE before Base64.
-3. Apply **From Base64** then decode the resulting bytes using the appropriate character encoding.
-4. Inspect the resulting script as text; do not execute it.
-5. Preserve evidence and document every transformation.
+**Input:**
 
-## Common troubleshooting
-- Garbled characters usually indicate the wrong character encoding or binary data being interpreted as text.
-- An invalid Base64 error may indicate incorrect alphabet, padding, or a false positive.
-- Hex and decimal conversions require correct separators and byte boundaries.
-- Hashes are not decrypted; compare candidate values by hashing them instead.
-- AES decryption requires the correct key, mode, IV or nonce, padding, and authentication tag when applicable.
-- A decoded JWT payload is not proof of authenticity; signature verification is separate.
+```text
+Hello, World!
+```
 
-## Four-week study plan
-**Week 1:** Recipes 1–20; understand representation and reversible encoding.
-**Week 2:** Recipes 21–38; clean, extract, and parse data.
-**Week 3:** Recipes 39–52; understand hashing, cryptography, and bytes.
-**Week 4:** Recipes 53–67; investigate network artifacts and build chained recipes.
+**Steps:**
 
-## Knowledge check
-1. What is the difference between encoding and encryption?
-2. Why does Base64 decoding sometimes produce unreadable text?
-3. What parameters are needed to decrypt AES correctly?
-4. How can you inspect a suspicious URL without visiting it?
-5. Why does decoding a JWT not validate its signature?
-6. How can you reproduce and document a CyberChef recipe for another analyst?
+1. Clear the **Recipe** panel.
+2. Enter `Hello, World!` in the **Input** panel.
+3. Find **To Base64** in the **Operations** panel.
+4. Drag it into the **Recipe** panel.
+5. View the encoded text in the **Output** panel.
+
+**Expected output:**
+
+```text
+SGVsbG8sIFdvcmxkIQ==
+```
+
+## Lab 2 — Base64 Decoding
+
+Use CyberChef to restore the original text.
+
+**Input:**
+
+```text
+SGVsbG8sIFdvcmxkIQ==
+```
+
+**Steps:**
+
+1. Clear the **Recipe** panel.
+2. Paste the encoded text into the **Input** panel.
+3. Add **From Base64** to the **Recipe** panel.
+4. View the decoded text in the **Output** panel.
+
+**Expected output:**
+
+```text
+Hello, World!
+```
+
+## Lab 3 — MD5 Hashing
+
+Use CyberChef to calculate the MD5 hash of the text below.
+
+**Input:**
+
+```text
+password123
+```
+
+**Steps:**
+
+1. Clear the **Recipe** panel.
+2. Enter `password123` in the **Input** panel.
+3. Add **MD5** to the **Recipe** panel.
+4. View the hash in the **Output** panel.
+
+**Expected output:**
+
+```text
+482c811da5d5b4bc6d497ffa98491e38
+```
+
+## Lab 4 — URL Encoding and Decoding
+
+Use CyberChef to encode a URL and then restore its original form.
+
+**Input:**
+
+```text
+https://www.linkedin.com/in/gokhankaradagk/
+```
+
+**Steps:**
+
+1. Clear the **Recipe** panel.
+2. Paste the URL into the **Input** panel.
+3. Add **URL Encode**.
+4. Enable **Encode all special chars**.
+5. Inspect the encoded URL in the **Output** panel.
+
+**Expected encoded output:**
+
+```text
+https%3A%2F%2Fwww.linkedin.com%2Fin%2Fgokhankaradagk%2F
+```
+
+6. Add **URL Decode** after **URL Encode**.
+7. Confirm that the output matches the original URL.
+
+**Recipe order:**
+
+```text
+URL Encode → URL Decode
+```
+
+**Expected final output:**
+
+```text
+https://www.linkedin.com/in/gokhankaradagk/
+```
+
+## Lab 5 — Hex to ASCII Conversion
+
+Use CyberChef to convert the hexadecimal value below into text.
+
+**Input:**
+
+```text
+48656c6c6f
+```
+
+**Steps:**
+
+1. Clear the **Recipe** panel.
+2. Enter `48656c6c6f` in the **Input** panel.
+3. Add **From Hex** to the **Recipe** panel.
+4. View the decoded text in the **Output** panel.
+
+**Expected output:**
+
+```text
+Hello
+```
+
+## Lab 6 — Defang an IP Address
+
+Use CyberChef to replace each dot in an IP address with `[.]`.
+
+**Input:**
+
+```text
+192.168.1.1
+```
+
+**Steps:**
+
+1. Clear the **Recipe** panel.
+2. Enter `192.168.1.1` in the **Input** panel.
+3. Add **Find / Replace** to the **Recipe** panel.
+4. Configure the operation:
+   - **Find:** `\.`
+   - **Replace:** `[.]`
+   - Enable **Regex**.
+5. View the defanged IP address in the **Output** panel.
+
+**Expected output:**
+
+```text
+192[.]168[.]1[.]1
+```
+
+## Lab 7 — Decode UTF-16LE Text
+
+Use two operations to reveal the original message.
+
+**Input:**
+
+```text
+TQBpAHMAcwBpAG8AbgAgAGEAYwBjAGUAcAB0AGUAZAAuAAoA
+```
+
+**Steps:**
+
+1. Clear the **Recipe** panel.
+2. Paste the encoded text into the **Input** panel.
+3. Add **From Base64**.
+4. Add **Decode text** after **From Base64**.
+5. Set the character encoding to **UTF-16LE (1200)**.
+6. View the decoded message in the **Output** panel.
+
+**Recipe order:**
+
+```text
+From Base64 → Decode text
+```
+
+**Expected output:**
+
+```text
+Mission accepted.
+```
+
+**From Base64** converts the input into bytes. **Decode text** interprets those bytes as UTF-16LE text.
+
+## Common Troubleshooting
+
+- **Unexpected output:** Check the recipe order and remove operations from previous exercises.
+- **Incorrect MD5 hash:** Check for extra spaces or line breaks in the input.
+- **URL remains unchanged:** Enable **Encode all special chars**.
+- **Hex conversion fails:** Check that the input contains complete pairs of hexadecimal digits.
+- **IP address is not defanged correctly:** Check the search pattern, replacement text, and **Regex** setting.
+- **Unreadable text after Base64 decoding:** Use **Decode text** with the appropriate character encoding.
+
+## Knowledge Check
+
+1. Which operation converts text into Base64?
+2. Which operation decodes Base64 text?
+3. Can an MD5 hash be decoded in the same way as Base64?
+4. Which setting encodes the special characters in the URL exercise?
+5. Using CyberChef, convert `49204c6f76652043796265722043686566` from hexadecimal to ASCII.
+6. What is the defanged version of `192.168.1.1`?
+7. Which character encoding is required to display `Mission accepted.` correctly?
+8. Why does the order of operations matter in a CyberChef recipe?
 
 ## Reference
 Official CyberChef: https://gchq.github.io/CyberChef/
