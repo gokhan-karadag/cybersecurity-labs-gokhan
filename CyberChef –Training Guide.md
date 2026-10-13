@@ -2006,5 +2006,5 @@ Mission accepted.
 8. Why does the order of operations matter in a CyberChef recipe?
 
 ## Reference
-Official CyberChef: https://gchq.github.io/CyberChef/
+Official CyberChef: https://cyberchef.io/
 Editorial note: All instructional prose, sample inputs, expected observations, exercises, and labs are written in English. Some outputs depend on operation settings and are described rather than presented as exact bytes.
