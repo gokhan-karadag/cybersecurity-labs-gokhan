@@ -2005,6 +2005,18 @@ Mission accepted.
 7. Which character encoding is required to display `Mission accepted.` correctly?
 8. Why does the order of operations matter in a CyberChef recipe?
 
-## Reference
-Official CyberChef: https://cyberchef.io/
-Editorial note: All instructional prose, sample inputs, expected observations, exercises, and labs are written in English. Some outputs depend on operation settings and are described rather than presented as exact bytes.
+## References
+
+Explore the following resources to learn more about CyberChef, practice data decoding and analysis, and strengthen your cybersecurity investigation skills.
+
+- **CyberChef – Official Website:** https://cyberchef.io/  
+  Use CyberChef to encode, decode, and analyze data directly in your browser.
+
+- **CyberChef – GitHub Repository:** https://github.com/gchq/CyberChef  
+  Explore the source code, available features, and project updates.
+
+- **CyberChef – Documentation:** https://github.com/gchq/CyberChef/wiki  
+  Learn more about CyberChef operations, recipes, and functionality.
+
+- **TryHackMe – CyberChef by Gokhan:** https://tryhackme.com/room/CyberChefGokhanckt  
+  Practice your CyberChef skills through hands-on cybersecurity challenges.
