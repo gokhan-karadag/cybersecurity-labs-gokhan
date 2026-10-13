@@ -572,16 +572,9 @@ Validate these conclusions using network and endpoint telemetry.
 
 ## References
 
-Explore the following resources to learn more about CyberChef, practice data decoding and analysis, and strengthen your cybersecurity investigation skills.
-
-- **CyberChef – Official Website:** https://cyberchef.io/  
-  Use CyberChef to encode, decode, and analyze data directly in your browser.
-
-- **CyberChef – GitHub Repository:** https://github.com/gchq/CyberChef  
-  Explore the source code, available features, and project updates.
-
-- **CyberChef – Documentation:** https://github.com/gchq/CyberChef/wiki  
-  Learn more about CyberChef operations, recipes, and functionality.
-
-- **TryHackMe – CyberChef by Gokhan:** https://tryhackme.com/room/CyberChefGokhanckt  
-  Practice your CyberChef skills through hands-on cybersecurity challenges.
+- [TryHackMe — Investigating with Splunk](https://tryhackme.com/room/investigatingwithsplunk)
+- [Microsoft — Sysmon](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon)
+- [Microsoft — PowerShell Logging](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_logging?view=powershell-5.1)
+- [CyberChef](https://gchq.github.io/CyberChef/)
+- User-provided PDF: `investigation with Splunk PDF.pdf`
+- User-provided walkthroughs by jcm3, igor_sec, Enes Cayvarli, Matt Eaton and B_the_Ripper
