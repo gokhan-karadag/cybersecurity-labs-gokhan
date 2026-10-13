@@ -109,7 +109,7 @@ SOC
 
 **Expected output / observation (depending on operation settings):**
 ```text
-53 4f 43
+41 42 43
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -265,7 +265,7 @@ ABC
 
 **Expected output / observation (depending on operation settings):**
 ```text
-65 66 67
+41 42 43
 ```
 
 **Practical exercise:** Modify one option or input character. Explain why the result changes and how you would validate it.
@@ -286,7 +286,7 @@ ABC
 
 **Sample input:**
 ```text
-72 105
+48 69
 ```
 
 **Expected output / observation (depending on operation settings):**
@@ -445,7 +445,7 @@ hello
 96==@
 ```
 
-**Expected output / observation (depending on operation settings):**
+**Expected output/observation (depending on operation settings):**
 ```text
 hello
 ```
