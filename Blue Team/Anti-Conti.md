@@ -1,10 +1,4 @@
-
-
-
-
-
-
-````markdown
+[README (1).md](https://github.com/user-attachments/files/33741652/README.1.md)
 # Conti Ransomware Investigation: TryHackMe Write-up
 
 ![Platform](https://img.shields.io/badge/Platform-TryHackMe-212C42?logo=tryhackme)
@@ -476,8 +470,3 @@ Key areas for protecting a system against ransomware:
 - [Ultimate Windows Security: Event Encyclopedia (4720)](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
 - [Sysmon Cheat Sheet (networkforensic.dk)](https://networkforensic.dk/Sysmon/Files/Sysmon-Cheatsheet.pdf)
 - Conti CTF presentation (Apogee, C3 Facilitator)
-````
-
-Notes:
-- Numeric findings (104 events, 18 `readme.txt`, 187 IIS events, etc.) come from the presentation's screenshots. Adjust them if your own Splunk results differ.
-- The short CVE descriptions in Q10 (FortiOS, SMBGhost) are context I added; they are not in the presentation. I can remove them if you prefer.
