@@ -32,22 +32,6 @@ In this room, we investigate the effects of **Conti ransomware** on an Exchange 
 - [Q10: CVEs leveraged](#q10-cves-leveraged)
 - [References](#references)
 - [Answers at a Glance](#answers-at-a-glance)
-
-## Answers at a Glance
-
-| # | Question | Answer |
-|---|----------|--------|
-| 1 | Location of the ransomware | `C:\Users\Administrator\Documents\cmd.exe` |
-| 2 | Sysmon event ID for file creation | `11` |
-| 3 | MD5 hash of the ransomware | `290c7dfb01e50cea9e19da81a781af2c` |
-| 4 | File saved to multiple folders | `readme.txt` |
-| 5 | Command used to add a new user | `net user /add securityninja hardToHack123$` |
-| 6 | Migration target (full image path) | `C:\Windows\System32\wbem\unsecapp.exe` |
-| 7 | Target process for system hashes | `C:\Windows\System32\lsass.exe` |
-| 8 | Web shell deployed | `i3gfPctK1c2x.aspx` |
-| 9 | Command line that executed the web shell | `attrib.exe -r \\win-aoqkg2as2q7.bellybear.local\C$\...\i3gfPctK1c2x.aspx` |
-| 10 | Three CVEs (ascending) | `CVE-2018-13374, CVE-2018-13379, CVE-2020-0796` |
-
 ---
 
 ## Q1: Location of the ransomware
@@ -248,6 +232,20 @@ This is answered from the Cyber Security Works blog post, [Is Conti Ransomware o
 - [Medium: TryHackMe Conti Write-up](https://medium.com/@kumarishefu.4507/try-hack-me-conti-write-up-c94713193e11)
 - [Ultimate Windows Security: Event 4720](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
 
+## Answers at a Glance
+
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Location of the ransomware | `C:\Users\Administrator\Documents\cmd.exe` |
+| 2 | Sysmon event ID for file creation | `11` |
+| 3 | MD5 hash of the ransomware | `290c7dfb01e50cea9e19da81a781af2c` |
+| 4 | File saved to multiple folders | `readme.txt` |
+| 5 | Command used to add a new user | `net user /add securityninja hardToHack123$` |
+| 6 | Migration target (full image path) | `C:\Windows\System32\wbem\unsecapp.exe` |
+| 7 | Target process for system hashes | `C:\Windows\System32\lsass.exe` |
+| 8 | Web shell deployed | `i3gfPctK1c2x.aspx` |
+| 9 | Command line that executed the web shell | `attrib.exe -r \\win-aoqkg2as2q7.bellybear.local\C$\...\i3gfPctK1c2x.aspx` |
+| 10 | Three CVEs (ascending) | `CVE-2018-13374, CVE-2018-13379, CVE-2020-0796` |
 
 
 
