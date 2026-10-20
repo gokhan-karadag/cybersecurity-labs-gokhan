@@ -1,10 +1,6 @@
 <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/b78541df-f0bc-4850-a3d7-d28ccdb7fed0" />
 
-# Conti
-
-![Platform](https://img.shields.io/badge/Platform-TryHackMe-212C42?logo=tryhackme)
-![Tool](https://img.shields.io/badge/Tool-Splunk-000000?logo=splunk)
-![Category](https://img.shields.io/badge/Category-Blue%20Team%20%2F%20DFIR-blue)
+# Anti- Conti
 
 ## Overview
 
