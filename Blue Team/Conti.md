@@ -20,7 +20,6 @@ In this room, we investigate the effects of **Conti ransomware** on an Exchange 
 
 ## Table of Contents
 
-- [Answers at a Glance](#answers-at-a-glance)
 - [Q1: Location of the ransomware](#q1-location-of-the-ransomware)
 - [Q2: Sysmon event ID for file creation](#q2-sysmon-event-id-for-file-creation)
 - [Q3: MD5 hash of the ransomware](#q3-md5-hash-of-the-ransomware)
@@ -32,6 +31,7 @@ In this room, we investigate the effects of **Conti ransomware** on an Exchange 
 - [Q9: Command line that executed the web shell](#q9-command-line-that-executed-the-web-shell)
 - [Q10: CVEs leveraged](#q10-cves-leveraged)
 - [References](#references)
+- [Answers at a Glance](#answers-at-a-glance)
 
 ## Answers at a Glance
 
