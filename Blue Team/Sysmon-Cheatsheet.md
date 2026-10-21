@@ -385,10 +385,6 @@
 
 ## Credits
 
-Önceki isimleri çıkartıp sadece sizin bilgilerinizi bırakarak güncellenmiş tablo:
-
-## Credits
-
 | Field | Description |
 | --- | --- |
 | `Creator` | Gökhan Karadağ ([LinkedIn](https://www.linkedin.com/in/gokhankaradagk/)) |
