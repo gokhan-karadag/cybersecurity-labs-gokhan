@@ -1,6 +1,10 @@
 # Sysmon Cheatsheet
 
-> Converted from the supplied cheatsheet. Original field names and descriptions are preserved.
+## Introduction
+
+This cheatsheet provides a quick reference to Sysmon Event IDs and their fields. It covers process creation, network connections, file activity, registry changes, and other events useful for security investigations. Use it to understand log fields and connect related activity during threat hunting and incident response.
+
+> Event availability depends on the Sysmon version and configuration. Field names displayed in your SIEM may differ from those in the original event XML.
 
 
 ## EventID 1 Process Create
