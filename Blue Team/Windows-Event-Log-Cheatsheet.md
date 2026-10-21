@@ -1,8 +1,10 @@
 # Windows Event Log Cheatsheet
 
-A Windows security investigation reference using the same heading and Field / Description table format as the Sysmon cheatsheet.
+## Introduction
 
-> Scope: Windows Security events and Windows PowerShell logging. Event availability depends on audit policy, Windows version, computer role, and collection settings. Fields below are selected investigation fields, not exhaustive schemas. XML field names may differ from labels shown in Event Viewer or extracted by a SIEM.
+This cheatsheet provides a quick reference to Windows Security and PowerShell Event IDs. It covers logon activity, account and group changes, process creation, scheduled tasks, authentication, and PowerShell script blocks. Each section uses a Field / Description table to explain key fields for threat hunting and incident response.
+
+> Event availability depends on audit policies, logging settings, Windows version, and computer role. The tables include selected investigation fields, not complete event schemas. XML field names may differ from labels shown in Event Viewer or your SIEM. Always review the event provider and log channel together with the Event ID.
 
 ## Table of Contents
 
