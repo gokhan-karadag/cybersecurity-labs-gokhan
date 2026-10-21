@@ -36,7 +36,6 @@ In this room, we investigate the effects of **Conti ransomware** on a company-ho
 - [Background: Ransomware and Conti](#background-ransomware-and-conti)
 - [Scenario and Ransom Note](#scenario-and-ransom-note)
 - [Initial Analysis: Task Category](#initial-analysis-task-category)
-- [Answers at a Glance](#answers-at-a-glance)
 - [Q1: Location of the ransomware](#q1-location-of-the-ransomware)
 - [Q2: Sysmon event ID for file creation](#q2-sysmon-event-id-for-file-creation)
 - [Q3: MD5 hash of the ransomware](#q3-md5-hash-of-the-ransomware)
@@ -47,8 +46,8 @@ In this room, we investigate the effects of **Conti ransomware** on a company-ho
 - [Q8: Web shell deployed by the exploit](#q8-web-shell-deployed-by-the-exploit)
 - [Q9: Command line that executed the web shell](#q9-command-line-that-executed-the-web-shell)
 - [Q10: CVEs leveraged](#q10-cves-leveraged)
-- [Protection Measures](#protection-measures)
 - [References](#references)
+- [Answers at a Glance](#answers-at-a-glance)
 
 ## Background: Ransomware and Conti
 
@@ -88,26 +87,12 @@ To get an overall view of the attacker's footprint, we first search `index=*` an
 
 This shows which event types to focus on. For example, `User Account Management` relates to user creation (Q5), and `File created` relates to file creation (Q2, Q4).
 
-## Answers at a Glance
-
-| # | Question | Answer |
-|---|----------|--------|
-| 1 | Location of the ransomware | `C:\Users\Administrator\Documents\cmd.exe` |
-| 2 | Sysmon event ID for file creation | `11` |
-| 3 | MD5 hash of the ransomware | `290c7dfb01e50cea9e19da81a781af2c` |
-| 4 | File saved to multiple folders | `readme.txt` |
-| 5 | Command used to add a new user | `net user /add securityninja hardToHack123$` |
-| 6 | Migration target (full image path) | `C:\Windows\System32\wbem\unsecapp.exe` |
-| 7 | Target process for system hashes | `C:\Windows\System32\lsass.exe` |
-| 8 | Web shell deployed | `i3gfPctK1c2x.aspx` |
-| 9 | Command line that executed the web shell | `attrib.exe -r \\win-aoqkg2as2q7.bellybear.local\C$\...\i3gfPctK1c2x.aspx` |
-| 10 | Three CVEs (ascending) | `CVE-2018-13374, CVE-2018-13379, CVE-2020-0796` |
-
 ---
 
 ## Q1: Location of the ransomware
 
 > **Question:** Can you identify the location of the ransomware?
+I listed all images seen running in the Sysmon logs.
 
 > **Hint:** *Look for a common Windows binary located in an unusual location.*
 
@@ -176,13 +161,13 @@ index=main sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational"
 
 > **Question:** Can you find the MD5 hash of the ransomware?
 
-Search for the file path found in Q1 together with the keyword `MD5`:
+Search for the malware’s file path found in Q1 together with the keyword MD5, then inspect the Hashes field in the result, which contains the MD5, SHA256, and IMPHASH values:
 
 ```spl
 Image="c:\\Users\\Administrator\\Documents\\cmd.exe" MD5
 ```
 
-The query returns a single event. Its `Hashes` field contains the MD5, SHA256, and IMPHASH values. The MD5 value is taken from there.
+The query returns a single event, and the MD5 value is taken from its Hashes field.
 
 <details>
 <summary>Answer</summary>
@@ -197,7 +182,7 @@ The query returns a single event. Its `Hashes` field contains the MD5, SHA256, a
 
 > **Question:** What file was saved to multiple folder locations?
 
-We list the files created by the ransomware (`cmd.exe`) using Event Code 11:
+We list the files created by the ransomware (`cmd.exe`) using Event Code 11 and check the `TargetFilename` field.
 
 **Method 1: Counting with `stats`**
 
@@ -210,14 +195,14 @@ index=* sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=
 
 Run the same query without `stats` and check the top values of the `TargetFilename` field on the left (18 distinct values).
 
-**Method 3: Query from the original notes**
+**Method 3: Listing all file creation events**
 
 ```spl
 index=main sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=11
 | table Image TargetFilename
 ```
 
-The results show `readme.txt` in many directories. Examples:
+In all three, `readme.txt` appears in many directories. Examples:
 
 - `C:\Users\.NET v4.5 Classic\Downloads\readme.txt`
 - `C:\Users\Administrator\Downloads\readme.txt`
@@ -225,18 +210,20 @@ The results show `readme.txt` in many directories. Examples:
 - `C:\Users\Default\Desktop\readme.txt`
 - `C:\Users\Default\Documents\readme.txt`
 
-This shows the file was dropped into different directories by the ransomware.
+This shows the ransomware dropped the file into many different directories.
 
 <details>
 <summary>Answer</summary>
 
-`readme.txt` (the ransom note)
+`readme.txt` (the ransom note, dropped into many directories)
 
 </details>
 
 ## Q5: Command used to add a new user
 
 > **Question:** What was the command the attacker used to add a new user to the compromised system?
+
+Searching for the keyword `add` surfaces events involving a user called `securityninja`. Scrolling through the logs reveals the `net` command that created the user. This can be confirmed in three ways.
 
 **Method 1: Searching `CommandLine` for `/add`**
 
@@ -268,7 +255,7 @@ Event ID **4720** ("A user account was created") is written to the Windows Secur
 index=* securityninja
 ```
 
-This returns 10 events. The `CommandLine` field shows which commands were executed. It indicates the attacker, after gaining initial access, was trying to establish a foothold.
+This returns 10 events. The `CommandLine` field shows which commands were executed, indicating the attacker was trying to establish a foothold after gaining initial access.
 
 <details>
 <summary>Answer</summary>
@@ -303,7 +290,9 @@ Sysmon Event ID 8 detects when a process creates a thread in another process, wh
 </details>
 
 > [!NOTE]
-> The presentation words this question in an older, two-part form: *"What is the migrated process image (executable), and what is the original process image (executable) when the attacker got on the system?"* There the answer is given as `powershell.exe,unsecapp.exe` (original first, then migrated):
+> The original process was `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`. It is not part of the answer but is useful context for your notes.
+>
+> Some versions of this room word the question in an older, two-part form: *"What is the migrated process image (executable), and what is the original process image (executable) when the attacker got on the system?"* There the answer is given as `powershell.exe,unsecapp.exe` (original first, then migrated):
 >
 > - **Original process:** `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`
 > - **Migrated process:** `C:\Windows\System32\wbem\unsecapp.exe`
@@ -314,7 +303,7 @@ Sysmon Event ID 8 detects when a process creates a thread in another process, wh
 
 > **Question:** The attacker also injected into a system process to retrieve the hashes. What is the target process image used for getting the system hashes?
 
-To retrieve system hashes, attackers typically use tools that access **LSASS** (Local Security Authority Subsystem Service) process memory or the **SAM** database. Since the question describes injection into a system process, the same Event Code 8 query from Q6 applies:
+To retrieve system hashes, attackers typically use tools that access **LSASS** (Local Security Authority Subsystem Service) process memory or the **SAM** database. Since the question describes injection into a system process, the same Event Code 8 (CreateRemoteThread) query from Q6 applies:
 
 ```spl
 index=* sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=8
@@ -326,7 +315,7 @@ The `TargetImage` field shows two values (50% each):
 - `C:\Windows\System32\lsass.exe`
 - `C:\Windows\System32\wbem\unsecapp.exe` (the migration target from Q6)
 
-`lsass.exe` is the Windows process that holds authentication material (NTLM hashes, Kerberos tickets, etc.) in memory, and attackers often dump it.
+`lsass.exe` is the Windows process that holds authentication material (NTLM hashes, Kerberos tickets, etc.) in memory. It is a common target for credential dumping, and attackers often dump it.
 
 <details>
 <summary>Answer</summary>
@@ -336,7 +325,7 @@ The `TargetImage` field shows two values (50% each):
 </details>
 
 > [!NOTE]
-> The presentation words this question slightly differently: *"The attacker also retrieved the system hashes. What is the process image used for getting the system hashes?"* The answer is the same.
+> Some versions of this room word the question slightly differently: *"The attacker also retrieved the system hashes. What is the process image used for getting the system hashes?"* The answer is the same.
 
 > [!TIP]
 > Event Code 10 (ProcessAccess) is a useful additional check for LSASS access:
@@ -344,12 +333,13 @@ The `TargetImage` field shows two values (50% each):
 > index=* sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=10 TargetImage="*lsass.exe"
 > | table SourceImage TargetImage GrantedAccess
 > ```
-
 ## Q8: Web shell deployed by the exploit
 
 > **Question:** What is the web shell the exploit deployed to the system?
 
 > **Hint:** *Try looking in the IIS logs for POST requests.*
+
+Filter the IIS logs for POST requests and inspect `cs_uri_stem` for URIs that don't belong to Exchange. Web shells on Exchange/IIS servers use the `.aspx` extension, so filtering on `aspx` narrows the results to a single suspicious file.
 
 **Method 1: IIS POST requests and common web shell extensions**
 
@@ -371,21 +361,23 @@ This returns 187 events. Among the 6 values in `cs_uri_stem`, one is a suspiciou
 | `/ecp/DDI/DDIService.svc/GetObject` | 1 |
 | `/owa/lang.owa` | 1 |
 
-**Method 2: Searching for `.aspx` directly**
-
-```spl
-*.aspx*
-```
-
-The goal is to find the file name or path of the malicious web shell dropped on the victim machine. Web shells placed on Exchange/IIS servers use the `.aspx` extension. In the `cs_uri_stem` field (45 values), `/owa/auth/i3gfPctK1c2x.aspx` stands out.
-
-**Queries from the original notes**
+**Method 2: Listing unique URIs of POST requests**
 
 ```spl
 index=* sourcetype=iis cs_method=POST
 | dedup cs_uri_stem
 | table cs_uri_stem
 ```
+
+**Method 3: Searching for `.aspx` directly**
+
+```spl
+*.aspx*
+```
+
+The goal is to find the file name or path of the malicious web shell dropped on the victim machine. In the `cs_uri_stem` field (45 values), `/owa/auth/i3gfPctK1c2x.aspx` stands out.
+
+**Method 4: Searching the Sysmon logs for `aspx`**
 
 ```spl
 index=* sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" *aspx
@@ -408,7 +400,7 @@ Using the web shell name found in the previous question, search for it and check
 i3gfPctK1c2x.aspx
 ```
 
-This returns 6 events. The `CommandLine` field shows a single value (the `Image` field is `C:\Windows\System32\attrib.exe`).
+This returns 6 events. The `CommandLine` field shows a single value, the `attrib.exe` command (the `Image` field is `C:\Windows\System32\attrib.exe`).
 
 <details>
 <summary>Answer</summary>
@@ -431,7 +423,7 @@ attrib.exe -r \\win-aoqkg2as2q7.bellybear.local\C$\Program Files\Microsoft\Excha
 
 > **Hint:** *External research required.*
 
-The answer comes from the Securin (formerly Cyber Security Works) blog post that lists the vulnerabilities associated with Conti: [Is Conti Ransomware on a Roll?](https://www.securin.io/articles/is-conti-ransomware-on-a-roll)
+The answer comes from the Securin (formerly Cyber Security Works) blog post that lists the vulnerabilities associated with Conti: [Is Conti Ransomware on a Roll?](https://www.securin.io/articles/is-conti-ransomware-on-a-roll) (the original post is also available on the [Cyber Security Works site](https://cybersecurityworks.com/blog/ransomware/is-conti-ransomware-on-a-roll.html)).
 
 Overview of the leveraged vulnerabilities:
 
@@ -448,16 +440,6 @@ Overview of the leveraged vulnerabilities:
 
 </details>
 
-## Protection Measures
-
-Key areas for protecting a system against ransomware:
-
-1. **Prevent infection:** Phishing awareness, email filtering, and up-to-date patching. In this case, timely patching of known vulnerabilities in Exchange and other systems is critical.
-2. **System hardening:** Reduce unnecessary services and externally exposed attack surface.
-3. **Endpoint security:** Use EDR/antivirus and telemetry tools like Sysmon to monitor suspicious behavior (such as `cmd.exe` running from an unusual location, remote thread creation, LSASS access).
-4. **Backup and recovery:** Offline/immutable backups and regular restore tests.
-5. **Access control:** Least privilege, strong passwords, MFA, and strict auditing of privileged accounts (remember that in this case the attacker added the `securityninja` account to the Administrators group).
-
 ## References
 
 - [Securin (formerly Cyber Security Works): Is Conti Ransomware on a Roll?](https://www.securin.io/articles/is-conti-ransomware-on-a-roll)
@@ -467,3 +449,39 @@ Key areas for protecting a system against ransomware:
 - [Ultimate Windows Security: Event Encyclopedia (4720)](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
 - [Sysmon Cheat Sheet (networkforensic.dk)](https://networkforensic.dk/Sysmon/Files/Sysmon-Cheatsheet.pdf)
 - Conti CTF presentation (Apogee, C3 Facilitator)
+
+## Answers at a Glance
+
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Location of the ransomware | `C:\Users\Administrator\Documents\cmd.exe` |
+| 2 | Sysmon event ID for file creation | `11` |
+| 3 | MD5 hash of the ransomware | `290c7dfb01e50cea9e19da81a781af2c` |
+| 4 | File saved to multiple folders | `readme.txt` |
+| 5 | Command used to add a new user | `net user /add securityninja hardToHack123$` |
+| 6 | Migration target (full image path) | `C:\Windows\System32\wbem\unsecapp.exe` |
+| 7 | Target process for system hashes | `C:\Windows\System32\lsass.exe` |
+| 8 | Web shell deployed | `i3gfPctK1c2x.aspx` |
+| 9 | Command line that executed the web shell | `attrib.exe -r \\win-aoqkg2as2q7.bellybear.local\C$\...\i3gfPctK1c2x.aspx` |
+| 10 | Three CVEs (ascending) | `CVE-2018-13374, CVE-2018-13379, CVE-2020-0796` |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
