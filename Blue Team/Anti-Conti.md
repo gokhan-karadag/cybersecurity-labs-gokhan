@@ -443,12 +443,10 @@ Overview of the leveraged vulnerabilities:
 ## References
 
 - [Securin (formerly Cyber Security Works): Is Conti Ransomware on a Roll?](https://www.securin.io/articles/is-conti-ransomware-on-a-roll)
-- [Cyber Security Works: Is Conti Ransomware on a Roll?](https://cybersecurityworks.com/blog/ransomware/is-conti-ransomware-on-a-roll.html)
 - [Medium: TryHackMe Conti Write-up](https://medium.com/@kumarishefu.4507/try-hack-me-conti-write-up-c94713193e11)
 - [Ultimate Windows Security: Sysmon Event ID 11 (FileCreate)](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=90011)
 - [Ultimate Windows Security: Event Encyclopedia (4720)](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)
 - [Sysmon Cheat Sheet (networkforensic.dk)](https://networkforensic.dk/Sysmon/Files/Sysmon-Cheatsheet.pdf)
-- Conti CTF presentation (Apogee, C3 Facilitator)
 
 ## Answers at a Glance
 
