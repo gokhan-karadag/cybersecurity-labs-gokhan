@@ -385,6 +385,10 @@
 
 ## Credits
 
+Önceki isimleri çıkartıp sadece sizin bilgilerinizi bırakarak güncellenmiş tablo:
+
+## Credits
+
 | Field | Description |
 | --- | --- |
-| `Creator` | Olaf Hartong (@olafhartong), FalconForce (@falconforceteam) |
+| `Creator` | Gökhan Karadağ ([LinkedIn](https://www.linkedin.com/in/gokhankaradagk/)) |
