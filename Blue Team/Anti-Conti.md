@@ -1,9 +1,6 @@
-[README (1).md](https://github.com/user-attachments/files/33741652/README.1.md)
-# Conti Ransomware Investigation: TryHackMe Write-up
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/88fa01cc-d1df-4175-a647-2471e3f5769b" />
 
-![Platform](https://img.shields.io/badge/Platform-TryHackMe-212C42?logo=tryhackme)
-![Tool](https://img.shields.io/badge/Tool-Splunk-000000?logo=splunk)
-![Category](https://img.shields.io/badge/Category-Blue%20Team%20%2F%20DFIR-blue)
+# Conti Ransomware Investigation
 
 ## Overview
 
