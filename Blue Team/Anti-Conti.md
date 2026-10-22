@@ -312,6 +312,7 @@ Sysmon Event ID 8 detects when a process creates a thread in another process, wh
 `C:\Windows\System32\wbem\unsecapp.exe`
 
 </details>
+<img width="1927" height="982" alt="image" src="https://github.com/user-attachments/assets/19954e7f-8cf5-4041-a889-514fb829af24" />
 
 > [!NOTE]
 > The original process was `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`. It is not part of the answer but is useful context for your notes.
