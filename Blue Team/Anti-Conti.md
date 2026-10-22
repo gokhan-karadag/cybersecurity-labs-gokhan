@@ -1,6 +1,27 @@
 <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/88fa01cc-d1df-4175-a647-2471e3f5769b" />
 
 # Conti Ransomware Investigation
+## Table of Contents
+
+- [Overview](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#overview)
+  - [Learning objectives](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#learning-objectives)
+  - [Attack chain](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#attack-chain)
+  - [Environment details](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#environment-details)
+- [Background: Ransomware and Conti](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#background-ransomware-and-conti)
+- [Scenario and Ransom Note](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#scenario-and-ransom-note)
+- [Initial Analysis: Task Category](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#initial-analysis-task-category)
+- [Q1: Location of the ransomware](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#q1-location-of-the-ransomware)
+- [Q2: Sysmon event ID for file creation](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#q2-sysmon-event-id-for-file-creation)
+- [Q3: MD5 hash of the ransomware](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#q3-md5-hash-of-the-ransomware)
+- [Q4: File saved to multiple folders](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#q4-file-saved-to-multiple-folders)
+- [Q5: Command used to add a new user](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#q5-command-used-to-add-a-new-user)
+- [Q6: Process migration target](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#q6-process-migration-target)
+- [Q7: Process used to retrieve system hashes](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#q7-process-used-to-retrieve-system-hashes)
+- [Q8: Web shell deployed by the exploit](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#q8-web-shell-deployed-by-the-exploit)
+- [Q9: Command line that executed the web shell](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#q9-command-line-that-executed-the-web-shell)
+- [Q10: CVEs leveraged](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#q10-cves-leveraged)
+- [References](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#references)
+- [Answers at a Glance](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Anti-Conti.md#answers-at-a-glance)
 
 ## Overview
 
@@ -30,24 +51,6 @@ In this room, we investigate the effects of **Conti ransomware** on a company-ho
 | Domain | `bellybear.local` |
 | Log date | 2021-09-08 |
 | Log sources | Sysmon (`WinEventLog:Microsoft-Windows-Sysmon/Operational`), IIS (`sourcetype=iis`), Windows Security |
-
-## Table of Contents
-
-- [Background: Ransomware and Conti](#background-ransomware-and-conti)
-- [Scenario and Ransom Note](#scenario-and-ransom-note)
-- [Initial Analysis: Task Category](#initial-analysis-task-category)
-- [Q1: Location of the ransomware](#q1-location-of-the-ransomware)
-- [Q2: Sysmon event ID for file creation](#q2-sysmon-event-id-for-file-creation)
-- [Q3: MD5 hash of the ransomware](#q3-md5-hash-of-the-ransomware)
-- [Q4: File saved to multiple folders](#q4-file-saved-to-multiple-folders)
-- [Q5: Command used to add a new user](#q5-command-used-to-add-a-new-user)
-- [Q6: Process migration target](#q6-process-migration-target)
-- [Q7: Process used to retrieve system hashes](#q7-process-used-to-retrieve-system-hashes)
-- [Q8: Web shell deployed by the exploit](#q8-web-shell-deployed-by-the-exploit)
-- [Q9: Command line that executed the web shell](#q9-command-line-that-executed-the-web-shell)
-- [Q10: CVEs leveraged](#q10-cves-leveraged)
-- [References](#references)
-- [Answers at a Glance](#answers-at-a-glance)
 
 ## Background: Ransomware and Conti
 
