@@ -362,12 +362,6 @@ The `TargetImage` field shows two values (50% each):
 > [!NOTE]
 > Some versions of this room word the question slightly differently: *"The attacker also retrieved the system hashes. What is the process image used for getting the system hashes?"* The answer is the same.
 
-> [!TIP]
-> Event Code 10 (ProcessAccess) is a useful additional check for LSASS access:
-> ```spl
-> index=* sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=10 TargetImage="*lsass.exe"
-> | table SourceImage TargetImage GrantedAccess
-> ```
 ## Q8: Web shell deployed by the exploit
 
 > **Question:** What is the web shell the exploit deployed to the system?
