@@ -340,7 +340,7 @@ Sysmon Event ID 8 detects when a process creates a thread in another process, wh
 To retrieve system hashes, attackers typically use tools that access **LSASS** (Local Security Authority Subsystem Service) process memory or the **SAM** database. Since the question describes injection into a system process, the same Event Code 8 (CreateRemoteThread) query from Q6 applies:
 
 ```spl
-index=* sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=8
+index=* EventCode=8
 | table SourceImage TargetImage
 ```
 
@@ -358,6 +358,8 @@ The `TargetImage` field shows two values (50% each):
 
 </details>
 <img width="1917" height="982" alt="image" src="https://github.com/user-attachments/assets/e04b5e14-db67-4a07-a765-199fe8744577" />
+
+<img width="1917" height="891" alt="image" src="https://github.com/user-attachments/assets/da5c63a9-4d49-48fe-b406-74d3b62f7f60" />
 
 > [!NOTE]
 > Some versions of this room word the question slightly differently: *"The attacker also retrieved the system hashes. What is the process image used for getting the system hashes?"* The answer is the same.
