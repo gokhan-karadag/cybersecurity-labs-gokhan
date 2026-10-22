@@ -388,6 +388,8 @@ index=main ("*.php" OR "*.php5" OR "*.phtml" OR "*.asp" OR "*.aspx" OR "*.ashx" 
 
 Run the query and inspect the **`CommandLine`** field in matching process events. Look for commands that create or reference a potential web shell. Review the file path and related events to identify the deployed file.
 
+<img width="1917" height="981" alt="image" src="https://github.com/user-attachments/assets/422ed65e-723b-4a93-9ba0-a1b622277dc2" />
+
 ### Method 2: IIS POST requests and common web shell extensions
 
 Switch the sourcetype from Sysmon to **IIS** to investigate HTTP requests. Filter for POST requests and potential web shell extensions in `cs_uri_stem`:
@@ -399,8 +401,6 @@ index=* sourcetype=iis cs_method=POST
 ```
 
 Look for unusual filenames or paths. In this investigation, `/owa/auth/i3gfPctK1c2x.aspx` stands out as a potential web shell.
-
-<img width="861" height="732" alt="Common web shell file types" src="https://github.com/user-attachments/assets/39cb3bee-97eb-44d3-a84e-dc747f7cf565" />
 
 <img width="1917" height="842" alt="IIS POST request investigation" src="https://github.com/user-attachments/assets/34fe960c-80a5-49db-82c4-780f04e9cfbd" />
 
