@@ -305,6 +305,7 @@ The `net1.exe` entries are records of the helper process started by `net.exe`; t
 > **Question:** The attacker migrated the process for better persistence. What is the migration target (full image path)?
 
 Filter on Event Code 8 (CreateRemoteThread):
+<img width="1907" height="1033" alt="image" src="https://github.com/user-attachments/assets/dee93309-90ef-4ac1-a55c-ff203094b2bd" />
 
 ```spl
 index=* sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=8
