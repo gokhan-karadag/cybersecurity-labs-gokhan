@@ -271,6 +271,7 @@ index=* EventCode=4720
 ```
 
 Event ID **4720** ("A user account was created") is written to the Windows Security log when a new user account is created on a system or domain. It is important for security monitoring and incident response because attackers often create new accounts to maintain persistence. The `Account_Name` field shows the `securityninja` account ([reference](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/default.aspx)).
+<img width="1912" height="1011" alt="image" src="https://github.com/user-attachments/assets/a312933d-6e7c-4b86-8f81-ff0014602d2f" />
 
 **Method 3: Searching for the suspicious account name**
 
