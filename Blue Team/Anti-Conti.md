@@ -372,7 +372,8 @@ The `TargetImage` field shows two values (50% each):
 
 Filter the IIS logs for POST requests and inspect `cs_uri_stem` for URIs that don't belong to Exchange. Web shells on Exchange/IIS servers use the `.aspx` extension, so filtering on `aspx` narrows the results to a single suspicious file.
 <img width="861" height="732" alt="image" src="https://github.com/user-attachments/assets/39cb3bee-97eb-44d3-a84e-dc747f7cf565" />
-<img width="1917" height="842" alt="image" src="https://github.com/user-attachments/assets/403807b0-be3a-40a9-a40e-d7b468949755" />
+<img width="1917" height="842" alt="image" src="https://github.com/user-attachments/assets/34fe960c-80a5-49db-82c4-780f04e9cfbd" />
+
 
 **Method 1: IIS POST requests and common web shell extensions**
 
@@ -401,6 +402,7 @@ index=* sourcetype=iis cs_method=POST
 | dedup cs_uri_stem
 | table cs_uri_stem
 ```
+<img width="1915" height="957" alt="image" src="https://github.com/user-attachments/assets/da46e548-04ce-46b8-b965-bfa75595c5da" />
 
 **Method 3: Searching for `.aspx` directly**
 
@@ -409,12 +411,7 @@ index=* sourcetype=iis cs_method=POST
 ```
 
 The goal is to find the file name or path of the malicious web shell dropped on the victim machine. In the `cs_uri_stem` field (45 values), `/owa/auth/i3gfPctK1c2x.aspx` stands out.
-
-**Method 4: Searching the Sysmon logs for `aspx`**
-
-```spl
-index=* sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" *aspx
-```
+<img width="1917" height="981" alt="image" src="https://github.com/user-attachments/assets/3fb0ad99-7914-40c3-98a9-441e22e30c45" />
 
 <details>
 <summary>Answer</summary>
