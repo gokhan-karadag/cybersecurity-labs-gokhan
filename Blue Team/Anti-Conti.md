@@ -469,6 +469,7 @@ attrib.exe -r \\win-aoqkg2as2q7.bellybear.local\C$\Program Files\Microsoft\Excha
 ```
 
 </details>
+<img width="1917" height="972" alt="image" src="https://github.com/user-attachments/assets/94d1f6b3-6a2d-4e91-b984-08961fdf60ca" />
 
 > [!NOTE]
 > `attrib.exe -r` removes the read-only attribute from the file; it does not execute the web shell. Although this is the answer the room expects, the observed command is more accurately described as modifying the web shell's file attributes.
