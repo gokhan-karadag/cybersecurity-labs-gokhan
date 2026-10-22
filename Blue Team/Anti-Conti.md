@@ -357,6 +357,7 @@ The `TargetImage` field shows two values (50% each):
 `C:\Windows\System32\lsass.exe`
 
 </details>
+<img width="1917" height="982" alt="image" src="https://github.com/user-attachments/assets/e04b5e14-db67-4a07-a765-199fe8744577" />
 
 > [!NOTE]
 > Some versions of this room word the question slightly differently: *"The attacker also retrieved the system hashes. What is the process image used for getting the system hashes?"* The answer is the same.
