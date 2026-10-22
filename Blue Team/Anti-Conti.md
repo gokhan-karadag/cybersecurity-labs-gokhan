@@ -396,9 +396,6 @@ Switch the sourcetype from Sysmon to **IIS** to investigate HTTP requests. Filte
 
 ```spl
 index=* sourcetype=iis cs_method=POST
-| regex cs_uri_stem="(?i)\.(php[0-9]?|phtml|asp|aspx|ashx|asmx|jsp|jspx|cfm|cfml|pl|cgi|py|rb)$"
-| stats count by cs_uri_stem
-```
 
 Look for unusual filenames or paths. In this investigation, `/owa/auth/i3gfPctK1c2x.aspx` stands out as a potential web shell.
 
