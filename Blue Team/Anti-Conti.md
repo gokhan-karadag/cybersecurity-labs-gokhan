@@ -375,10 +375,12 @@ The `TargetImage` field shows two values (50% each):
 First, we asked ChatGPT:
 
 > Common Web Shell File Types?
+<img width="791" height="508" alt="image" src="https://github.com/user-attachments/assets/5c4d7b49-2ece-4abb-b291-f936daefb1c0" />
 
 Then, we asked:
 
 > Could you create a short Splunk query using these file extensions?
+<img width="796" height="207" alt="image" src="https://github.com/user-attachments/assets/1ab8ac19-76cf-4a70-a2e7-587a5b837059" />
 
 ```spl
 index=main ("*.php" OR "*.php5" OR "*.phtml" OR "*.asp" OR "*.aspx" OR "*.ashx" OR "*.asmx" OR "*.jsp" OR "*.jspx" OR "*.cfm" OR "*.cfml" OR "*.pl" OR "*.cgi" OR "*.py" OR "*.rb")
