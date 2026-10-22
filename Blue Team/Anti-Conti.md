@@ -150,7 +150,7 @@ Sysmon Event ID 11 is logged when a file is created or overwritten. Selecting th
 
 There are three ways to find this:
 
-1. **Sysmon Cheat Sheet:** The [networkforensic.dk Sysmon Cheat Sheet](https://networkforensic.dk/Sysmon/Files/Sysmon-Cheatsheet.pdf) lists **EventID 11: File create**, with the fields `UtcTime`, `ProcessGuid`, `ProcessId`, `Image`, `TargetFilename`, `CreationUtcTime`, and `User`.
+1. **Sysmon Cheat Sheet:** The [Sysmon Cheat Sheet](https://github.com/gokhan-karadag/cybersecurity-labs-gokhan/blob/main/Blue%20Team/Sysmon-Cheatsheet.md) lists **EventID 11: File create**, with the fields `UtcTime`, `ProcessGuid`, `ProcessId`, `Image`, `TargetFilename`, `CreationUtcTime`, and `User`.
 2. **Google search:** Searching "What is the file creation Event ID?" returns Sysmon Event ID 11 (FileCreate).
 3. **Ultimate Windows Security:** According to [Sysmon Event ID 11: FileCreate](https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=90011), this event is logged when a file is created or overwritten. It is especially useful for monitoring locations malware commonly uses on initial infection, such as the Startup folder and temporary and download directories.
 
