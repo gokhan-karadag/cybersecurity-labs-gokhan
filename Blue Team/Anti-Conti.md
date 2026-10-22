@@ -259,6 +259,7 @@ net localgroup "Remote Desktop Users" "securityninja" /add
 ```
 
 (The same commands also appear as variants run through `C:\Windows\system32\net1`.) The `net user` command can add, modify, or delete user accounts and display account information on a local computer or domain.
+<img width="1915" height="996" alt="image" src="https://github.com/user-attachments/assets/ecb27d78-9e77-42c9-b281-5f8568ac658a" />
 
 **Method 2: Windows Security Event 4720**
 
