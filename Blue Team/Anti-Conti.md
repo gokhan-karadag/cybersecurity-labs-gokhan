@@ -371,6 +371,8 @@ The `TargetImage` field shows two values (50% each):
 > **Hint:** *Try looking in the IIS logs for POST requests.*
 
 Filter the IIS logs for POST requests and inspect `cs_uri_stem` for URIs that don't belong to Exchange. Web shells on Exchange/IIS servers use the `.aspx` extension, so filtering on `aspx` narrows the results to a single suspicious file.
+<img width="861" height="732" alt="image" src="https://github.com/user-attachments/assets/39cb3bee-97eb-44d3-a84e-dc747f7cf565" />
+<img width="1917" height="842" alt="image" src="https://github.com/user-attachments/assets/403807b0-be3a-40a9-a40e-d7b468949755" />
 
 **Method 1: IIS POST requests and common web shell extensions**
 
