@@ -390,14 +390,15 @@ Run the query and inspect the **`CommandLine`** field in matching process events
 
 <img width="1917" height="981" alt="image" src="https://github.com/user-attachments/assets/422ed65e-723b-4a93-9ba0-a1b622277dc2" />
 
-### Method 2: IIS POST requests and common web shell extensions
+### Method 2: Investigating IIS POST requests
 
-Switch the sourcetype from Sysmon to **IIS** to investigate HTTP requests. Filter for POST requests and potential web shell extensions in `cs_uri_stem`:
+Switch the sourcetype from Sysmon to **IIS** and filter for POST requests:
 
 ```spl
 index=* sourcetype=iis cs_method=POST
+```
 
-Look for unusual filenames or paths. In this investigation, `/owa/auth/i3gfPctK1c2x.aspx` stands out as a potential web shell.
+Inspect the **`cs_uri_stem`** field for unusual filenames or paths. In this investigation, `/owa/auth/i3gfPctK1c2x.aspx` stands out as a potential web shell.
 
 <img width="1917" height="842" alt="IIS POST request investigation" src="https://github.com/user-attachments/assets/34fe960c-80a5-49db-82c4-780f04e9cfbd" />
 
@@ -411,7 +412,7 @@ index=* sourcetype=iis cs_method=POST
 | table cs_uri_stem
 ```
 
-The supplied POST request results contain these paths and counts. The query above displays only the unique paths.
+The POST request results contain the following paths and counts. The query above displays only the unique paths.
 
 | cs_uri_stem | Count |
 |-------------|-------|
@@ -438,7 +439,8 @@ Inspect the **`cs_uri_stem`** field. Among its values, `/owa/auth/i3gfPctK1c2x.a
 
 <img width="1917" height="981" alt="Searching for ASPX files" src="https://github.com/user-attachments/assets/3fb0ad99-7914-40c3-98a9-441e22e30c45" />
 
-> **Note:** A file extension or unusual filename alone does not confirm a web shell. Review its context and related activity.
+> [!NOTE]
+> A file extension or unusual filename alone does not confirm a web shell. Review its context and related activity.
 
 <details>
 <summary>Answer</summary>
@@ -451,29 +453,28 @@ Inspect the **`cs_uri_stem`** field. Among its values, `/owa/auth/i3gfPctK1c2x.a
 
 > **Question:** What is the command line that executed this web shell?
 
-Using the web shell name found in the previous question, search for it and check the `CommandLine` field:
+Using the web shell name found in the previous question, search for it and inspect the **`CommandLine`** field:
 
 ```spl
-i3gfPctK1c2x.aspx
+index=* "i3gfPctK1c2x.aspx"
 ```
 
-This returns 6 events. The `CommandLine` field shows a single value, the `attrib.exe` command (the `Image` field is `C:\Windows\System32\attrib.exe`).
+This returns 6 events. The `CommandLine` field shows a single value: an `attrib.exe` command. The `Image` field is `C:\Windows\System32\attrib.exe`.
 
 <details>
 <summary>Answer</summary>
 
-```
+```text
 attrib.exe -r \\win-aoqkg2as2q7.bellybear.local\C$\Program Files\Microsoft\Exchange Server\V15\FrontEnd\HttpProxy\owa\auth\i3gfPctK1c2x.aspx
 ```
 
 </details>
 
 > [!NOTE]
-> `attrib.exe -r` removes the read-only attribute from the file; it does not execute it. It is the answer the room expects, but in analysis notes it is more accurate to describe it as the attacker modifying the web shell's file attributes while preparing it for use.
+> `attrib.exe -r` removes the read-only attribute from the file; it does not execute the web shell. Although this is the answer the room expects, the observed command is more accurately described as modifying the web shell's file attributes.
 
 > [!NOTE]
-> The Splunk interface may display backslashes in escaped form (`\\\\win-...`). The real UNC path starts with `\\win-...`. Check which format the room accepts.
-
+> Backslashes may appear escaped in raw event data. A standard UNC path begins with `\\win-...`. Preserve the command's recorded format when submitting the answer.
 ## Q10: CVEs leveraged
 
 > **Question:** What three CVEs did this exploit leverage? Provide the answer in ascending order.
