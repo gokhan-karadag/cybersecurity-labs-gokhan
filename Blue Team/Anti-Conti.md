@@ -92,17 +92,19 @@ This shows which event types to focus on. For example, `User Account Management`
 ## Q1: Location of the ransomware
 
 > **Question:** Can you identify the location of the ransomware?
-I listed all images seen running in the Sysmon logs.
 
 > **Hint:** *Look for a common Windows binary located in an unusual location.*
 
-**Method 1: Sysmon Event ID 11 (FileCreate) and the `Image` field**
+**Method 1: Using the `readme` file from the scenario as a keyword**
+
+The task scenario mentions that unusual `readme` files were found on the Exchange server. We can use this as a search keyword:
 
 ```spl
-index=* sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=11
+index=* readme
 ```
 
-Sysmon Event ID 11 is logged when a file is created or overwritten. Selecting the `Image` field on the left lists all executables that created files. There are 104 events and 10 distinct `Image` values. Among them, `c:\Users\Administrator\Documents\cmd.exe` (18 events) stands out.
+This returns 18 events. In the field list on the left, the `Image` field has only **1 value** (100% of events, 18 count): `c:\Users\Administrator\Documents\cmd.exe`. This means every `readme` file was created by this single executable. The `TargetFilename` field (18 values) confirms the `readme.txt` files were dropped into many different directories. Since a copy of `cmd.exe` running from the Documents folder is not where the legitimate binary lives, this is the ransomware.
+<img width="1917" height="980" alt="image" src="https://github.com/user-attachments/assets/2bee7329-c14c-4a56-844b-dca9931098c4" />
 
 **Method 2: Unique listing with `table` and `dedup`**
 
@@ -123,6 +125,14 @@ index=* sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational"
 ```
 
 `cmd.exe` normally lives in `C:\Windows\System32`. A copy running from a user's Documents folder is suspicious and suggests masquerading as a legitimate system binary.
+
+**Method 4: Sysmon Event ID 11 (FileCreate) and the `Image` field**
+
+```spl
+index=* sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=11
+```
+
+Sysmon Event ID 11 is logged when a file is created or overwritten. Selecting the `Image` field on the left lists all executables that created files. There are 104 events and 10 distinct `Image` values. Among them, `c:\Users\Administrator\Documents\cmd.exe` (18 events) stands out.
 
 <details>
 <summary>Answer</summary>
