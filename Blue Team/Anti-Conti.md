@@ -279,17 +279,26 @@ Event ID **4720** ("A user account was created") is written to the Windows Secur
 index=* securityninja
 ```
 
-This returns 10 events. The `CommandLine` field shows which commands were executed, indicating the attacker was trying to establish a foothold after gaining initial access.
+This query returns **10 events**. The `CommandLine` field shows the commands that were executed. We choose the correct command based on **what it does**, rather than its position in the list.
 
-<details>
-<summary>Answer</summary>
+### Answer
 
 `net user /add securityninja hardToHack123$`
 
-</details>
+This command creates the `securityninja` account with the specified password. The other commands add the existing account to groups:
+
+| Command | Description |
+|---|---|
+| `net user /add securityninja hardToHack123$` | Creates the new user account. |
+| `net localgroup administrators securityninja /add` | Adds the account to the **Administrators** group, granting administrator privileges. |
+| `net localgroup "Remote Desktop Users" "securityninja" /add` | Adds the account to the **Remote Desktop Users** group, granting permission to sign in through RDP. |
+
+The `net1.exe` entries are records of the helper process started by `net.exe`; they do not represent separate account creation actions. Since the question asks for the command the attacker used, we select the original `net user /add ...` command.
 
 > [!NOTE]
-> After the account was created, it was also added to the `Administrators` and `Remote Desktop Users` groups. This is an attempt at both privilege escalation and persistence via remote access (RDP).
+> Creating the account and adding it to these groups suggests that the attacker was trying to maintain administrator access and prepare an account for future RDP connections. Successful RDP access also depends on the service, firewall settings, network access, and applicable logon policies.
+<img width="1927" height="982" alt="image" src="https://github.com/user-attachments/assets/94d28709-2284-4d77-a5a6-a9840f361bba" />
+
 
 ## Q6: Process migration target
 
