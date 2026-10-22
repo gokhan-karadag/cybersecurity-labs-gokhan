@@ -370,21 +370,49 @@ The `TargetImage` field shows two values (50% each):
 
 > **Hint:** *Try looking in the IIS logs for POST requests.*
 
-Filter the IIS logs for POST requests and inspect `cs_uri_stem` for URIs that don't belong to Exchange. Web shells on Exchange/IIS servers use the `.aspx` extension, so filtering on `aspx` narrows the results to a single suspicious file.
-<img width="861" height="732" alt="image" src="https://github.com/user-attachments/assets/39cb3bee-97eb-44d3-a84e-dc747f7cf565" />
-<img width="1917" height="842" alt="image" src="https://github.com/user-attachments/assets/34fe960c-80a5-49db-82c4-780f04e9cfbd" />
+### Method 1: Searching common web shell extensions with ChatGPT
 
+First, we asked ChatGPT:
 
-**Method 1: IIS POST requests and common web shell extensions**
+> Common Web Shell File Types?
 
-Change the sourcetype from Sysmon to **IIS**, since it collects events related to web pages. Then filter for POST requests and common web shell file types:
+Then, we asked:
+
+> Could you create a short Splunk query using these file extensions?
+
+```spl
+index=main ("*.php" OR "*.php5" OR "*.phtml" OR "*.asp" OR "*.aspx" OR "*.ashx" OR "*.asmx" OR "*.jsp" OR "*.jspx" OR "*.cfm" OR "*.cfml" OR "*.pl" OR "*.cgi" OR "*.py" OR "*.rb")
+```
+
+Run the query and inspect the **`CommandLine`** field in matching process events. Look for commands that create or reference a potential web shell. Review the file path and related events to identify the deployed file.
+
+### Method 2: IIS POST requests and common web shell extensions
+
+Switch the sourcetype from Sysmon to **IIS** to investigate HTTP requests. Filter for POST requests and potential web shell extensions in `cs_uri_stem`:
 
 ```spl
 index=* sourcetype=iis cs_method=POST
-| search *.php* OR *.asp* OR *.aspx* OR *.jsp*
+| regex cs_uri_stem="(?i)\.(php[0-9]?|phtml|asp|aspx|ashx|asmx|jsp|jspx|cfm|cfml|pl|cgi|py|rb)$"
+| stats count by cs_uri_stem
 ```
 
-This returns 187 events. Among the 6 values in `cs_uri_stem`, one is a suspicious file that does not belong to Exchange:
+Look for unusual filenames or paths. In this investigation, `/owa/auth/i3gfPctK1c2x.aspx` stands out as a potential web shell.
+
+<img width="861" height="732" alt="Common web shell file types" src="https://github.com/user-attachments/assets/39cb3bee-97eb-44d3-a84e-dc747f7cf565" />
+
+<img width="1917" height="842" alt="IIS POST request investigation" src="https://github.com/user-attachments/assets/34fe960c-80a5-49db-82c4-780f04e9cfbd" />
+
+### Method 3: Listing unique URIs of POST requests
+
+List unique POST request paths to compare suspicious entries with normal Exchange endpoints:
+
+```spl
+index=* sourcetype=iis cs_method=POST
+| dedup cs_uri_stem
+| table cs_uri_stem
+```
+
+The supplied POST request results contain these paths and counts. The query above displays only the unique paths.
 
 | cs_uri_stem | Count |
 |-------------|-------|
@@ -395,23 +423,23 @@ This returns 187 events. Among the 6 values in `cs_uri_stem`, one is a suspiciou
 | `/ecp/DDI/DDIService.svc/GetObject` | 1 |
 | `/owa/lang.owa` | 1 |
 
-**Method 2: Listing unique URIs of POST requests**
+The randomly named `.aspx` file warrants further investigation.
+
+<img width="1915" height="957" alt="Unique IIS POST request URIs" src="https://github.com/user-attachments/assets/da46e548-04ce-46b8-b965-bfa75595c5da" />
+
+### Method 4: Searching for `.aspx` directly
+
+Search for events containing `.aspx`:
 
 ```spl
-index=* sourcetype=iis cs_method=POST
-| dedup cs_uri_stem
-| table cs_uri_stem
-```
-<img width="1915" height="957" alt="image" src="https://github.com/user-attachments/assets/da46e548-04ce-46b8-b965-bfa75595c5da" />
-
-**Method 3: Searching for `.aspx` directly**
-
-```spl
-*.aspx*
+index=* "*.aspx*"
 ```
 
-The goal is to find the file name or path of the malicious web shell dropped on the victim machine. In the `cs_uri_stem` field (45 values), `/owa/auth/i3gfPctK1c2x.aspx` stands out.
-<img width="1917" height="981" alt="image" src="https://github.com/user-attachments/assets/3fb0ad99-7914-40c3-98a9-441e22e30c45" />
+Inspect the **`cs_uri_stem`** field. Among its values, `/owa/auth/i3gfPctK1c2x.aspx` stands out. Review related process events, if available, to confirm the deployed web shell.
+
+<img width="1917" height="981" alt="Searching for ASPX files" src="https://github.com/user-attachments/assets/3fb0ad99-7914-40c3-98a9-441e22e30c45" />
+
+> **Note:** A file extension or unusual filename alone does not confirm a web shell. Review its context and related activity.
 
 <details>
 <summary>Answer</summary>
