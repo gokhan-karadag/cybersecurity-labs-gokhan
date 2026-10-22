@@ -187,6 +187,7 @@ The query returns a single event, and the MD5 value is taken from its Hashes fie
 (Splunk displays it in uppercase as `290C7DFB01E50CEA9E19DA81A781AF2C`; it is the same value.)
 
 </details>
+<img width="1915" height="1032" alt="image" src="https://github.com/user-attachments/assets/1ee375cd-8903-4b84-a9ab-1b60e10945f1" />
 
 ## Q4: File saved to multiple folders
 
@@ -228,6 +229,7 @@ This shows the ransomware dropped the file into many different directories.
 `readme.txt` (the ransom note, dropped into many directories)
 
 </details>
+<img width="1920" height="615" alt="image" src="https://github.com/user-attachments/assets/e8ad57be-ef03-4e9d-9e24-3801c1f74499" />
 
 ## Q5: Command used to add a new user
 
