@@ -308,7 +308,7 @@ Filter on Event Code 8 (CreateRemoteThread):
 <img width="1907" height="1033" alt="image" src="https://github.com/user-attachments/assets/dee93309-90ef-4ac1-a55c-ff203094b2bd" />
 
 ```spl
-index=* sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=8
+index=* EventCode=8
 | table SourceImage TargetImage
 ```
 
@@ -322,10 +322,10 @@ Sysmon Event ID 8 detects when a process creates a thread in another process, wh
 `C:\Windows\System32\wbem\unsecapp.exe`
 
 </details>
+<img width="1914" height="603" alt="image" src="https://github.com/user-attachments/assets/55645e38-f6b4-458d-9405-14d8bd1a0237" />
 
 > [!NOTE]
 > The original process was `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`. It is not part of the answer but is useful context for your notes.
->
 > Some versions of this room word the question in an older, two-part form: *"What is the migrated process image (executable), and what is the original process image (executable) when the attacker got on the system?"* There the answer is given as `powershell.exe,unsecapp.exe` (original first, then migrated):
 >
 > - **Original process:** `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`
