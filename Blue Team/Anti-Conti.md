@@ -195,16 +195,22 @@ The query returns a single event, and the MD5 value is taken from its Hashes fie
 
 We list the files created by the ransomware (`cmd.exe`) using Event Code 11 and check the `TargetFilename` field.
 
-**Method 1: Counting with `stats`**
+**Method 1: Inspecting the `TargetFilename` field**
+
+```spl
+index=* Image="C:\\Users\\Administrator\\Documents\\cmd.exe" EventCode=11
+```
+
+The search returns 18 events. In the field list on the left, the `TargetFilename` field has 18 distinct values (100% of events). Opening the field shows that every top value is a `readme.txt` file in a different directory.
+
+<img width="1920" height="615" alt="image" src="https://github.com/user-attachments/assets/e8ad57be-ef03-4e9d-9e24-3801c1f74499" />
+
+**Method 2: Counting with `stats`**
 
 ```spl
 index=* sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=11 Image="c:\\Users\\Administrator\\Documents\\cmd.exe"
 | stats count by TargetFilename
 ```
-
-**Method 2: Inspecting the field list**
-
-Run the same query without `stats` and check the top values of the `TargetFilename` field on the left (18 distinct values).
 
 **Method 3: Listing all file creation events**
 
@@ -229,7 +235,8 @@ This shows the ransomware dropped the file into many different directories.
 `readme.txt` (the ransom note, dropped into many directories)
 
 </details>
-<img width="1920" height="615" alt="image" src="https://github.com/user-attachments/assets/e8ad57be-ef03-4e9d-9e24-3801c1f74499" />
+OR
+<img width="1905" height="984" alt="image" src="https://github.com/user-attachments/assets/545e785b-3747-47af-9691-4c22b8594872" />
 
 ## Q5: Command used to add a new user
 
