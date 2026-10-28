@@ -1,10 +1,6 @@
-<img width="1067" height="1474" alt="975b5439-2e94-4a02-b07b-53463ea6f05e" src="https://github.com/user-attachments/assets/842f44d8-ac8b-4069-8ba0-f0ecb3516db9" />
-[README.md](https://github.com/user-attachments/files/34089606/README.md)
-
 # Phishing Analysis and Investigation
 
-![SOC analyst examining a suspicious email](assets/phishing-investigation.png)
-
+<img width="1536" height="1024" alt="social-engineering" src="https://github.com/user-attachments/assets/85ac358a-88de-4211-ad01-f7579a77a0af" />
 A practical SOC study guide combining BTL1 fundamentals with an evidence-based investigation workflow.
 
 ## Purpose
@@ -46,7 +42,7 @@ Common warning signs include urgency, threats, unexpected requests, mismatched l
 
 ### Social engineering tactics
 
-![Conceptual illustration of trust, authority, and urgency in social engineering](assets/social-engineering.png)
+<img width="1536" height="1024" alt="phishing-investigation" src="https://github.com/user-attachments/assets/47a455b7-5dd6-4da8-a54c-578b3b146931" />
 
 | Tactic | How it influences the recipient |
 | --- | --- |
@@ -136,7 +132,7 @@ Clean reputation results do not prove safety. Domain age, registration privacy, 
 
 ## 5. Analyze attachments
 
-![Conceptual illustration of evidence preservation and isolated attachment analysis](assets/evidence-analysis.png)
+<img width="1536" height="1024" alt="evidence-analysis" src="https://github.com/user-attachments/assets/e0ae1d4c-53c9-43db-afbb-f3f9a56d6d86" />
 
 ### Static analysis
 
