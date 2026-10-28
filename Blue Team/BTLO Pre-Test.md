@@ -21,8 +21,7 @@
 - [7. Decide and Respond](#7-decide-and-respond)
   - [Preventive Controls](#preventive-controls)
 - [8. Case Report Template](#8-case-report-template)
-- [9. Greenholt PLC Exercise](#9-greenholt-plc-exercise)
-- [10. Tool Reference](#10-tool-reference)
+- [9. Tool Reference](#10-tool-reference)
 - [Key Reminders](#key-reminders)
 - [Technical References](#technical-references)
 - [Challenge: Identify the Phishing Email](#challenge-identify-the-phishing-email)
@@ -278,17 +277,7 @@ IP:     192[.]0[.]2[.]10
 Email:  sender@example[.]com
 ```
 
-## 9. Greenholt PLC exercise
-
-A Sales Executive receives an unexpected email appearing to come from a customer. It uses an unusual generic greeting, mentions an unexpected money transfer, and includes an unsolicited attachment. The employee reports it to the SOC.
-
-**Task:** Investigate `challenge.eml` using the workflow above. Review a working copy in a controlled environment with remote content blocked. Use static analysis first and dynamic analysis only when justified.
-
-**Deliverables:** A concise case report with message and attachment hashes, header and authentication findings, artifact analysis, user-impact assessment, timeline, verdict, confidence, and recommended response.
-
-**Evidence status:** The email and supporting artifacts were not supplied with this guide; the scenario has no confirmed verdict.
-
-## 10. Tool reference
+## 9. Tool reference
 
 Use tools permitted by the organization's data-handling rules. External submissions and active scans can disclose information or contact attacker infrastructure. [R5, R6]
 
@@ -316,14 +305,6 @@ Use tools permitted by the organization's data-handling rules. External submissi
 | Malware distribution intelligence | URLhaus | https://urlhaus.abuse.ch/ |
 
 URLhaus focuses on malware distribution; use phishing-specific intelligence for credential-phishing sites. [R8]
-
-## Key Reminders
-
-- Clean reputation, successful authentication, or no observed sandbox activity does not prove safety.
-- Branding, HTTPS, and familiar display names do not establish legitimacy.
-- Missing log events do not establish that no interaction occurred; document coverage and retention limits.
-- Consider business impact before blocking shared infrastructure or parent domains.
-- Keep confirmed facts, assumptions, and recommended actions clearly separated.
 
 ## Technical references
 
