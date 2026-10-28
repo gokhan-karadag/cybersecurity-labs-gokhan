@@ -326,30 +326,141 @@ Your task is to review John Smith’s emails in **`Mail.zip`**, identify the phi
 
 ### Questions and Answers
 
+### Questions and Answers
+
 **Q1. Sender:** What email address sent the phishing message?
 
+**Answer:** `jjoe96374@g.mail.com`
 
+The suspicious email is titled **Weekly Meeting** and uses the display name **John Joe**. Although the address resembles Gmail, its domain is `g.mail.com`, not `gmail.com`.
 
+![Sender address displayed in Thunderbird](assets/sender.png)
 
-
-
-
-
-
-
-
+---
 
 **Q2. Recipient:** What email address received it?
 
+**Answer:** `smithyOG59@gmail.com`
+
+The `To` header identifies John Smith’s mailbox as the recipient.
+
+![Message headers showing the recipient](assets/headers.png)
+
+---
+
 **Q3. Sender domain:** What is the domain of the sender’s email address?
+
+**Answer:** `g.mail.com`
+
+The domain is the part after the `@` symbol:
+
+```text
+jjoe96374@g.mail.com → g.mail.com
+```
+
+The address can be mistaken for a Gmail account at a glance. Compare the complete address with the expected sender identity; a familiar display name does not establish legitimacy.
+
+> Earlier notes list `gmail.com`, but the sender screenshots show `g.mail.com`. The source screenshot also contains authentication results referring to `gmail.com`; this inconsistency requires the original email for further verification.
+
+![Sender evidence showing g.mail.com](assets/sender.png)
+
+---
 
 **Q4. Timestamp:** On what day and at what time was the message sent? Include the timezone or UTC offset.
 
+**Answer:** Sunday, **5 November 2023 at 22:27:32 (UTC−07:00)**.
+
+The message’s `Date` header records:
+
+```text
+Date: Sun, 5 Nov 2023 22:27:32 -0700
+UTC equivalent: Mon, 6 Nov 2023 05:27:32 +0000
+```
+
+This is the stated send time. Delivery timestamps in `Received` headers should be examined separately.
+
+![Message source showing the Date header](assets/headers.png)
+
+---
+
 **Q5. Linked domain:** What domain appears in the phishing link?
+
+**Answer:** `101[.]com`
+
+The recorded link contains the hostname `www[.]trusted[.]download[.]101[.]com`:
+
+```text
+hxxp://www[.]trusted[.]download[.]101[.]com/download.html
+```
+
+The presentation shows this destination in Thunderbird’s status bar when hovering over **“Please use this link.”** The registrable domain is `101[.]com`; `www.trusted.download` consists of subdomain labels.
+
+> The earlier source screenshot’s plain-text body contains a different URL. Check the original email’s HTML to resolve the difference between message views.
+
+![Actual hyperlink destination shown in Thunderbird](assets/link-destination-slide.png)
+
+---
 
 **Q6. Country:** What country is associated with the linked domain? State whether your evidence concerns registration or hosting location.
 
+**Answer:** **United States**, according to the additional presentation’s hosting lookup. Earlier evidence shows **China**.
+
+| Evidence | Associated IP | Recorded hosting location |
+| --- | --- | --- |
+| Additional presentation | `18[.]161[.]6[.]14` | Portland, Oregon, United States — Amazon |
+| Earlier DomainTools screenshot | `36[.]42[.]77[.]164` | Weinan, Shaanxi, China — China Telecom |
+
+These results describe **hosting/IP locations**, not the domain registrant’s or attacker’s location.
+
+Different lookup times, DNS responses, or hosting changes could explain the difference. The supplied evidence does not establish which IP served the exact linked hostname when the email was delivered.
+
+![Additional presentation showing United States hosting](assets/hosting-us-slide.png)
+
+![Earlier DomainTools evidence showing China hosting](assets/domain-profile.png)
+
+---
+
 **Q7. Domain assessment:** Was the linked site more likely a compromised legitimate website or a domain created for malicious purposes? Support your conclusion with evidence and note any uncertainty.
+
+**Answer:** More likely a **compromised legitimate domain**, consistent with the exercise’s expected answer. Confidence is limited.
+
+The saved DomainTools profile shows approximately **20 years of IP history**, **19 years of hosting history**, and a preview of an established website. This supports an existing domain rather than one newly created for this campaign.
+
+However, a long history does not prove legitimacy or compromise. The evidence does not establish who controlled the linked subdomain or what the page served during the incident.
+
+The saved URL reputation report shows no vendor detections at that time. **A clean reputation result does not prove that a link is safe.**
+
+![Domain history supporting the assessment](assets/domain-profile.png)
+
+![Saved URL reputation results](assets/url-report.png)
+
+---
+
+### Investigation Summary
+
+The **Weekly Meeting** email uses a familiar colleague’s identity and a routine meeting request to encourage the recipient to follow a link. The exercise identifies this message as the phishing attempt.
+
+Key findings include:
+
+- A sender address that resembles Gmail but uses `g.mail.com`.
+- A meeting link pointing to a hostname under `101[.]com`.
+- Conflicting historical hosting locations that require source and timestamp context.
+- An existing domain that may have been abused or compromised.
+
+The supplied evidence does not confirm credential harvesting, user interaction, or account or endpoint compromise.
+
+![Weekly Meeting phishing message](assets/message.png)
+
+
+<img width="1920" height="1055" alt="headers" src="https://github.com/user-attachments/assets/3c57087c-d005-4164-a7d5-78ecdb472f91" />
+<img width="1908" height="982" alt="domain-profile" src="https://github.com/user-attachments/assets/84c48dfb-5a82-47e7-b83f-c551b0c3db72" />
+<img width="1910" height="957" alt="url-report" src="https://github.com/user-attachments/assets/c6aff552-ed49-4601-8462-0ba2c994778e" />
+<img width="894" height="361" alt="sender" src="https://github.com/user-attachments/assets/94226e3d-5dca-45e6-9e5b-223f80e5394b" />
+<img width="1300" height="732" alt="recipient-slide" src="https://github.com/user-attachments/assets/f0aba83e-d085-4366-94a8-0b49a46f1e82" />
+<img width="1287" height="1013" alt="network-country" src="https://github.com/user-attachments/assets/3bf79fcb-1d79-464b-a2dc-d4558738f35d" />
+<img width="1917" height="1056" alt="message" src="https://github.com/user-attachments/assets/db94fb77-ae0d-4ad2-a461-a010fe06f63e" />
+<img width="1300" height="732" alt="link-destination-slide" src="https://github.com/user-attachments/assets/ad15f296-7f4e-4919-8beb-6e7813af8719" />
+
 
 
 
