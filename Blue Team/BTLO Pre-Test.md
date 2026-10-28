@@ -23,7 +23,6 @@
 - [8. Case Report Template](#8-case-report-template)
 - [9. Tool Reference](#10-tool-reference)
 - [Key Reminders](#key-reminders)
-- [Technical References](#technical-references)
 - [Challenge: Identify the Phishing Email](#challenge-identify-the-phishing-email)
   - [Scenario](#scenario)
   - [Instructions](#instructions)
@@ -328,6 +327,17 @@ Your task is to review John Smith’s emails in **`Mail.zip`**, identify the phi
 ### Questions and Answers
 
 **Q1. Sender:** What email address sent the phishing message?
+
+
+
+
+
+
+
+
+
+
+
 
 **Q2. Recipient:** What email address received it?
 
