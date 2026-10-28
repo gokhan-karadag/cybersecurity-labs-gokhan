@@ -80,15 +80,8 @@ Common warning signs include urgency, threats, unexpected requests, mismatched l
 | Urgency | Pressures the recipient to act before checking the request. |
 | Familiarity and trust | Uses known names, relationships, branding, or conversation context. |
 
-## 1. Preserve and prepare
 
-- Create a case with the analyst, reporting user, affected mailbox, report time, and business context.
-- Preserve the original `.eml` or `.msg`, including full headers, body, and attachments. Record acquisition details and SHA-256; analyze a working copy.
-- Use a controlled analysis environment. Block remote content and avoid opening links or attachments during initial review.
-- Check data-handling requirements before submitting messages, URLs, or files to external services. Prefer existing reports and hash lookups.
-- Record timeline events in UTC while retaining original timestamps and offsets.
-
-## 2. Triage the message
+## 1. Triage the message
 
 Check:
 
@@ -100,7 +93,7 @@ Check:
 
 Verify unusual requests through a known independent channel. Public email providers, spelling errors, and unusual wording are contextual signals; none establishes a verdict alone.
 
-## 3. Review headers and authentication
+## 2. Review headers and authentication
 
 Preserve complete headers and record `From`, `Reply-To`, `Return-Path`, recipients, subject, `Message-ID`, `Date`, `Received`, and `Authentication-Results`.
 
@@ -147,7 +140,7 @@ Record results from trusted receiving infrastructure, including relevant domains
 
 Receiver policy can affect the final disposition. Record authentication results and delivery outcome separately.
 
-## 4. Analyze URLs and infrastructure
+## 3. Analyze URLs and infrastructure
 
 1. Review existing reputation reports for the full URL, hostname, domain, and relevant IPs.
 2. Use RDAP/WHOIS for registration context and DNS for address resolution. Record lookup times.
@@ -157,7 +150,7 @@ Receiver policy can affect the final disposition. Record authentication results 
 
 Clean reputation results do not prove safety. Domain age, registration privacy, shared hosting, and screenshots require context. Preserve the distinction between a malicious URL and its parent domain.
 
-## 5. Analyze attachments
+## 4. Analyze attachments
 
 <img width="1536" height="1024" alt="evidence-analysis" src="https://github.com/user-attachments/assets/e0ae1d4c-53c9-43db-afbb-f3f9a56d6d86" />
 
@@ -226,13 +219,13 @@ No observed malicious behavior is not proof of safety; execution may depend on u
 
 Tools can support both static and dynamic analysis. Rendering documents or HTML may activate content or generate network requests. [R1, R2]
 
-## 6. Determine scope and impact
+## 5. Determine scope and impact
 
 Establish whether the user received, opened, clicked, downloaded, executed, entered credentials, approved MFA, granted application access, or transferred money.
 
 Correlate email, SIEM, EDR, DNS, proxy, firewall, and identity logs. Search related messages using sender, subject, URL, attachment hash, recipients, delivery time, and Message-ID. Build a timeline and distinguish delivery from confirmed compromise.
 
-## 7. Decide and respond
+## 6. Decide and respond
 
 State the verdict, confidence, decisive evidence, conflicting findings, and remaining gaps. Use the organization's categories, such as legitimate, spam, suspicious, or malicious phishing.
 
@@ -256,7 +249,7 @@ Document actions, owners, authorization where required, and results. Thank the r
 - Maintain validated sender, domain, and URL blocks, considering business impact.
 - Provide awareness training and controlled phishing simulations, with an easy reporting process.
 
-## 8. Case report template
+## 7. Case report template
 
 | Field | Required information |
 | --- | --- |
@@ -276,7 +269,7 @@ IP:     192[.]0[.]2[.]10
 Email:  sender@example[.]com
 ```
 
-## 9. Tool reference
+## 8. Tool reference
 
 Use tools permitted by the organization's data-handling rules. External submissions and active scans can disclose information or contact attacker infrastructure. [R5, R6]
 
@@ -323,8 +316,6 @@ Your task is to review John Smith’s emails in **`Mail.zip`**, identify the phi
 4. Record your findings and explain your reasoning.
 
 > Treat all links and attachments as untrusted. Do not visit the linked website. Although the exercise originally described the links as non-malicious, their current status is unknown.
-
-### Questions and Answers
 
 ### Questions and Answers
 
