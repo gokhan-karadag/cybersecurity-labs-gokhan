@@ -311,12 +311,40 @@ URLhaus focuses on malware distribution; use phishing-specific intelligence for 
 
 ---
 
-*Combines a condensed summary of Security Blue Team BTL1 Phishing Analysis material, the Phishing Investigation SOC Student Guide, and the Phishing Email Analysis presentation.*
+## Challenge: Identify the Phishing Email
 
-*Illustrations were created specifically for this guide using AI image generation; they are conceptual artwork, not third-party screenshots or technical evidence.*
+### Scenario
 
+XYZ Corporation has recently onboarded two employees, **John Joe** and **John Smith**. Both received Gmail accounts for communicating with colleagues.
 
+On the same day, the cybersecurity team conducted a phishing simulation as part of a security awareness review. The employees were unaware of the exercise.
 
+Your task is to review John Smith’s emails in **`Mail.zip`**, identify the phishing message, and document the evidence supporting your findings.
+
+### Instructions
+
+1. Extract `Mail.zip` and review the messages using a text editor or an email client such as Mozilla Thunderbird or eM Client.
+2. Inspect the headers, message content, and actual link destinations.
+3. Use passive research and existing reputation reports to investigate the suspicious domain.
+4. Record your findings and explain your reasoning.
+
+> Treat all links and attachments as untrusted. Do not visit the linked website. Although the exercise originally described the links as non-malicious, their current status is unknown.
+
+### Questions and Answers
+
+**Q1. Sender:** What email address sent the phishing message?
+
+**Q2. Recipient:** What email address received it?
+
+**Q3. Sender domain:** What is the domain of the sender’s email address?
+
+**Q4. Timestamp:** On what day and at what time was the message sent? Include the timezone or UTC offset.
+
+**Q5. Linked domain:** What domain appears in the phishing link?
+
+**Q6. Country:** What country is associated with the linked domain? State whether your evidence concerns registration or hosting location.
+
+**Q7. Domain assessment:** Was the linked site more likely a compromised legitimate website or a domain created for malicious purposes? Support your conclusion with evidence and note any uncertainty.
 
 
 
