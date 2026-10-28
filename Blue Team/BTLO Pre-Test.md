@@ -151,17 +151,42 @@ Common formats include executables and scripts (`.exe`, `.vbs`, `.js`, `.bat`, `
 
 ### File hash collection
 
+Calculate attachment hashes to identify files, compare them with threat intelligence, and document evidence without executing the attachment. Use SHA-256 as the primary identifier; collect MD5 or SHA-1 when needed to match existing reports.
+
+Replace `attachment.bin` with the actual filename. Quote paths containing spaces.
+
 **Windows PowerShell**
 
 ```powershell
-Get-FileHash -Path .\attachment.bin -Algorithm SHA256
+# SHA-256 (default algorithm)
+Get-FileHash -Path ".\attachment.bin"
+
+# Explicit SHA-256
+Get-FileHash -Path ".\attachment.bin" -Algorithm SHA256
+
+# MD5
+Get-FileHash -Path ".\attachment.bin" -Algorithm MD5
+
+# SHA-1
+Get-FileHash -Path ".\attachment.bin" -Algorithm SHA1
 ```
 
 **Linux**
 
 ```bash
-sha256sum attachment.bin
+# SHA-256
+sha256sum "attachment.bin"
+
+# MD5
+md5sum "attachment.bin"
+
+# SHA-1
+sha1sum "attachment.bin"
 ```
+
+Record the filename, algorithm, and complete hash value in the investigation report. Search the hash in approved reputation tools before considering a file upload.
+
+> A hash identifies file content; it does not establish whether the file is malicious. MD5 and SHA-1 are retained for compatibility with older intelligence, not as secure integrity guarantees.
 
 ### Dynamic analysis
 
