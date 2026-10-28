@@ -2,6 +2,34 @@
 
 <img width="1536" height="1024" alt="social-engineering" src="https://github.com/user-attachments/assets/85ac358a-88de-4211-ad01-f7579a77a0af" />
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Email Fundamentals](#email-fundamentals)
+- [Phishing Types and Techniques](#phishing-types-and-techniques)
+  - [Social Engineering Tactics](#social-engineering-tactics)
+- [1. Preserve and Prepare](#1-preserve-and-prepare)
+- [2. Triage the Message](#2-triage-the-message)
+- [3. Review Headers and Authentication](#3-review-headers-and-authentication)
+  - [Authentication Result Reference](#authentication-result-reference)
+- [4. Analyze URLs and Infrastructure](#4-analyze-urls-and-infrastructure)
+- [5. Analyze Attachments](#5-analyze-attachments)
+  - [Static Analysis](#static-analysis)
+  - [File Hash Collection](#file-hash-collection)
+  - [Dynamic Analysis](#dynamic-analysis)
+- [6. Determine Scope and Impact](#6-determine-scope-and-impact)
+- [7. Decide and Respond](#7-decide-and-respond)
+  - [Preventive Controls](#preventive-controls)
+- [8. Case Report Template](#8-case-report-template)
+- [9. Greenholt PLC Exercise](#9-greenholt-plc-exercise)
+- [10. Tool Reference](#10-tool-reference)
+- [Key Reminders](#key-reminders)
+- [Technical References](#technical-references)
+- [Challenge: Identify the Phishing Email](#challenge-identify-the-phishing-email)
+  - [Scenario](#scenario)
+  - [Instructions](#instructions)
+  - [Questions and Answers](#questions-and-answers)
+    
 ## Introduction
 
 **Phishing is a social engineering attack** that uses impersonation and deceptive messages to trick people into revealing sensitive information, clicking malicious links, executing harmful files, or approving fraudulent requests. An attack may also request payments or MFA approval without including a malicious link.
