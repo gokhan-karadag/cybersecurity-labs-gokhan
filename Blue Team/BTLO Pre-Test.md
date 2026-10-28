@@ -104,6 +104,7 @@ Read `Received` headers from bottom to top for apparent delivery order, then ide
 | DMARC | Visible `From` alignment with passing SPF or DKIM | Requires at least one passing, aligned mechanism |
 
 Record results from trusted receiving infrastructure, including relevant domains and alignment. Forwarding or message modification can affect results; compromised legitimate accounts can pass authentication. [R3, R4]
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/404a6193-5709-4fc2-9893-ef5fc5149e76" />
 
 ### Authentication result reference
 
