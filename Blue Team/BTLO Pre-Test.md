@@ -416,106 +416,803 @@ The saved URL reputation report shows no vendor detections at that time. **A cle
 ---
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <img width="1067" height="1474" alt="9e945a4c-8592-4a59-b5ab-23cb76efcd17" src="https://github.com/user-attachments/assets/3ef3f8e8-4d17-414d-abd8-9a8036cc375e" />
+# Splunk Fundamentals and SOC Investigation
 
+A practical guide to searching logs, building dashboards, identifying unusual activity, and documenting security investigations with Splunk.
+
+## Table of Contents
+
+- [Learning Objectives](#learning-objectives)
+- [Lab Conventions](#lab-conventions)
+- [Task 2 — Introduction](#task-2--introduction)
+- [Task 3 — Splunk Components](#task-3--splunk-components)
+- [Task 4 — Search & Reporting](#task-4--search--reporting)
+- [Task 5 — Splunk Dashboards](#task-5--splunk-dashboards)
+- [Task 6 — Filtering Results](#task-6--filtering-results)
+- [Task 7 — Structuring Results](#task-7--structuring-results)
+- [Task 8 — Transforming Commands](#task-8--transforming-commands)
+- [Task 9 — Anomaly Detection](#task-9--anomaly-detection)
+- [Task 10 — Raw Log Analysis Practice](#task-10--raw-log-analysis-practice)
+- [Task 11 — Splunk Use Case: Interview Answer](#task-11--splunk-use-case-interview-answer)
+- [Task 12 — Scenario 1](#task-12--scenario-1)
+- [Investigation Report Template](#investigation-report-template)
+- [References](#references)
+
+## Learning Objectives
+
+By the end of this guide, you should be able to:
+
+- Explain the roles of forwarders, indexers, and search heads.
+- Search events using Search Processing Language (SPL).
+- Filter, extract, organize, and summarize fields.
+- Create useful security dashboards.
+- Identify suspicious patterns and investigate their context.
+- Document findings, limitations, and recommended actions.
+
+## Lab Conventions
+
+The examples use illustrative indexes and normalized fields:
+
+| Item | Example |
+| --- | --- |
+| Authentication index | `auth_logs` |
+| Web access index | `web_logs` |
+| Authentication fields | `user`, `src_ip`, `dest`, `action` |
+| Web fields | `src_ip`, `method`, `uri`, `status`, `bytes` |
+| Authentication outcomes | `success`, `failure` |
+
+Replace these values with the indexes, sourcetypes, field names, and values present in your environment.
+
+> Queries demonstrate investigation methods. No lab events were supplied or searched, so counts, identities, and incident outcomes are not asserted.
+
+For historical lab data, select the dataset’s actual time range. Relative ranges such as `earliest=-24h` only search recent events.
+
+## Task 2 — Introduction
+
+### What Is Splunk?
+
+Splunk collects and indexes machine data so analysts can search events, calculate statistics, create visualizations, and investigate activity across different systems.
+
+Common security data sources include:
+
+- Windows and Linux event logs.
+- Authentication and identity logs.
+- Firewall, DNS, and proxy logs.
+- Web server access logs.
+- Endpoint security events.
+- Cloud audit logs.
+
+Splunk Enterprise provides the underlying search and analytics platform. Splunk Enterprise Security adds dedicated SIEM capabilities.
+
+### What Is SPL?
+
+**Search Processing Language (SPL)** retrieves and processes data through a pipeline of commands.
+
+```spl
+index=auth_logs action="failure"
+| stats count AS failed_attempts BY src_ip
+| sort - failed_attempts
+```
+
+This query:
+
+1. Searches authentication events.
+2. Selects failed attempts.
+3. Counts failures by source IP.
+4. Displays the highest counts first.
+
+The pipe character, `|`, passes results to the next command.
+
+### Questions and Answers
+
+**Q1. What is an event?**
+
+**Answer:** An individual record of activity, such as a login attempt or an HTTP request.
+
+**Q2. What is a field?**
+
+**Answer:** A named piece of information associated with an event, such as `user`, `src_ip`, or `status`.
+
+**Q3. Does a suspicious search result prove compromise?**
+
+**Answer:** No. Analysts must examine context, supporting events, data quality, and alternative explanations.
+
+## Task 3 — Splunk Components
+
+### Core Components
+
+| Component | Main role |
+| --- | --- |
+| Universal Forwarder | Collects and forwards data with a lightweight agent. |
+| Heavy Forwarder | Can parse, filter, and route data before forwarding. |
+| Indexer | Processes and stores indexed events and searches its local data. |
+| Search Head | Provides the search interface and coordinates searches. |
+| Deployment Server | Distributes configurations and apps to deployment clients. |
+
+A small deployment can combine several roles on one Splunk Enterprise instance. Larger environments commonly separate them.
+
+### Simplified Data Flow
+
+```mermaid
+flowchart TD
+    A["Endpoints and log sources"] --> B["Forwarder"]
+    B --> C["Indexer"]
+    D["Search Head"] -->|"Search request"| C
+    C -->|"Search results"| D
+    D --> E["Analyst searches and dashboards"]
+```
+
+### Important Metadata
+
+| Field | Meaning |
+| --- | --- |
+| `index` | Logical destination used to organize indexed events. |
+| `host` | Host associated with an event. |
+| `source` | Origin of the data, such as a file path or input. |
+| `sourcetype` | Classification that helps Splunk interpret the data. |
+| `_time` | Event timestamp interpreted by Splunk. |
+| `_raw` | Original event text stored in the event. |
+
+### Questions and Answers
+
+**Q1. Which component stores indexed events?**
+
+**Answer:** The indexer.
+
+**Q2. Which component coordinates searches?**
+
+**Answer:** The search head.
+
+**Q3. Does the `host` field always identify the attacker?**
+
+**Answer:** No. It identifies the host associated with the event and must be interpreted according to the data source.
+
+## Task 4 — Search & Reporting
+
+### Start with Data Discovery
+
+Identify available event types within a known index:
+
+```spl
+index=auth_logs
+| stats count BY sourcetype
+| sort - count
+```
+
+Inspect a sample of raw events:
+
+```spl
+index=auth_logs
+| head 20
+| table _time host source sourcetype _raw
+```
+
+Review field names and values before writing detection queries.
+
+### Search for Specific Activity
+
+```spl
+index=auth_logs action="failure"
+```
+
+Search for a phrase in event text:
+
+```spl
+index=auth_logs "authentication failed"
+```
+
+Search by source IP:
+
+```spl
+index=auth_logs src_ip="192.0.2.10"
+```
+
+### Use a Time Range
+
+```spl
+index=auth_logs earliest=-24h latest=now
+| stats count BY action
+```
+
+For an investigation, use the incident’s actual time window and record the timezone used.
+
+### Create a Report
+
+```spl
+index=auth_logs action="failure"
+| stats count AS failed_attempts
+        dc(user) AS targeted_accounts
+        values(user) AS users
+  BY src_ip
+| sort - failed_attempts
+```
+
+This report summarizes failures and the distinct accounts associated with each source.
+
+Save a useful search as a report when it needs to be reused or scheduled. Record its purpose, time range, owner, and relevant assumptions.
+
+### Questions and Answers
+
+**Q1. Why should you specify an index?**
+
+**Answer:** It limits the search to relevant data and reduces unnecessary searching.
+
+**Q2. Why might a search return no events?**
+
+**Answer:** Possible causes include an incorrect time range, index, field name, field value, permissions, or missing ingestion.
+
+## Task 5 — Splunk Dashboards
+
+Dashboards combine search results into panels that help analysts review activity and identify changes.
+
+### Suggested Authentication Dashboard
+
+| Panel | Visualization | Purpose |
+| --- | --- | --- |
+| Total authentication events | Single value | Show overall activity. |
+| Successful and failed logins | Column chart | Compare recorded outcomes. |
+| Failures over time | Line chart | Identify bursts and changes. |
+| Top failure sources | Bar chart | Prioritize source IPs for review. |
+| Targeted accounts | Table | Identify accounts receiving failures. |
+
+### Total Authentication Events
+
+```spl
+index=auth_logs
+| stats count AS authentication_events
+```
+
+### Authentication Outcomes
+
+```spl
+index=auth_logs
+| stats count BY action
+```
+
+### Failed Logins over Time
+
+```spl
+index=auth_logs action="failure"
+| timechart span=15m count AS failed_attempts
+```
+
+### Top Sources
+
+```spl
+index=auth_logs action="failure"
+| stats count AS failed_attempts BY src_ip
+| sort - failed_attempts
+| head 10
+```
+
+### Dashboard Design Notes
+
+- Give each panel a clear title.
+- Use a shared time filter where appropriate.
+- Include units and meaningful field labels.
+- Add drilldowns to supporting events.
+- Explain what a panel counts.
+- Avoid presenting a high count as proof of an attack.
+
+## Task 6 — Filtering Results
+
+Filtering reduces a large dataset to events relevant to the investigation.
+
+### Boolean Operators
+
+```spl
+index=auth_logs (action="failure" OR action="blocked")
+```
+
+```spl
+index=auth_logs action="failure" NOT user="service_account"
+```
+
+Use parentheses to make combinations of `AND` and `OR` explicit.
+
+### Filter Multiple Values
+
+```spl
+index=auth_logs
+| search user IN ("alice", "bob", "charlie")
+```
+
+### Use Wildcards
+
+```spl
+index=web_logs uri="*/admin*"
+```
+
+This identifies matching requests, not necessarily malicious activity.
+
+### Numeric Comparisons
+
+```spl
+index=web_logs
+| where status >= 400
+```
+
+### Search within an IP Range
+
+```spl
+index=auth_logs
+| where cidrmatch("192.0.2.0/24", src_ip)
+```
+
+### `search` and `where`
+
+| Command | Typical use |
+| --- | --- |
+| `search` | Keyword searches, field-value matching, and Boolean filtering. |
+| `where` | Expression-based filtering, functions, and field comparisons. |
+
+Compare two fields:
+
+```spl
+index=network_logs
+| where src_ip=dest_ip
+```
+
+### Questions and Answers
+
+**Q1. Which command supports `cidrmatch()` in an expression?**
+
+**Answer:** `where`.
+
+**Q2. Why should exclusions be documented?**
+
+**Answer:** Exclusions can hide relevant activity. Record their purpose and review whether they remain appropriate.
+
+## Task 7 — Structuring Results
+
+Use these commands to make events easier to examine without confusing presentation changes with evidence.
+
+### Select Columns with `table`
+
+```spl
+index=auth_logs
+| table _time user src_ip dest action
+```
+
+### Retain Fields with `fields`
+
+```spl
+index=auth_logs
+| fields _time user src_ip dest action
+```
+
+`fields` controls which fields continue through the pipeline. `table` formats selected fields into a table.
+
+### Rename Fields
+
+```spl
+index=auth_logs
+| rename src_ip AS source_ip dest AS destination
+| table _time user source_ip destination action
+```
+
+### Create Fields with `eval`
+
+```spl
+index=web_logs
+| eval traffic_kb=round(bytes/1024, 2)
+| table _time src_ip uri traffic_kb
+```
+
+### Extract Fields with `rex`
+
+For raw text containing a value such as `src=192.0.2.10`:
+
+```spl
+index=web_logs
+| rex field=_raw "src=(?<extracted_src_ip>\d{1,3}(?:\.\d{1,3}){3})"
+| table _time extracted_src_ip _raw
+```
+
+This pattern extracts IPv4-shaped text; it does not validate every address or support IPv6.
+
+### Sort Results
+
+```spl
+index=auth_logs
+| sort 0 _time
+| table _time user src_ip action
+```
+
+`sort 0` avoids the command’s default result limit. Use it carefully on large datasets.
+
+### Remove Duplicate Combinations
+
+```spl
+index=auth_logs
+| dedup user src_ip
+| table user src_ip
+```
+
+> `dedup` removes events from the result set. Preserve a separate view of the complete evidence when event counts or sequence matter.
+
+## Task 8 — Transforming Commands
+
+Transforming commands summarize events into statistical results.
+
+### `stats`
+
+Count failed logins by account:
+
+```spl
+index=auth_logs action="failure"
+| stats count AS failed_attempts BY user
+| sort - failed_attempts
+```
+
+Calculate multiple metrics:
+
+```spl
+index=auth_logs
+| stats count AS events
+        dc(src_ip) AS unique_sources
+        values(action) AS observed_actions
+  BY user
+```
+
+### Common Functions
+
+| Function | Purpose |
+| --- | --- |
+| `count` | Count events or non-null field values. |
+| `dc(field)` | Count distinct field values. |
+| `values(field)` | Return distinct values. |
+| `sum(field)` | Calculate a total. |
+| `avg(field)` | Calculate an average. |
+| `min(field)` | Return the minimum. |
+| `max(field)` | Return the maximum. |
+| `earliest(field)` | Return the earliest observed value by event time. |
+| `latest(field)` | Return the latest observed value by event time. |
+
+### `chart`
+
+```spl
+index=auth_logs
+| chart count OVER user BY action
+```
+
+Creates a table comparing authentication outcomes by user.
+
+### `timechart`
+
+```spl
+index=auth_logs
+| timechart span=1h count BY action
+```
+
+Summarizes authentication activity into hourly intervals.
+
+### `eventstats`
+
+```spl
+index=web_logs
+| eventstats avg(bytes) AS average_bytes BY src_ip
+| table _time src_ip bytes average_bytes
+```
+
+Adds a group-level statistic to the original events.
+
+### `streamstats`
+
+```spl
+index=auth_logs
+| sort 0 _time
+| streamstats count AS event_sequence BY user
+| table _time user action event_sequence
+```
+
+Calculates a running count as events are processed. Ordering matters.
+
+### Command Comparison
+
+| Command | Result |
+| --- | --- |
+| `stats` | Produces summary rows. |
+| `chart` | Produces a chart-oriented summary table. |
+| `timechart` | Produces a time-based summary. |
+| `eventstats` | Adds aggregate statistics to events. |
+| `streamstats` | Adds running statistics in processing order. |
+
+## Task 9 — Anomaly Detection
+
+An anomaly is activity that differs from an expected pattern. It can indicate an attack, a configuration problem, or legitimate operational changes.
+
+### Repeated Login Failures
+
+```spl
+index=auth_logs action="failure"
+| bin _time span=5m
+| stats count AS failed_attempts
+        dc(user) AS targeted_accounts
+  BY _time src_ip
+| where failed_attempts >= 20
+| sort - failed_attempts
+```
+
+The threshold is illustrative. Tune it to the environment’s normal behavior.
+
+### Possible Password Spraying
+
+```spl
+index=auth_logs action="failure"
+| bin _time span=15m
+| stats count AS failed_attempts
+        dc(user) AS targeted_accounts
+        values(user) AS users
+  BY _time src_ip
+| where targeted_accounts >= 10
+| sort - targeted_accounts
+```
+
+One source attempting multiple accounts may warrant review. Shared proxies, scanners, and identity infrastructure can produce similar patterns.
+
+### Unusually Large Web Responses
+
+```spl
+index=web_logs earliest=-7d@d latest=@d
+| eventstats avg(bytes) AS baseline_avg
+             stdev(bytes) AS baseline_sd
+  BY uri
+| where baseline_sd > 0
+    AND bytes > baseline_avg + (3 * baseline_sd)
+| table _time src_ip uri bytes baseline_avg baseline_sd
+```
+
+This exploratory search compares events with statistics from the same selected period. It is not an independently trained detection model.
+
+Large responses do not establish data exfiltration. Consider endpoint function, traffic direction, request context, and expected file sizes.
+
+### Investigation Questions
+
+- Is the activity unusual for this account, source, or application?
+- Did it occur during an expected operational task?
+- Are the logs complete and correctly parsed?
+- Is there related successful authentication?
+- Do endpoint or network events support the hypothesis?
+
+## Task 10 — Raw Log Analysis Practice
+
+### Example Event
+
+```text
+2026-10-20T14:23:18Z host=web01 src=192.0.2.25 user=alice method=POST uri=/login status=401 bytes=512
+```
+
+### Initial Interpretation
+
+| Value | Interpretation |
+| --- | --- |
+| Timestamp | 20 October 2026, 14:23:18 UTC |
+| Host | `web01` |
+| Source IP | `192.0.2.25` |
+| User | `alice` |
+| Method | `POST` |
+| URI | `/login` |
+| HTTP status | `401` |
+| Response bytes | `512`, according to this example’s schema |
+
+A `401` response indicates that authentication is required or has not succeeded for the request. It does not alone prove a password-guessing attempt.
+
+### Extract the Fields
+
+```spl
+index=web_logs
+| rex field=_raw "src=(?<source_address>\S+)"
+| rex field=_raw "user=(?<account>\S+)"
+| rex field=_raw "method=(?<http_method>\S+)"
+| rex field=_raw "uri=(?<request_uri>\S+)"
+| rex field=_raw "status=(?<http_status>\d{3})"
+| table _time host source_address account http_method request_uri http_status
+```
+
+If the data is already correctly extracted, use existing fields rather than extracting duplicates.
+
+### Questions and Answers
+
+**Q1. What is the source IP?**
+
+**Answer:** `192.0.2.25`.
+
+**Q2. What endpoint was requested?**
+
+**Answer:** `/login`.
+
+**Q3. What HTTP method was used?**
+
+**Answer:** `POST`.
+
+**Q4. Is this single event sufficient to confirm brute force?**
+
+**Answer:** No. Review frequency, accounts, outcomes, and supporting activity.
+
+**Q5. Why compare `_time` with the raw timestamp?**
+
+**Answer:** Incorrect timestamp parsing can place events in the wrong investigation window or disrupt the timeline.
+
+## Task 11 — Splunk Use Case: Interview Answer
+
+### Question
+
+**How would you use Splunk to investigate a suspected brute-force attack?**
+
+### Example Answer
+
+“I would first confirm the relevant authentication data sources and investigation time range. I would search for failed logins, group them by source IP and account, and look for repeated attempts or one source targeting many users.
+
+Next, I would check whether successful logins followed the failures and review the affected account’s activity. I would correlate identity, endpoint, and network logs to assess whether access was authorized or suspicious.
+
+I would document the timeline, supporting evidence, and visibility gaps. If the evidence supported compromise, I would follow the response playbook and coordinate appropriate containment.”
+
+### Supporting Query
+
+```spl
+index=auth_logs action="failure"
+| bin _time span=10m
+| stats count AS failed_attempts
+        dc(user) AS targeted_accounts
+  BY _time src_ip
+| where failed_attempts >= 20
+| sort - failed_attempts
+```
+
+### What Makes the Answer Strong?
+
+- Starts with data scope and time.
+- Explains how SPL supports the investigation.
+- Looks beyond failed logins.
+- Separates suspicious behavior from confirmed compromise.
+- Connects findings to a documented response.
+
+## Task 12 — Scenario 1
+
+### Scenario
+
+A security team receives an alert about repeated authentication failures against a corporate application.
+
+Investigate whether the activity represents password guessing, password spraying, a configuration issue, or legitimate user behavior.
+
+> This is an illustrative exercise. The room’s original scenario and event dataset were not available, so no incident-specific answers are provided.
+
+### Step 1: Confirm the Data
+
+```spl
+index=auth_logs
+| stats count AS events BY sourcetype action
+| sort - events
+```
+
+Verify that the selected period includes the reported activity.
+
+### Step 2: Identify Sources
+
+```spl
+index=auth_logs action="failure"
+| stats count AS failed_attempts
+        dc(user) AS targeted_accounts
+        values(user) AS users
+  BY src_ip
+| sort - failed_attempts
+```
+
+### Step 3: Identify Targeted Accounts
+
+```spl
+index=auth_logs action="failure"
+| stats count AS failed_attempts
+        dc(src_ip) AS unique_sources
+  BY user
+| sort - failed_attempts
+```
+
+### Step 4: Review Timing
+
+```spl
+index=auth_logs action="failure"
+| timechart span=5m count AS failed_attempts
+```
+
+Check for short bursts, sustained attempts, or activity matching scheduled processes.
+
+### Step 5: Find Successes after Failures
+
+```spl
+index=auth_logs action IN ("failure", "success")
+| sort 0 _time
+| streamstats current=f
+    last(eval(if(action="failure", _time, null()))) AS previous_failure
+  BY user src_ip
+| where action="success" AND isnotnull(previous_failure)
+| eval seconds_since_failure=_time-previous_failure
+| where seconds_since_failure >= 0 AND seconds_since_failure <= 900
+| table _time user src_ip dest seconds_since_failure
+```
+
+This finds successes within 15 minutes of an earlier failure for the same user and source IP.
+
+It does not require repeated failures and does not prove compromise. Investigate related behavior and consider activity distributed across different sources.
+
+### Step 6: Review Supporting Events
+
+For a selected account, replace the example value:
+
+```spl
+index=auth_logs user="alice"
+| sort 0 _time
+| table _time user src_ip dest action
+```
+
+Correlate findings with available:
+
+- Identity and MFA events.
+- Endpoint process and session activity.
+- DNS, proxy, and firewall records.
+- Account changes and privilege assignments.
+- Known maintenance or service-account activity.
+
+### Questions and Answers
+
+**Q1. Which source generated the most failures?**
+
+**Answer:** Run the source summary search and report the top `src_ip` with its count and time range.
+
+**Q2. Which account received the most failures?**
+
+**Answer:** Run the account summary search and report the top `user`.
+
+**Q3. Did one source target several accounts?**
+
+**Answer:** Review the distinct account count and event details. This may support a password-spraying hypothesis.
+
+**Q4. Did a successful login follow the failures?**
+
+**Answer:** Review the sequence search and supporting raw events. Record the account, source, destination, and timestamps.
+
+**Q5. Was an account compromised?**
+
+**Answer:** Determine this from corroborating evidence. A successful login after failures is insufficient by itself.
+
+**Q6. What response is appropriate?**
+
+**Answer:** Follow the evidence and response playbook. Actions may include identity review, session revocation, password reset, detection updates, or source blocking after assessing business impact.
+
+### Deliverable
+
+Prepare a concise report containing:
+
+- Investigation time range and data sources.
+- Relevant SPL searches.
+- Key accounts, sources, and destinations.
+- Timeline and supporting events.
+- Assessment and confidence.
+- Visibility gaps.
+- Actions taken and recommended follow-up.
+
+## Investigation Report Template
+
+| Field | Required information |
+| --- | --- |
+| Case summary | Case ID, analyst, alert, and investigation objective. |
+| Scope | Time range, timezone, indexes, sourcetypes, and coverage. |
+| Evidence | Relevant events, identifiers, and preserved exports. |
+| Searches | SPL queries and their purpose. |
+| Findings | Accounts, sources, counts, sequences, and supporting context. |
+| Assessment | Verdict, confidence, alternatives, and limitations. |
+| Response | Actions, justification, owners, and outcomes. |
+| Follow-up | Additional data, monitoring, and detection improvements. |
+
+Separate observed facts from hypotheses. Record what the available data supports and what remains unknown.
+
+## References
+
+- [Splunk Deployment Components](https://help.splunk.com/en/splunk-enterprise/get-started/deployment-capacity-manual/9.3/hardware-capacity-planning/components-of-a-splunk-enterprise-deployment)
+- [Splunk: Using Statistical Commands](https://help.splunk.com/en/splunk-enterprise/search/search-manual/10.0/calculate-statistics/use-the-stats-command-and-functions)
+- [Splunk: streamstats](https://help.splunk.com/en/splunk-enterprise/spl-search-reference/9.3/search-commands/streamstats)
 
 
 
