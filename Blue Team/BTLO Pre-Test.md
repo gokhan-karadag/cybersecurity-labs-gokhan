@@ -1035,178 +1035,132 @@ If the data is already correctly extracted, use existing fields rather than extr
 
 **Answer:** Incorrect timestamp parsing can place events in the wrong investigation window or disrupt the timeline.
 
-## Task 11 — Splunk Use Case: Interview Answer
+## Task 12 — Scenario
+As a SOC analyst, a comprehensive analysis was conducted using Splunk to investigate a security breach in an Active Directory environment. The main goal of this process was to identify the attacker’s actions, determine the techniques used, and present all events in a chronological timeline.
 
-### Question
+The investigation started by identifying the attacker’s initial enumeration activities on the network. Through Splunk queries, commands such as “whoami”, “net user”, “nltest” were observed. This indicated that the attacker was attempting to gather information about the system. This stage was considered the starting point of the attack.
 
-**How would you use Splunk to investigate a suspected brute-force attack?**
+After this, it was determined that the attacker performed a privilege escalation attack. The analysis revealed that an “unquoted service path vulnerability” was exploited. By examining Event ID 4688 logs in Splunk, suspicious process creation activities were identified, confirming that the attacker elevated their privileges using this vulnerability.
 
-### Example Answer
+Following privilege escalation, the attacker moved to a more critical stage. A DCsync attack was carried out on the Domain Controller, allowing the attacker to extract sensitive data from the Active Directory database. When analyzing Event ID 4662, it was observed that replication activities—normally performed only by domain controllers—were executed by a suspicious user. This clearly indicated that the attacker had gained domain-level privileges.
 
-“I would first confirm the relevant authentication data sources and investigation time range. I would search for failed logins, group them by source IP and account, and look for repeated attempts or one source targeting many users.
+The attacker then used the obtained credentials to perform a “pass-the-hash” (PtH) attack, enabling unauthorized access across systems. In Splunk, Event ID 4624 and NTLM authentication logs showed suspicious login attempts using NTLM instead of Kerberos, confirming that authentication was performed using hash values.
 
-Next, I would check whether successful logins followed the failures and review the affected account’s activity. I would correlate identity, endpoint, and network logs to assess whether access was authorized or suspicious.
+It was also observed that the attacker carried out lateral movement within the network. The same user account logged into multiple systems in a short period and performed actions across different machines. This indicated that the attacker was attempting to expand control over the network.
 
-I would document the timeline, supporting evidence, and visibility gaps. If the evidence supported compromise, I would follow the response playbook and coordinate appropriate containment.”
+In the final stage, the attacker established persistence using multiple techniques. Methods such as Registry Run keys, scheduled tasks, and service creation were identified, ensuring long-term access to the system.
 
-### Supporting Query
+All findings were combined into a detailed timeline, clearly showing each phase of the attack, including enumeration, privilege escalation, credential access, lateral movement, and persistence. This analysis not only revealed how the attack was carried out but also highlighted existing security gaps and monitoring weaknesses.
 
-```spl
-index=auth_logs action="failure"
-| bin _time span=10m
-| stats count AS failed_attempts
-        dc(user) AS targeted_accounts
-  BY _time src_ip
-| where failed_attempts >= 20
-| sort - failed_attempts
-```
+As a result, this investigation conducted using Splunk made the attacker’s actions fully visible and provided valuable insights to improve the organization’s security posture.
+To proceed with the second scenario please:
+ 
+- Click "Start Machine"
+- Access Splunk by your web browser using  http://MACHINE_IP:8000
 
-### What Makes the Answer Strong?
+- Go to *Settings* and click on *Indexes*
+- The index we will be using is "*Folks*"
 
-- Starts with data scope and time.
-- Explains how SPL supports the investigation.
-- Looks beyond failed logins.
-- Separates suspicious behavior from confirmed compromise.
-- Connects findings to a documented response.
+## Questions and Answers
+**Q1. What is the name of the first suspicious file executed with PowerShell?**
 
-## Task 12 — Scenario 1
+<details>
+<summary>Show answer</summary>
 
-### Scenario
+`fun.exe`
 
-A security team receives an alert about repeated authentication failures against a corporate application.
+</details>
 
-Investigate whether the activity represents password guessing, password spraying, a configuration issue, or legitimate user behavior.
+**Q2. Who is the user that executed this file?**
 
-> This is an illustrative exercise. The room’s original scenario and event dataset were not available, so no incident-specific answers are provided.
+<details>
+<summary>Show answer</summary>
 
-### Step 1: Confirm the Data
+`Abdullah-work\HelpDesk`
 
-```spl
-index=auth_logs
-| stats count AS events BY sourcetype action
-| sort - events
-```
+</details>
 
-Verify that the selected period includes the reported activity.
+**Q3. What is the name of the host that executed the suspicious file?**
 
-### Step 2: Identify Sources
+<details>
+<summary>Show answer</summary>
 
-```spl
-index=auth_logs action="failure"
-| stats count AS failed_attempts
-        dc(user) AS targeted_accounts
-        values(user) AS users
-  BY src_ip
-| sort - failed_attempts
-```
+`CLIENT02`
 
-### Step 3: Identify Targeted Accounts
+</details>
 
-```spl
-index=auth_logs action="failure"
-| stats count AS failed_attempts
-        dc(src_ip) AS unique_sources
-  BY user
-| sort - failed_attempts
-```
+**Q4. When was this suspicious file first executed?**
 
-### Step 4: Review Timing
+<details>
+<summary>Show answer</summary>
 
-```spl
-index=auth_logs action="failure"
-| timechart span=5m count AS failed_attempts
-```
+`2023-05-10 05:10:30`
 
-Check for short bursts, sustained attempts, or activity matching scheduled processes.
+</details>
 
-### Step 5: Find Successes after Failures
+**Q5. Sorting by Event Code 4104, what tool did the attacker use to enumerate the environment for Domain Account Discovery? What is the sub-technique ID associated with domain account enumeration of this tool?**
 
-```spl
-index=auth_logs action IN ("failure", "success")
-| sort 0 _time
-| streamstats current=f
-    last(eval(if(action="failure", _time, null()))) AS previous_failure
-  BY user src_ip
-| where action="success" AND isnotnull(previous_failure)
-| eval seconds_since_failure=_time-previous_failure
-| where seconds_since_failure >= 0 AND seconds_since_failure <= 900
-| table _time user src_ip dest seconds_since_failure
-```
+<details>
+<summary>Show answer</summary>
 
-This finds successes within 15 minutes of an earlier failure for the same user and source IP.
+`Bloodhound, T1087.002`
 
-It does not require repeated failures and does not prove compromise. Investigate related behavior and consider activity distributed across different sources.
+</details>
 
-### Step 6: Review Supporting Events
+**Q6. The attacker used an unquoted vulnerable service path to escalate privileges. Searching in the CommandLine field, what is the name of the vulnerable service?**
 
-For a selected account, replace the example value:
+<details>
+<summary>Show answer</summary>
 
-```spl
-index=auth_logs user="alice"
-| sort 0 _time
-| table _time user src_ip dest action
-```
+`Automate-Basic-Monitoring.exe`
 
-Correlate findings with available:
+</details>
 
-- Identity and MFA events.
-- Endpoint process and session activity.
-- DNS, proxy, and firewall records.
-- Account changes and privilege assignments.
-- Known maintenance or service-account activity.
+**Q7. What is the SHA256 of the executable that escalates the attacker’s privileges?**
 
-### Questions and Answers
+<details>
+<summary>Show answer</summary>
 
-**Q1. Which source generated the most failures?**
+`8ACC5D98CFFE8FE7D85DE218971B18D49166922D079676729055939463555BD2`
 
-**Answer:** Run the source summary search and report the top `src_ip` with its count and time range.
+</details>
 
-**Q2. Which account received the most failures?**
+**Q8. What is the original name of fun.exe?**
 
-**Answer:** Run the account summary search and report the top `user`.
+<details>
+<summary>Show answer</summary>
 
-**Q3. Did one source target several accounts?**
+`mimikatz.exe`
 
-**Answer:** Review the distinct account count and event details. This may support a password-spraying hypothesis.
+</details>
 
-**Q4. Did a successful login follow the failures?**
+**Q9. The attacker compromises the IT-Support account using the HelpDesk account. What was the logon type?**
 
-**Answer:** Review the sequence search and supporting raw events. Record the account, source, destination, and timestamps.
+<details>
+<summary>Show answer</summary>
 
-**Q5. Was an account compromised?**
+`9`
 
-**Answer:** Determine this from corroborating evidence. A successful login after failures is insufficient by itself.
+</details>
 
-**Q6. What response is appropriate?**
+**Q10. Using fun.exe, what is the command line used to launch the DCSync attack?**
 
-**Answer:** Follow the evidence and response playbook. Actions may include identity review, session revocation, password reset, detection updates, or source blocking after assessing business impact.
+<details>
+<summary>Show answer</summary>
 
-### Deliverable
+`"C:\Users\HelpDesk\fun.exe" "lsadump::dcsync /user:Abdullah-work\Administrator"`
 
-Prepare a concise report containing:
+</details>
 
-- Investigation time range and data sources.
-- Relevant SPL searches.
-- Key accounts, sources, and destinations.
-- Timeline and supporting events.
-- Assessment and confidence.
-- Visibility gaps.
-- Actions taken and recommended follow-up.
+**Q11. Knowing the HelpDesk user was compromised, what ticket name did the attacker generate to access the parent DC as Administrator?**
 
-## Investigation Report Template
+<details>
+<summary>Show answer</summary>
 
-| Field | Required information |
-| --- | --- |
-| Case summary | Case ID, analyst, alert, and investigation objective. |
-| Scope | Time range, timezone, indexes, sourcetypes, and coverage. |
-| Evidence | Relevant events, identifiers, and preserved exports. |
-| Searches | SPL queries and their purpose. |
-| Findings | Accounts, sources, counts, sequences, and supporting context. |
-| Assessment | Verdict, confidence, alternatives, and limitations. |
-| Response | Actions, justification, owners, and outcomes. |
-| Follow-up | Additional data, monitoring, and detection improvements. |
+`trust-test2.kirbi`
 
-Separate observed facts from hypotheses. Record what the available data supports and what remains unknown.
+</details>
+
 
 ## References
 
