@@ -343,9 +343,7 @@ The suspicious email is titled **Weekly Meeting** and uses the display name **Jo
 **Answer:** `smithyOG59@gmail.com`
 
 The `To` header identifies John Smith’s mailbox as the recipient.
-
-
-<img width="1908" height="982" alt="domain-profile" src="https://github.com/user-attachments/assets/84c48dfb-5a82-47e7-b83f-c551b0c3db72" />
+<img width="835" height="276" alt="image" src="https://github.com/user-attachments/assets/e03d24e0-b51e-4c43-b48b-f89a5c0be30f" />
 
 ---
 
@@ -362,7 +360,9 @@ jjoe96374@g.mail.com → g.mail.com
 The address can be mistaken for a Gmail account at a glance. Compare the complete address with the expected sender identity; a familiar display name does not establish legitimacy.
 
 > Earlier notes list `gmail.com`, but the sender screenshots show `g.mail.com`. The source screenshot also contains authentication results referring to `gmail.com`; this inconsistency requires the original email for further verification.
-<img width="1910" height="957" alt="url-report" src="https://github.com/user-attachments/assets/c6aff552-ed49-4601-8462-0ba2c994778e" />
+
+
+<img width="1908" height="982" alt="domain-profile" src="https://github.com/user-attachments/assets/84c48dfb-5a82-47e7-b83f-c551b0c3db72" />
 
 ---
 
@@ -378,9 +378,7 @@ UTC equivalent: Mon, 6 Nov 2023 05:27:32 +0000
 ```
 
 This is the stated send time. Delivery timestamps in `Received` headers should be examined separately.
-
-
-<img width="894" height="361" alt="sender" src="https://github.com/user-attachments/assets/94226e3d-5dca-45e6-9e5b-223f80e5394b" />
+<img width="1910" height="957" alt="url-report" src="https://github.com/user-attachments/assets/c6aff552-ed49-4601-8462-0ba2c994778e" />
 
 ---
 
@@ -398,8 +396,7 @@ The presentation shows this destination in Thunderbird’s status bar when hover
 
 > The earlier source screenshot’s plain-text body contains a different URL. Check the original email’s HTML to resolve the difference between message views.
 
-
-<img width="1300" height="732" alt="recipient-slide" src="https://github.com/user-attachments/assets/f0aba83e-d085-4366-94a8-0b49a46f1e82" />
+<img width="894" height="361" alt="sender" src="https://github.com/user-attachments/assets/94226e3d-5dca-45e6-9e5b-223f80e5394b" />
 
 ---
 
@@ -415,11 +412,10 @@ The presentation shows this destination in Thunderbird’s status bar when hover
 These results describe **hosting/IP locations**, not the domain registrant’s or attacker’s location.
 
 Different lookup times, DNS responses, or hosting changes could explain the difference. The supplied evidence does not establish which IP served the exact linked hostname when the email was delivered.
-
+<img width="1300" height="732" alt="recipient-slide" src="https://github.com/user-attachments/assets/f0aba83e-d085-4366-94a8-0b49a46f1e82" />
 
 <img width="1287" height="1013" alt="network-country" src="https://github.com/user-attachments/assets/3bf79fcb-1d79-464b-a2dc-d4558738f35d" />
-
-![Earlier DomainTools evidence showing China hosting](assets/domain-profile.png)
+<img width="1917" height="1056" alt="message" src="https://github.com/user-attachments/assets/db94fb77-ae0d-4ad2-a461-a010fe06f63e" />
 
 ---
 
@@ -433,7 +429,7 @@ However, a long history does not prove legitimacy or compromise. The evidence do
 
 The saved URL reputation report shows no vendor detections at that time. **A clean reputation result does not prove that a link is safe.**
 
-<img width="1917" height="1056" alt="message" src="https://github.com/user-attachments/assets/db94fb77-ae0d-4ad2-a461-a010fe06f63e" />
+
 <img width="1300" height="732" alt="link-destination-slide" src="https://github.com/user-attachments/assets/ad15f296-7f4e-4919-8beb-6e7813af8719" />
 
 ---
