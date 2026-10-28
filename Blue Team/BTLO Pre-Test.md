@@ -306,20 +306,6 @@ Use tools permitted by the organization's data-handling rules. External submissi
 
 URLhaus focuses on malware distribution; use phishing-specific intelligence for credential-phishing sites. [R8]
 
-## Technical references
-
-- **R1 NIST NCCoE — Static analysis definition:** https://pages.nist.gov/nccoe-devsecops/appendix-c.html
-- **R2 MITRE D3FEND — Dynamic Analysis:** https://d3fend.mitre.org/technique/d3f%3ADynamicAnalysis/
-- **R3 Microsoft — How email authentication works:** https://learn.microsoft.com/en-gb/defender-office-365/email-authentication-about
-- **R4 Microsoft — DMARC configuration and alignment:** https://learn.microsoft.com/en-au/microsoft-365/security/office-365-security/email-authentication-dmarc-configure?view=o365-worldwide
-- **R5 VirusTotal — How it works and report sharing:** https://docs.virustotal.com/docs/how-it-works
-- **R6 URLscan — Scan visibility levels:** https://docs.urlscan.io/pages/visibility
-- **R7 ICANN — Launching RDAP and sunsetting WHOIS:** https://www.icann.org/en/announcements/details/icann-update-launching-rdap-sunsetting-whois-27-01-2025-en
-- **R8 URLhaus — API and submission policy:** https://urlhaus.abuse.ch/api
-- **R9 Thunderbird — Remote content in messages:** https://support.mozilla.org/en-US/kb/remote-content-in-messages
-
----
-
 ## Challenge: Identify the Phishing Email
 
 ### Scenario
