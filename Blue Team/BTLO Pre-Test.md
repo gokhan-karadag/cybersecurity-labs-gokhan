@@ -4,28 +4,35 @@
 
 ## Table of Contents
 
+### Phishing Analysis
+
 - [Introduction](#introduction)
 - [Email Fundamentals](#email-fundamentals)
 - [Phishing Types and Techniques](#phishing-types-and-techniques)
-  - [Social Engineering Tactics](#social-engineering-tactics)
-- [1. Triage the Message](#1-triage-the-message)
-- [2. Review Headers and Authentication](#2-review-headers-and-authentication)
-  - [Authentication Result Reference](#authentication-result-reference)
-- [3. Analyze URLs and Infrastructure](#3-analyze-urls-and-infrastructure)
-- [4. Analyze Attachments](#4-analyze-attachments)
-  - [Static Analysis](#static-analysis)
-  - [File Hash Collection](#file-hash-collection)
-  - [Dynamic Analysis](#dynamic-analysis)
-- [5. Determine Scope and Impact](#5-determine-scope-and-impact)
-- [6. Decide and Respond](#6-decide-and-respond)
-  - [Preventive Controls](#preventive-controls)
-- [7. Case Report Template](#7-case-report-template)
-- [8. Tool Reference](#8-tool-reference)
-- [Challenge: Identify the Phishing Email](#challenge-identify-the-phishing-email)
-  - [Scenario](#scenario)
-  - [Instructions](#instructions)
-  - [Questions and Answers](#questions-and-answers)
-    
+- [Triage](#1-triage-the-message)
+- [Headers and Authentication](#2-review-headers-and-authentication)
+- [URL Analysis](#3-analyze-urls-and-infrastructure)
+- [Attachment Analysis](#4-analyze-attachments)
+- [Scope and Impact](#5-determine-scope-and-impact)
+- [Response](#6-decide-and-respond)
+- [Report Template](#7-case-report-template)
+- [Tools](#8-tool-reference)
+- [Phishing Challenge](#challenge-identify-the-phishing-email)
+
+### Splunk Investigation
+
+- [Introduction](#task-2--introduction)
+- [Components](#task-3--splunk-components)
+- [Search & Reporting](#task-4--search--reporting)
+- [Dashboards](#task-5--splunk-dashboards)
+- [Filtering Results](#task-6--filtering-results)
+- [Structuring Results](#task-7--structuring-results)
+- [Transforming Commands](#task-8--transforming-commands)
+- [Anomaly Detection](#task-9--anomaly-detection)
+- [Raw Log Analysis](#task-10--raw-log-analysis-practice)
+- [Scenario](#task-12--scenario)
+- [Questions and Answers](#questions-and-answers-6)
+- [References](#references)
 ## Introduction
 
 **Phishing is a social engineering attack** that uses impersonation and deceptive messages to trick people into revealing sensitive information, clicking malicious links, executing harmful files, or approving fraudulent requests. An attack may also request payments or MFA approval without including a malicious link.
@@ -420,24 +427,6 @@ The saved URL reputation report shows no vendor detections at that time. **A cle
 # Splunk Fundamentals and SOC Investigation
 
 A practical guide to searching logs, building dashboards, identifying unusual activity, and documenting security investigations with Splunk.
-
-## Table of Contents
-
-- [Learning Objectives](#learning-objectives)
-- [Lab Conventions](#lab-conventions)
-- [Task 2 — Introduction](#task-2--introduction)
-- [Task 3 — Splunk Components](#task-3--splunk-components)
-- [Task 4 — Search & Reporting](#task-4--search--reporting)
-- [Task 5 — Splunk Dashboards](#task-5--splunk-dashboards)
-- [Task 6 — Filtering Results](#task-6--filtering-results)
-- [Task 7 — Structuring Results](#task-7--structuring-results)
-- [Task 8 — Transforming Commands](#task-8--transforming-commands)
-- [Task 9 — Anomaly Detection](#task-9--anomaly-detection)
-- [Task 10 — Raw Log Analysis Practice](#task-10--raw-log-analysis-practice)
-- [Task 11 — Splunk Use Case: Interview Answer](#task-11--splunk-use-case-interview-answer)
-- [Task 12 — Scenario 1](#task-12--scenario-1)
-- [Investigation Report Template](#investigation-report-template)
-- [References](#references)
 
 ## Learning Objectives
 
