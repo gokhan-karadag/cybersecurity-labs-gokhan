@@ -97,8 +97,6 @@
 
 
 
-
-<img width="1067" height="1474" alt="975b5439-2e94-4a02-b07b-53463ea6f05e" src="https://github.com/user-attachments/assets/c35fa9e1-1692-45e1-b175-3152e7d7fc60" />
 <img width="1067" height="1474" alt="9e945a4c-8592-4a59-b5ab-23cb76efcd17" src="https://github.com/user-attachments/assets/3ef3f8e8-4d17-414d-abd8-9a8036cc375e" />
 
 
