@@ -1,13 +1,14 @@
 # Phishing Analysis and Investigation
 
 <img width="1536" height="1024" alt="social-engineering" src="https://github.com/user-attachments/assets/85ac358a-88de-4211-ad01-f7579a77a0af" />
-A practical SOC study guide combining BTL1 fundamentals with an evidence-based investigation workflow.
 
-## Purpose
+## Introduction
 
-Investigate reported phishing emails, assess user impact, and document an evidence-based verdict and response.
+**Phishing is a social engineering attack** that uses impersonation and deceptive messages to trick people into revealing sensitive information, clicking malicious links, executing harmful files, or approving fraudulent requests. An attack may also request payments or MFA approval without including a malicious link.
 
-Phishing uses impersonation or deceptive requests to steal information, compromise accounts or devices, or commit fraud. Messages may request credentials, payments, file execution, or MFA approval without containing a malicious link.
+Attackers exploit **trust, curiosity, fear, and urgency** to influence decisions. Their goal is to steal credentials, financial details, or personal information; gain unauthorized access to accounts and systems; or commit fraud. Even well-informed users can be targeted by convincing messages, making user awareness and technical controls essential.
+
+This practical SOC study guide combines **BTL1 fundamentals** with an **evidence-based investigation workflow**. It covers how to investigate reported emails, analyze artifacts, assess user impact, and document a clear verdict and appropriate response.
 
 ## Email Fundamentals
 
